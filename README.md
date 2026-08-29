@@ -145,7 +145,21 @@ endereço do domínio é ignorado.
 Limite do Gmail: cerca de 500 mensagens por dia, folgado para o volume
 de um formulário de site.
 
-### Verificação anti-robô
+### CAPTCHA visual
+
+Gerado pelo próprio servidor, em SVG, sem biblioteca externa e sem
+serviço de terceiro. Cinco caracteres com rotação, cores, linhas e
+pontos de ruído. O alfabeto exclui caracteres que se confundem
+(`0 O 1 I l`), então ninguém erra por ambiguidade.
+
+- `GET /api/captcha` devolve `{ id, svg, criado, assinatura }`
+- O código correto nunca trafega: vai assinado por HMAC. Na conferência
+  o servidor refaz a assinatura com o que a pessoa digitou
+- Sem estado no servidor, aceita maiúsculas ou minúsculas, expira em
+  15 minutos e cada código só vale uma vez
+- O botão de recarregar gera outro na hora
+
+### Verificação anti-robô (invisível, além do CAPTCHA)
 
 Não usa serviço externo. O navegador recebe um desafio assinado e precisa
 encontrar um número que gere um hash SHA-256 com 15 bits zero à frente.

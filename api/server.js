@@ -285,6 +285,80 @@ setInterval(() => {
   for (const [id, ate] of usados) if (ate < agora) usados.delete(id);
 }, 5 * 60 * 1000).unref();
 
+
+// ─────────────────────────────────────────────────────────────
+// CAPTCHA visual, gerado aqui mesmo em SVG
+//
+// Sem biblioteca externa e sem estado no servidor: o código correto
+// vai assinado por HMAC. Na conferência, refazemos a assinatura com o
+// que a pessoa digitou. Se bater, estava certo.
+// ─────────────────────────────────────────────────────────────
+// letras e números que não se confundem entre si
+const ALFABETO = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const CORES = ['#0061AF', '#0D3B66', '#1B4F72', '#0A4D68', '#123C69'];
+
+const rnd = (a, b) => a + Math.random() * (b - a);
+const escolhe = arr => arr[Math.floor(Math.random() * arr.length)];
+
+function desenhaCaptcha(texto) {
+  const L = 260, A = 84;
+  let corpo = '';
+
+  // ruído de fundo: linhas curvas
+  for (let i = 0; i < 5; i++) {
+    const y = rnd(10, A - 10);
+    corpo += `<path d="M0 ${y.toFixed(1)} Q ${L / 4} ${rnd(0, A).toFixed(1)}, ${L / 2} ${y.toFixed(1)} T ${L} ${rnd(0, A).toFixed(1)}" `
+          +  `stroke="${escolhe(CORES)}" stroke-width="${rnd(0.8, 1.8).toFixed(1)}" fill="none" opacity="0.28"/>`;
+  }
+  // pontos
+  for (let i = 0; i < 40; i++) {
+    corpo += `<circle cx="${rnd(0, L).toFixed(1)}" cy="${rnd(0, A).toFixed(1)}" r="${rnd(0.6, 1.6).toFixed(1)}" fill="${escolhe(CORES)}" opacity="0.3"/>`;
+  }
+  // caracteres, cada um com rotação e deslocamento próprios
+  const passo = (L - 46) / texto.length;
+  for (let i = 0; i < texto.length; i++) {
+    const x = 26 + i * passo + rnd(-4, 4);
+    const y = A / 2 + rnd(-5, 5);
+    const rot = rnd(-26, 26);
+    const tam = rnd(31, 40);
+    corpo += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-family="Georgia,'Times New Roman',serif" `
+          +  `font-size="${tam.toFixed(1)}" font-weight="700" fill="${escolhe(CORES)}" `
+          +  `text-anchor="middle" dominant-baseline="middle" `
+          +  `transform="rotate(${rot.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})">${texto[i]}</text>`;
+  }
+  // riscos por cima
+  for (let i = 0; i < 3; i++) {
+    corpo += `<line x1="${rnd(0, L / 3).toFixed(1)}" y1="${rnd(0, A).toFixed(1)}" `
+          +  `x2="${rnd(L * 2 / 3, L).toFixed(1)}" y2="${rnd(0, A).toFixed(1)}" `
+          +  `stroke="${escolhe(CORES)}" stroke-width="${rnd(1, 2).toFixed(1)}" opacity="0.4"/>`;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${L} ${A}" width="${L}" height="${A}" role="img" aria-label="Código de verificação">`
+       + `<rect width="${L}" height="${A}" fill="#F2F7FC"/>${corpo}</svg>`;
+}
+
+function novoCaptcha() {
+  let texto = '';
+  for (let i = 0; i < 5; i++) texto += escolhe(ALFABETO);
+  const id = crypto.randomBytes(8).toString('hex');
+  const criado = Date.now();
+  return {
+    id, criado,
+    svg: desenhaCaptcha(texto),
+    assinatura: assina(`cap.${id}.${texto.toUpperCase()}.${criado}`)
+  };
+}
+
+function captchaValido(c) {
+  if (!c || !c.id || !c.criado || !c.assinatura) return 'Digite o código da imagem.';
+  const resposta = String(c.resposta || '').trim().toUpperCase();
+  if (!resposta) return 'Digite o código da imagem.';
+  if (Date.now() - Number(c.criado) > 15 * 60 * 1000) return 'O código expirou. Gere outro.';
+  if (usados.has('cap' + c.id)) return 'Código já utilizado. Gere outro.';
+  if (assina(`cap.${c.id}.${resposta}.${c.criado}`) !== c.assinatura) return 'Código incorreto. Tente de novo.';
+  usados.set('cap' + c.id, Date.now() + 15 * 60 * 1000);
+  return null;
+}
+
 // ─────────────────────────────────────────────────────────────
 // App
 // ─────────────────────────────────────────────────────────────
@@ -373,8 +447,14 @@ code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
 </div></body></html>`);
 });
 
-// Desafio para o formulário
+// Desafio invisível (custo de máquina)
 app.get('/api/desafio', (req, res) => res.json({ ok: true, ...novoDesafio() }));
+
+// CAPTCHA visual para digitar
+app.get('/api/captcha', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json({ ok: true, ...novoCaptcha() });
+});
 
 // Abertura de ticket
 app.post('/api/tickets', async (req, res) => {
@@ -396,6 +476,9 @@ app.post('/api/tickets', async (req, res) => {
   if (!nome || !empresa || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return res.status(400).json({ ok: false, erro: 'Preencha nome, empresa e um e-mail válido.' });
   }
+
+  const erroCaptcha = captchaValido(b.captcha);
+  if (erroCaptcha) return res.status(400).json({ ok: false, erro: erroCaptcha });
 
   const problema = desafioValido(b.desafio);
   if (problema) return res.status(400).json({ ok: false, erro: problema });
@@ -492,7 +575,7 @@ app.use((req, res) => {
   res.status(404).json({
     ok: false,
     erro: 'Rota não encontrada.',
-    rotas: ['GET /', 'GET /health', 'GET /api/desafio', 'POST /api/tickets', 'GET /api/tickets/:codigo']
+    rotas: ['GET /', 'GET /health', 'GET /api/desafio', 'GET /api/captcha', 'POST /api/tickets', 'GET /api/tickets/:codigo']
   });
 });
 

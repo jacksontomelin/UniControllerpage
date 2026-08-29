@@ -186,6 +186,22 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .dp .who b{display:block;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--navy);letter-spacing:-.2px}
 .dp .who span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
 
+/* CAPTCHA VISUAL */
+.cap-box{grid-column:1/-1;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:18px 20px}
+.cap-box .lb{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px}
+.cap-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.cap-img{background:#F2F7FC;border:1px solid var(--border);border-radius:10px;overflow:hidden;line-height:0;flex-shrink:0;min-width:200px;min-height:66px;display:flex;align-items:center;justify-content:center}
+.cap-img svg{width:200px;height:auto;display:block}
+.cap-img .carregando{font-size:12px;color:var(--ink3,#7C90A5);padding:22px 14px;line-height:1.4}
+.cap-refresh{width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,transform .4s}
+.cap-refresh:hover{border-color:var(--az2)}
+.cap-refresh.girando{transform:rotate(360deg)}
+.cap-refresh svg{width:17px;height:17px;stroke:var(--az);fill:none;stroke-width:2}
+.cap-in{flex:1;min-width:150px}
+.cap-in input{width:100%;font-family:'Syne',sans-serif;font-size:19px;font-weight:800;letter-spacing:4px;text-transform:uppercase;text-align:center;color:var(--navy);background:#fff;border:1px solid var(--border);border-radius:11px;padding:12px 14px}
+.cap-in input:focus{outline:none;border-color:var(--az2)}
+.cap-in input::placeholder{font-weight:500;letter-spacing:1px;font-size:14px;color:var(--ink3,#7C90A5)}
+
 /* FORMULÁRIO CORPORATIVO */
 .form-wrap{max-width:1200px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:24px;padding:44px;display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:start}
 .form-side h3{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.7px;margin-bottom:12px;line-height:1.2}
@@ -1188,6 +1204,18 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
           <label for="f-msg">O que está travando hoje?</label>
           <textarea id="f-msg" name="mensagem" placeholder="Ex.: nossa esteira de crédito para de rodar esperando avaliação do veículo e consulta processual do cliente."></textarea>
         </div>
+        <div class="cap-box">
+          <div class="lb">Digite o código da imagem</div>
+          <div class="cap-row">
+            <div class="cap-img" id="cap-img"><span class="carregando">carregando…</span></div>
+            <button type="button" class="cap-refresh" id="cap-novo" title="Gerar outro código" aria-label="Gerar outro código">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7M21 3v6h-6"/></svg>
+            </button>
+            <div class="cap-in">
+              <input id="f-captcha" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="5" placeholder="5 caracteres" aria-label="Código da imagem">
+            </div>
+          </div>
+        </div>
         <div class="form-send">
           <button class="btn-send" type="submit">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
@@ -1379,6 +1407,39 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
   var API_URL = window.UC_API || 'https://api.unicontroller.com.br';
   var fc = document.getElementById('fcorp');
   if(fc){
+    /* ── CAPTCHA visual, gerado pela própria API ── */
+    var captcha = null;
+    var capImg = document.getElementById('cap-img');
+    var capBtn = document.getElementById('cap-novo');
+    var capIn  = document.getElementById('f-captcha');
+
+    function carregaCaptcha(){
+      if(!capImg) return;
+      capImg.innerHTML = '<span class="carregando">carregando…</span>';
+      if(capIn) capIn.value = '';
+      fetch(API_URL + '/api/captcha', {cache:'no-store'})
+        .then(function(r){ return r.json(); })
+        .then(function(c){
+          if(!c || !c.ok) throw new Error('sem captcha');
+          captcha = { id: c.id, criado: c.criado, assinatura: c.assinatura };
+          capImg.innerHTML = c.svg;
+        })
+        .catch(function(){
+          captcha = null;
+          capImg.innerHTML = '<span class="carregando">indisponível<br>use o WhatsApp</span>';
+        });
+    }
+
+    if(capBtn) capBtn.addEventListener('click', function(){
+      capBtn.classList.add('girando');
+      setTimeout(function(){ capBtn.classList.remove('girando'); }, 420);
+      carregaCaptcha();
+    });
+    if(capIn) capIn.addEventListener('input', function(){
+      capIn.value = capIn.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    });
+    carregaCaptcha();
+
     /* ── Verificação anti-robô, resolvida no próprio navegador ──
        Busca um desafio na API e procura o número que gera um hash com
        os bits zero pedidos. Leva menos de um segundo e o visitante não
@@ -1455,7 +1516,11 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
         nome: val('f-nome'), empresa: val('f-empresa'), email: val('f-email'),
         telefone: val('f-tel'), segmento: val('f-seg'), volume: val('f-vol'),
         mensagem: val('f-msg'), website: val('f-website'), origem: 'formulario',
-        desafio: desafio
+        desafio: desafio,
+        captcha: captcha ? {
+          id: captcha.id, criado: captcha.criado,
+          assinatura: captcha.assinatura, resposta: val('f-captcha')
+        } : null
       };
     };
 
@@ -1477,6 +1542,11 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
       }
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)){
         msg('Confira o e-mail digitado.', '#E85D5D'); return false;
+      }
+      if(captcha && val('f-captcha').length < 5){
+        msg('Digite os 5 caracteres da imagem.', '#E85D5D');
+        if(capIn) capIn.focus();
+        return false;
       }
       return true;
     };
@@ -1524,7 +1594,7 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
             '</div>';
           return;
         }
-        desafio = null; preparaDesafio();
+        desafio = null; preparaDesafio(); carregaCaptcha();
         msg((res.j && res.j.erro) ? res.j.erro : 'Não foi possível enviar agora.', '#E85D5D');
       })
       .catch(function(){
