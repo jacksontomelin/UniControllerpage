@@ -126,6 +126,23 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .band-face .nm b{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px;display:block}
 .band-face .nm span{font-size:11px;color:rgba(255,255,255,.68);display:block;margin-top:3px}
 
+/* HISTÓRICO DO VEÍCULO */
+.hist-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:60px;align-items:center;margin-top:52px}
+.hist-note{background:#fff;border:1px solid var(--border);border-radius:20px;padding:30px}
+.hist-note .ic{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--az),var(--az2));display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.hist-note .ic svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:1.8}
+.hist-note h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--navy);margin-bottom:10px;letter-spacing:-.4px}
+.hist-note p{font-size:13.5px;color:var(--muted);line-height:1.75}
+.hist-note p+p{margin-top:12px}
+.hist-note b{color:var(--navy);font-weight:700}
+.hist-items{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hi{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;transition:border-color .3s,box-shadow .3s,transform .35s cubic-bezier(.16,1,.3,1)}
+.hi:hover{border-color:var(--az);box-shadow:0 10px 30px rgba(0,97,175,.1);transform:translateY(-4px)}
+.hi .t{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.hi .t svg{width:17px;height:17px;stroke:var(--az2);fill:none;stroke-width:2;flex-shrink:0}
+.hi .t b{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:800;color:var(--navy);letter-spacing:-.2px}
+.hi p{font-size:12.5px;color:var(--muted);line-height:1.65}
+
 /* BOTÃO FLUTUANTE WHATSAPP */
 .wa{position:fixed;right:22px;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:150;display:flex;align-items:center;gap:0;background:#25D366;border-radius:99px;padding:14px;box-shadow:0 10px 34px rgba(37,211,102,.42),0 3px 10px rgba(0,0,0,.18);transition:transform .28s cubic-bezier(.16,1,.3,1),box-shadow .28s,padding .3s cubic-bezier(.16,1,.3,1);opacity:0;transform:translateY(18px) scale(.9);pointer-events:none}
 .wa.on{opacity:1;transform:none;pointer-events:auto}
@@ -264,7 +281,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 @media(max-width:1000px){.sol,.c-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){
   .hero-in,.f-grid,.pains{grid-template-columns:1fr;gap:40px}
-  .band-in{grid-template-columns:1fr;gap:34px}
+  .band-in,.hist-grid{grid-template-columns:1fr;gap:34px}
   .band-face{max-width:300px;margin:0 auto}
   .pains{gap:20px}
   .f-top{grid-template-columns:1fr;gap:32px}
@@ -286,7 +303,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   section{padding:60px 16px}
   h2{font-size:27px;letter-spacing:-.6px}
   .lead{font-size:14.5px}
-  .sol,.c-grid{grid-template-columns:1fr}
+  .sol,.c-grid,.hist-items{grid-template-columns:1fr}
   .f-photo{max-height:470px}
   .band{padding:56px 16px}
   .band-bg{background-image:url('img/fenauto-mobile.jpg');background-position:44% 30%}
@@ -324,6 +341,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   <div class="nav-links">
     <a href="#problema">O problema</a>
     <a href="#solucoes">Soluções</a>
+    <a href="#historico">Histórico</a>
     <a href="#corporativo">Corporativo</a>
     <a href="#fundador">Quem constrói</a>
     <a href="#contato" class="btn-nav">Falar com a gente</a>
@@ -459,6 +477,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
           <li><span class="d"></span><span><b>FipeConsulta</b>: valor do veículo pela placa ou pelo código</span></li>
           <li><span class="d"></span><span><b>JudSC</b>: consulta processual multi‑tribunal, com eProc do TJSC</span></li>
           <li><span class="d"></span><span><b>Painel do veículo</b>: situação, débitos e restrições numa tela</span></li>
+          <li><span class="d"></span><span><b>Histórico do veículo</b>: leilão, furto, restrição judicial e gravame</span></li>
           <li><span class="d"></span><span><b>Base de valores</b>: referência de preço sempre atualizada</span></li>
         </ul>
       </div>
@@ -472,6 +491,42 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
           <li><span class="d"></span><span><b>Radar de estoque</b>: preço e giro das revendas da região</span></li>
           <li><span class="d"></span><span><b>Mapa de revendas</b>: prospecção e análise de concorrência</span></li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="historico">
+  <div class="in-w">
+    <div class="rv">
+      <div class="tag">Histórico veicular</div>
+      <h2>O que o veículo carrega<br>antes de virar garantia</h2>
+      <p class="lead">Financiar ou comprar um carro sem conhecer o passado dele é assumir risco no escuro. Um bem com passagem por leilão ou bloqueio judicial vale outra coisa, e isso precisa aparecer antes da assinatura, não depois.</p>
+    </div>
+    <div class="hist-grid">
+      <div class="hist-note rv-s">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Não é teoria, é participação</h3>
+        <p>Ao longo dos anos, <b>investimos e contribuímos com informação para empresas de sistemas de crédito e de consulta veicular</b>. Estamos dos dois lados: o de quem consome o dado na operação e o de quem ajuda a construir a base.</p>
+        <p>Isso muda o que conseguimos entregar. Não intermediamos uma consulta genérica: entendemos de onde cada informação vem, o que ela significa na prática e onde ela costuma falhar.</p>
+      </div>
+      <div class="hist-items">
+        <div class="hi rv">
+          <div class="t"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/><path d="M2 8h20"/></svg><b>Passagem por leilão</b></div>
+          <p>Indício de veículo leiloado, sinistrado ou recuperado de seguradora, com o impacto direto na avaliação do bem.</p>
+        </div>
+        <div class="hi rv">
+          <div class="t"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0z"/></svg><b>Furto e roubo</b></div>
+          <p>Registro de ocorrência de furto ou roubo associado ao veículo, antes que ele entre na sua carteira.</p>
+        </div>
+        <div class="hi rv">
+          <div class="t"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8L3 14h6zM18 8l-3 6h6zM7 21h10"/></svg><b>Restrição judicial</b></div>
+          <p>Bloqueios e restrições lançados por determinação da Justiça, incluindo os registrados via Renajud.</p>
+        </div>
+        <div class="hi rv">
+          <div class="t"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg><b>Gravame e débitos</b></div>
+          <p>Financiamento em aberto, alienação fiduciária e pendências que travam a transferência lá na frente.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -568,7 +623,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         </div>
         <div class="f-item rv">
           <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-          <div><h4>Mentor e investidor anjo</h4><p>Orienta despachantes, lojistas e escritórios na modernização das próprias rotinas, e investe em sistemas e startups em estágio inicial ligados ao setor.</p></div>
+          <div><h4>Mentor e investidor anjo</h4><p>Orienta despachantes, lojistas e escritórios na modernização das próprias rotinas. Investe em sistemas e startups do setor, e contribui com informação para empresas de crédito e de consulta veicular.</p></div>
         </div>
         <div class="f-item rv">
           <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5M17 3l3 4-3 4M7 13l-3 4 3 4"/></svg></div>
@@ -605,6 +660,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <div class="f-links">
           <a href="#problema">O problema</a>
           <a href="#solucoes">Soluções</a>
+          <a href="#historico">Histórico veicular</a>
           <a href="#corporativo">Corporativo</a>
           <a href="#fundador">Quem constrói</a>
         </div>
