@@ -30,7 +30,9 @@ img,svg{display:block}
 .js-rv .rv.in,.js-rv .rv-l.in,.js-rv .rv-s.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
-  .rv,.rv-l,.rv-s,.js-rv .rv,.js-rv .rv-l,.js-rv .rv-s{opacity:1!important;transform:none!important}
+  .rv,.rv-l,.rv-s,.js-rv .rv,.js-rv .rv-l,.js-rv .rv-s,
+  .js-rv .eyebrow,.js-rv .hero-sub,.js-rv .hero-btns,.js-rv .hero-stats,
+  .js-rv .mock-wrap,.js-rv .mock-row,.js-rv h1 .ln>i{opacity:1!important;transform:none!important}
 }
 
 /* ── PROGRESS ── */
@@ -62,33 +64,31 @@ nav.scrolled .nav-links a:hover{color:var(--navy)}
 .aur2{width:340px;height:340px;background:rgba(125,211,245,.1);bottom:-120px;left:-70px;animation:drift 26s ease-in-out infinite reverse}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}}
 .hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,132,199,.15);border:1px solid rgba(0,132,199,.3);padding:6px 14px;border-radius:99px;margin-bottom:20px;opacity:0;animation:fadeup .8s .15s cubic-bezier(.16,1,.3,1) forwards}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,132,199,.15);border:1px solid rgba(0,132,199,.3);padding:6px 14px;border-radius:99px;margin-bottom:20px}
 .eyebrow span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:var(--cy)}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--cy);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 h1{font-family:'Syne',sans-serif;font-size:52px;font-weight:900;color:#fff;line-height:1.05;letter-spacing:-2px;margin-bottom:18px}
 h1 .ln{display:block;overflow:hidden}
-h1 .ln>i{display:block;font-style:normal;transform:translateY(108%);animation:lineup 1.05s cubic-bezier(.16,1,.3,1) forwards}
-h1 .ln:nth-child(2)>i{animation-delay:.11s}
-h1 .ln:nth-child(3)>i{animation-delay:.22s}
+h1 .ln>i{display:block;font-style:normal}
 @keyframes lineup{to{transform:none}}
 h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:16px;color:rgba(255,255,255,.62);line-height:1.8;margin-bottom:32px;max-width:490px;opacity:0;animation:fadeup .9s .5s cubic-bezier(.16,1,.3,1) forwards}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.62);line-height:1.8;margin-bottom:32px;max-width:490px}
 .hero-sub b{color:#fff;font-weight:700}
 @keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeup .9s .62s cubic-bezier(.16,1,.3,1) forwards}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn-hero{padding:14px 28px;background:linear-gradient(135deg,var(--az),var(--az2));border-radius:12px;font-size:14px;font-weight:800;color:#fff;box-shadow:0 8px 30px rgba(0,97,175,.4);transition:transform .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:9px}
 .btn-hero:hover{transform:translateY(-3px);box-shadow:0 14px 42px rgba(0,97,175,.55)}
 .btn-hero svg{width:16px;height:16px;transition:transform .28s cubic-bezier(.16,1,.3,1)}
 .btn-hero:hover svg{transform:translateX(4px)}
 .btn-ghost{padding:14px 28px;border:1.5px solid rgba(255,255,255,.2);border-radius:12px;font-size:14px;font-weight:700;color:rgba(255,255,255,.8);transition:border-color .25s,color .25s,transform .25s}
 .btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff;transform:translateY(-3px)}
-.hero-stats{display:flex;gap:32px;margin-top:44px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);opacity:0;animation:fadeup .9s .78s cubic-bezier(.16,1,.3,1) forwards}
+.hero-stats{display:flex;gap:32px;margin-top:44px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1)}
 .sn{font-family:'Syne',sans-serif;font-size:27px;font-weight:800;color:#fff;letter-spacing:-.8px}
 .sl{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-top:2px}
 
 /* ── HERO MOCKUP ── */
-.mock-wrap{opacity:0;animation:fadeup 1.1s .45s cubic-bezier(.16,1,.3,1) forwards}
+.mock-wrap{}
 .mock{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:20px;backdrop-filter:blur(20px);position:relative;overflow:hidden}
 .mock::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(125,211,245,.9),transparent);animation:scan 5s ease-in-out infinite}
 @keyframes scan{0%,100%{opacity:.2;transform:translateX(-46%)}50%{opacity:1;transform:translateX(46%)}}
@@ -97,7 +97,7 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .mock-logo .u,.mock-logo .p{color:var(--cy)}
 .mock-ok{background:rgba(16,185,129,.2);color:#6EE7B7;font-size:8px;font-weight:800;padding:4px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:5px}
 .mock-ok .d{width:4px;height:4px;border-radius:50%;background:#6EE7B7;animation:blink 2.2s infinite}
-.mock-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;opacity:0;animation:rowin .6s cubic-bezier(.16,1,.3,1) forwards}
+.mock-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
 @keyframes rowin{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
 .mock-left{display:flex;align-items:center;min-width:0}
 .mock-ico{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--az),var(--az2));display:flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0}
@@ -107,6 +107,18 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .chip{font-size:8px;font-weight:800;padding:3px 8px;border-radius:99px;flex-shrink:0}
 .cg{background:rgba(16,185,129,.15);color:#6EE7B7}
 .cb{background:rgba(0,132,199,.2);color:var(--cy)}
+
+/* Entrada do hero — também opt-in. Se a animação não rodar (iOS em modo de
+   baixo consumo, JS bloqueado), o conteúdo fica visível em vez de sumir. */
+.js-rv .eyebrow{opacity:0;animation:fadeup .8s .15s cubic-bezier(.16,1,.3,1) forwards}
+.js-rv h1 .ln>i{transform:translateY(108%);animation:lineup 1.05s cubic-bezier(.16,1,.3,1) forwards}
+.js-rv h1 .ln:nth-child(2)>i{animation-delay:.11s}
+.js-rv h1 .ln:nth-child(3)>i{animation-delay:.22s}
+.js-rv .hero-sub{opacity:0;animation:fadeup .9s .5s cubic-bezier(.16,1,.3,1) forwards}
+.js-rv .hero-btns{opacity:0;animation:fadeup .9s .62s cubic-bezier(.16,1,.3,1) forwards}
+.js-rv .hero-stats{opacity:0;animation:fadeup .9s .78s cubic-bezier(.16,1,.3,1) forwards}
+.js-rv .mock-wrap{opacity:0;animation:fadeup 1.1s .45s cubic-bezier(.16,1,.3,1) forwards}
+.js-rv .mock-row{opacity:0;animation:rowin .6s cubic-bezier(.16,1,.3,1) forwards}
 
 /* ── MARQUEE ── */
 .mq{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:22px 0;overflow:hidden;position:relative}
@@ -637,11 +649,10 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     </div>
     <div class="mt-grid">
       <div class="mt-photo rv-s">
-        <div class="mt-badge"><span>13º Congresso FENAUTO</span></div>
-        <img src="img/jackson-mentor.jpg" alt="Jackson Tomelin, mentor e CEO da UniController, no Congresso FENAUTO" width="760" height="950">
+        <img src="img/jackson-mentor.jpg" alt="Jackson Tomelin, mentor, CEO e fundador da UniController" width="760" height="950">
         <div class="mt-cap">
           <div class="t">Jackson Tomelin</div>
-          <div class="s">Mentor, CEO e investidor anjo</div>
+          <div class="s">Mentor, CEO da UniController e investidor anjo</div>
         </div>
       </div>
       <div>
