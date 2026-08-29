@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>UNICONTROLLER | Documentação veicular e consulta de dados por API</title>
+<title>UNICONTROLLER | Documentação e dados de veículo para lojas, financeiras e escritórios</title>
 <meta name="description" content="Mais de 2.800 clientes, 80 mil procurações processadas e 20 mil documentos de transferência emitidos. A UniController entrega documentação veicular e consulta de dados por API para lojas, revendas, financeiras e bancos.">
 <meta property="og:title" content="UniController | Documentação veicular e consulta de dados por API">
 <meta property="og:description" content="2.800+ clientes, 80 mil+ procurações processadas e 20 mil+ documentos de transferência. Documentação e dados que entram direto no seu sistema.">
@@ -240,6 +240,17 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .cite q{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--navy);line-height:1.5;letter-spacing:-.3px;quotes:'\201C' '\201D'}
 .cite cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:12px;font-weight:500}
 
+/* O QUE FAZEMOS (faixa explicativa) */
+.oque{background:#fff;border-bottom:1px solid var(--border);padding:52px 40px}
+.oque-in{max-width:1200px;margin:0 auto}
+.oque-lb{text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--az2);margin-bottom:32px}
+.oque-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.oq{display:flex;gap:16px;align-items:flex-start}
+.oq .n{width:38px;height:38px;border-radius:11px;background:var(--azl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.oq .n svg{width:18px;height:18px;stroke:var(--az);fill:none;stroke-width:1.9}
+.oq b{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--navy);display:block;margin-bottom:6px;letter-spacing:-.3px}
+.oq p{font-size:13.5px;color:var(--muted);line-height:1.7}
+
 /* MARQUEE */
 .mq{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;overflow:hidden;position:relative}
 .mq::before,.mq::after{content:'';position:absolute;top:0;bottom:0;width:110px;z-index:2;pointer-events:none}
@@ -354,7 +365,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 .f-social b{color:rgba(255,255,255,.8);font-weight:700}
 .f-copy{font-size:12px;margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);text-align:center;line-height:1.9}
 
-@media(max-width:1000px){.sol,.c-grid,.dep-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:1000px){.sol,.c-grid,.dep-grid{grid-template-columns:1fr 1fr}.oque-grid{gap:24px}}
 @media(max-width:900px){
   .hero-in,.f-grid,.pains{grid-template-columns:1fr;gap:40px}
   .band-in,.hist-grid,.form-wrap{grid-template-columns:1fr;gap:34px}
@@ -379,7 +390,9 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   section{padding:60px 16px}
   h2{font-size:27px;letter-spacing:-.6px}
   .lead{font-size:14.5px}
-  .sol,.c-grid,.hist-items,.fields,.dep-grid{grid-template-columns:1fr}
+  .sol,.c-grid,.hist-items,.fields,.dep-grid,.oque-grid{grid-template-columns:1fr}
+  .oque{padding:38px 16px}
+  .oque-grid{gap:24px}
   .form-wrap{padding:26px 20px;border-radius:18px;gap:30px}
   .form-side h3{font-size:22px}
   .f-photo{max-height:470px}
@@ -417,7 +430,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 <nav id="nav">
   <div class="logo nav-logo"><span class="u">UNI</span>CONTROLLER<span class="p">.</span></div>
   <div class="nav-links">
-    <a href="#problema">O problema</a>
+    <a href="#problema">O que resolvemos</a>
     <a href="#solucoes">Soluções</a>
     <a href="#historico">Histórico</a>
     <a href="#corporativo">Corporativo</a>
@@ -430,9 +443,9 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   <div class="aur aur1"></div><div class="aur aur2"></div>
   <div class="hero-in">
     <div>
-      <div class="eyebrow hero-a d1"><span class="dot"></span><span>Documentação e dados veiculares</span></div>
-      <h1 class="hero-a d1">Documento pronto e dado na tela.<br><span class="hl">Sem ninguém esperando.</span></h1>
-      <p class="hero-sub hero-a d2">A UniController entrega documentação veicular e consulta de dados que <b>entram direto no sistema que a sua empresa já usa</b>. Para lojas, revendas, financeiras, bancos e escritórios que não podem parar esperando papel ou portal.</p>
+      <div class="eyebrow hero-a d1"><span class="dot"></span><span>Desde 2018 em Santa Catarina</span></div>
+      <h1 class="hero-a d1">A papelada e os dados<br>do veículo, <span class="hl">resolvidos.</span></h1>
+      <p class="hero-sub hero-a d2">A UniController faz duas coisas para quem trabalha com veículo: <b>emite os documentos de compra e venda</b> e <b>entrega por API os dados que a operação precisa consultar</b>. Para lojas, revendas, financeiras, bancos e escritórios.</p>
       <div class="hero-btns hero-a d3">
         <a class="btn-hero" href="#problema">Ver o que resolvemos
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -476,6 +489,26 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
             <div><div class="mock-name">Atendimento em escala</div><div class="mock-sub">Vários atendentes, um número</div></div>
           </div><span class="chip cg">ATIVO</span>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="oque">
+  <div class="oque-in">
+    <div class="oque-lb rv">Em resumo, é isto que fazemos</div>
+    <div class="oque-grid">
+      <div class="oq rv">
+        <div class="n"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+        <div><b>Documento</b><p>Procuração, ATPV‑e e transferência assinados pelo celular do cliente, com validade jurídica e sem cartório.</p></div>
+      </div>
+      <div class="oq rv">
+        <div class="n"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+        <div><b>Dado</b><p>Valor do veículo, histórico de leilão e restrição, e situação processual entrando direto no sistema que você já usa.</p></div>
+      </div>
+      <div class="oq rv">
+        <div class="n"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div><b>Atendimento</b><p>WhatsApp organizado para a equipe dar conta do volume, com vários atendentes num número só.</p></div>
       </div>
     </div>
   </div>
@@ -532,8 +565,8 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   <div class="in-w">
     <div class="center rv">
       <div class="tag">Soluções</div>
-      <h2>Três frentes, tudo em operação</h2>
-      <p class="lead">Cada frente resolve uma etapa do processo. Você contrata só a que precisa, ou o conjunto.</p>
+      <h2>Os sistemas por trás de cada frente</h2>
+      <p class="lead">Documento, dado e atendimento. Você contrata só a frente que precisa, ou o conjunto.</p>
     </div>
     <div class="sol">
       <div class="s-card rv">
@@ -561,8 +594,8 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       </div>
       <div class="s-card rv">
         <div class="s-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h3>Atendimento e mercado</h3>
-        <p>Conversa com cliente em escala e leitura de preço da concorrência.</p>
+        <h3>Atendimento</h3>
+        <p>Conversa com cliente em escala, e leitura de preço da concorrência para decidir compra.</p>
         <ul class="s-list">
           <li><span class="d"></span><span><b>UniZap</b>: central de WhatsApp com transcrição de áudio</span></li>
           <li><span class="d"></span><span><b>ZapController</b>: atendimento multi‑agente com histórico</span></li>
@@ -577,7 +610,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 <section id="historico">
   <div class="in-w">
     <div class="rv">
-      <div class="tag">Histórico veicular</div>
+      <div class="tag">Dado · Histórico veicular</div>
       <h2>O que o veículo carrega<br>antes de virar garantia</h2>
       <p class="lead">Financiar ou comprar um carro sem conhecer o passado dele é assumir risco no escuro. Um bem com passagem por leilão ou bloqueio judicial vale outra coisa, e isso precisa aparecer antes da assinatura, não depois.</p>
     </div>
@@ -614,7 +647,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   <div class="in-w">
     <div class="rv">
       <div class="tag" style="color:var(--cy)">Corporativo</div>
-      <h2>Preparados para o volume<br>de quem opera grande</h2>
+      <h2>As mesmas duas frentes,<br>no volume de quem opera grande</h2>
       <p class="lead">Instituições financeiras e redes de lojas não precisam de mais um sistema para a equipe acessar. Precisam da informação entrando no fluxo que já existe.</p>
     </div>
     <div class="c-grid">
@@ -676,7 +709,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     <div class="rv">
       <div class="tag">Quem constrói</div>
       <h2>Jackson Tomelin</h2>
-      <p class="lead">Despachante documentalista credenciado, CEO e fundador da UniController, mentor e investidor anjo. Duas profissões na mesma pessoa: documentação e desenvolvimento.</p>
+      <p class="lead">A UniController é dirigida por quem executa o processo todo dia. Jackson Tomelin é despachante documentalista credenciado e desenvolvedor: emite documento no balcão e escreve o sistema que automatiza esse mesmo documento.</p>
       <div class="cite">
         <q>Mudança é inevitável. Crescimento é opcional.</q>
         <cite>John C. Maxwell, escritor</cite>
@@ -870,7 +903,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       <div>
         <div class="f-h">Empresa</div>
         <div class="f-links">
-          <a href="#problema">O problema</a>
+          <a href="#problema">O que resolvemos</a>
           <a href="#solucoes">Soluções</a>
           <a href="#historico">Histórico veicular</a>
           <a href="#corporativo">Corporativo</a>
