@@ -526,7 +526,12 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 }
 </style>
 <script>
-window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
+/* ═══════════════════════════════════════════════════════════
+   Endereço do serviço de tickets (o que recebe o formulário).
+   Precisa ser diferente da sua API pública, senão as duas
+   aplicações disputam a mesma rota no Coolify.
+   ═══════════════════════════════════════════════════════════ */
+window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
 </script>
 <script>
 /* Ativa as animações de entrada só quando há suporte real. Sem isso,
@@ -1410,7 +1415,7 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
 
 /* ── Formulário: bloco próprio, para não depender do código de animação ── */
 (function(){
-  var API_URL = window.UC_API || 'https://api.unicontroller.com.br';
+  var API_URL = window.UC_API || 'https://tickets.unicontroller.com.br';
   var fc = document.getElementById('fcorp');
   if(fc){
     var aviso = document.getElementById('fmsg');

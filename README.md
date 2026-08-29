@@ -92,11 +92,14 @@ api/.env.example modelo das variáveis
 2. **Base Directory:** `/api`
 3. Build Pack **Dockerfile** · Port **3000**
 4. **Storages:** adicione um volume persistente em `/data` (o banco fica ali)
-5. **Domains:** `https://api.unicontroller.com.br`
+5. **Domains:** `https://tickets.unicontroller.com.br`
+   (não use `api.unicontroller.com.br`: esse endereço já é da API pública
+   e duas aplicações não podem declarar o mesmo domínio no Coolify)
 6. Preencha as variáveis conforme `api/.env.example`
 7. Deploy
 
-No DNS, crie um registro **A** para `api` apontando para o IP do VPS.
+O DNS já tem um registro curinga apontando tudo para o VPS, então
+`tickets.unicontroller.com.br` resolve sem precisar criar nada.
 
 ### Endpoints
 
@@ -111,7 +114,7 @@ No DNS, crie um registro **A** para `api` apontando para o IP do VPS.
 ### Mudar o status de um ticket
 
 ```bash
-curl -X PATCH https://api.unicontroller.com.br/api/admin/tickets/UC-2026-0001 \
+curl -X PATCH https://tickets.unicontroller.com.br/api/admin/tickets/UC-2026-0001 \
   -H "Authorization: Bearer SEU_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"status":"analise","nota":"Analisando o volume para montar a proposta."}'
