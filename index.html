@@ -203,6 +203,10 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .btn-send{padding:15px 30px;background:linear-gradient(135deg,var(--az),var(--az2));border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#fff;cursor:pointer;box-shadow:0 8px 26px rgba(0,97,175,.38);transition:transform .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:9px}
 .btn-send:hover{transform:translateY(-3px);box-shadow:0 14px 38px rgba(0,97,175,.5)}
 .btn-send svg{width:16px;height:16px}
+.btn-alt{padding:15px 24px;background:#fff;border:1px solid var(--border);border-radius:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--navy);cursor:pointer;transition:border-color .25s,transform .25s;display:inline-flex;align-items:center;gap:9px}
+.btn-alt:hover{border-color:var(--az2);transform:translateY(-3px)}
+.btn-alt svg{width:16px;height:16px}
+.btn-alt.ok{border-color:var(--green);color:var(--green)}
 .form-note{font-size:12px;color:var(--muted);line-height:1.6;flex:1;min-width:200px}
 
 /* BOTÃO FLUTUANTE WHATSAPP */
@@ -814,10 +818,14 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         </div>
         <div class="form-send">
           <button class="btn-send" type="submit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
-            Enviar proposta
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Enviar pelo WhatsApp
           </button>
-          <span class="form-note" id="fmsg">Abre o seu e-mail com tudo preenchido. Prefere WhatsApp? <a href="https://wa.me/5547999357131" data-wa="formulario" target="_blank" rel="noopener" style="color:var(--az2);font-weight:700">Fale por aqui</a>.</span>
+          <button class="btn-alt" type="button" id="f-copy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar dados
+          </button>
+          <span class="form-note" id="fmsg">Enviamos por WhatsApp porque a resposta é mais rápida. Prefere e-mail? <a id="f-mail" href="mailto:suporte@unicontroller.com.br" style="color:var(--az2);font-weight:700">suporte@unicontroller.com.br</a></span>
         </div>
       </form>
     </div>
@@ -989,35 +997,79 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     a.href = 'https://wa.me/5547999357131?text=' + encodeURIComponent(txt + ' [' + a.dataset.wa + ']');
   });
 
-  /* ── Formulário corporativo: monta o e-mail já preenchido ── */
+  /* ── Formulário corporativo ──
+     O envio principal é por WhatsApp: mailto só funciona se a pessoa tiver
+     um programa de e-mail configurado, o que falha na maioria dos desktops. */
   var fc = document.getElementById('fcorp');
   if(fc){
+    var val = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
+    var aviso = document.getElementById('fmsg');
+
+    var montar = function(){
+      return [
+        'Proposta corporativa | UniController',
+        '',
+        'Nome: ' + val('f-nome'),
+        'Empresa: ' + val('f-empresa'),
+        'E-mail: ' + val('f-email'),
+        'Telefone: ' + (val('f-tel') || 'nao informado'),
+        'Segmento: ' + val('f-seg'),
+        'Volume mensal estimado: ' + val('f-vol'),
+        '',
+        'O que esta travando hoje:',
+        val('f-msg') || 'nao informado'
+      ].join('\n');
+    };
+
+    var valida = function(){
+      if(!val('f-nome') || !val('f-empresa') || !val('f-email')){
+        aviso.textContent = 'Preencha nome, empresa e e-mail para continuar.';
+        aviso.style.color = '#E85D5D';
+        return false;
+      }
+      aviso.style.color = '';
+      return true;
+    };
+
     fc.addEventListener('submit', function(ev){
       ev.preventDefault();
-      var v = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
-      var nome = v('f-nome'), emp = v('f-empresa'), mail = v('f-email');
-      var aviso = document.getElementById('fmsg');
-      if(!nome || !emp || !mail){
-        aviso.innerHTML = 'Preencha nome, empresa e e-mail para continuar.';
-        aviso.style.color = '#E85D5D';
-        return;
-      }
-      var corpo = [
-        'Nome: ' + nome,
-        'Empresa: ' + emp,
-        'E-mail: ' + mail,
-        'Telefone: ' + (v('f-tel') || 'não informado'),
-        'Segmento: ' + v('f-seg'),
-        'Volume mensal estimado: ' + v('f-vol'),
-        '',
-        'O que está travando hoje:',
-        v('f-msg') || 'não informado'
-      ].join('\n');
-      var assunto = 'Proposta corporativa | ' + emp + ' (' + v('f-seg') + ')';
-      aviso.innerHTML = 'Abrindo o seu programa de e-mail. Se nada acontecer, escreva para suporte@unicontroller.com.br.';
-      aviso.style.color = '';
-      window.location.href = 'mailto:suporte@unicontroller.com.br?subject=' +
-        encodeURIComponent(assunto) + '&body=' + encodeURIComponent(corpo);
+      if(!valida()) return;
+      var url = 'https://wa.me/5547999357131?text=' + encodeURIComponent(montar() + ' [formulario]');
+      var w = window.open(url, '_blank');
+      if(!w) window.location.href = url;
+    });
+
+    var btc = document.getElementById('f-copy');
+    if(btc) btc.addEventListener('click', function(){
+      if(!valida()) return;
+      var txt = montar();
+      var feito = function(){
+        btc.classList.add('ok');
+        btc.lastChild.textContent = ' Copiado';
+        aviso.textContent = 'Dados copiados. Cole no e-mail para suporte@unicontroller.com.br ou no WhatsApp.';
+        setTimeout(function(){ btc.classList.remove('ok'); btc.lastChild.textContent = ' Copiar dados'; }, 3000);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(feito, function(){ fallback(txt, feito); });
+      } else { fallback(txt, feito); }
+    });
+
+    function fallback(txt, feito){
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); feito(); }
+      catch(e){ aviso.textContent = 'Não foi possível copiar. Selecione os campos manualmente.'; }
+      document.body.removeChild(ta);
+    }
+
+    /* o link de e-mail é preenchido na hora do clique, sem navegar a página */
+    var lm = document.getElementById('f-mail');
+    if(lm) lm.addEventListener('click', function(){
+      if(!val('f-nome') && !val('f-empresa')) return;
+      lm.href = 'mailto:suporte@unicontroller.com.br?subject=' +
+        encodeURIComponent('Proposta corporativa | ' + (val('f-empresa') || 'contato')) +
+        '&body=' + encodeURIComponent(montar());
     });
   }
 
