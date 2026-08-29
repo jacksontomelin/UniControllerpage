@@ -549,7 +549,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <div class="mock-row">
           <div class="mock-left">
             <div class="mock-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17V9l1.8-4h7.4l1.8 4v8"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/></svg></div>
-            <div><div class="mock-name">Valor do veículo</div><div class="mock-sub">Pela placa ou pelo código</div></div>
+            <div><div class="mock-name">Valor do veículo</div><div class="mock-sub">Por placa, código ou descrição</div></div>
           </div><span class="chip cb">API</span>
         </div>
         <div class="mock-row">
@@ -660,7 +660,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <h3>Consulta de dados por API</h3>
         <p>Informação veicular e processual entrando direto no seu sistema.</p>
         <ul class="s-list">
-          <li><span class="d"></span><span><b>FipeConsulta</b>: valor do veículo pela placa ou pelo código</span></li>
+          <li><span class="d"></span><span><b>FipeConsulta</b>: valor do veículo por busca de texto, código ou placa</span></li>
           <li><span class="d"></span><span><b>JudSC</b>: consulta processual multi‑tribunal, com eProc do TJSC</span></li>
           <li><span class="d"></span><span><b>Painel do veículo</b>: situação, débitos e restrições numa tela</span></li>
           <li><span class="d"></span><span><b>Histórico do veículo</b>: leilão, furto, restrição judicial e gravame</span></li>
@@ -695,32 +695,34 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       <div class="prod rv">
         <div class="prod-head">
           <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17V9l1.8-4h7.4l1.8 4v8"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/><path d="M6.5 12h11"/></svg></div>
-          <div><h3>FipeConsulta</h3><p>Quanto o veículo vale, pela placa ou pelo código</p></div>
+          <div><h3>FipeConsulta</h3><p>Quanto o veículo vale, com busca que entende texto solto</p></div>
           <span class="tg">API REST</span>
         </div>
         <div class="prod-body">
           <div class="steps">
             <div class="lb">O caminho da consulta</div>
-            <div class="stp"><span class="n">1</span><div><b>Você envia a placa</b><p>Uma chamada com a placa do veículo. Se preferir, aceita também o código FIPE direto, quando você já o tem.</p></div></div>
-            <div class="stp"><span class="n">2</span><div><b>Identificamos o veículo</b><p>A placa é resolvida em marca, modelo, versão e ano. É o passo que costuma dar errado quando a busca é manual, porque uma versão trocada muda bastante o valor.</p></div></div>
-            <div class="stp"><span class="n">3</span><div><b>Cruzamos com a base de valores</b><p>Mantemos a tabela completa e atualizada em base própria. Por isso a resposta não depende da disponibilidade da fonte original no momento da consulta.</p></div></div>
-            <div class="stp"><span class="n">4</span><div><b>Retorno pronto para usar</b><p>Valor, referência do mês e os dados do veículo num JSON único. Sem tela para abrir, sem operador digitando.</p></div></div>
+            <div class="stp"><span class="n">1</span><div><b>Você manda o texto como tem</b><p>Busca livre que aceita marca, modelo, ano e combustível numa string só. Tolera erro de digitação: "amaroc" encontra Amarok.</p></div></div>
+            <div class="stp"><span class="n">2</span><div><b>Interpretamos a descrição</b><p>Entende apelido de marca (vw, gm) e o padrão de descrição do DETRAN/SC, com as abreviações que aparecem no documento do veículo.</p></div></div>
+            <div class="stp"><span class="n">3</span><div><b>Pontuamos os resultados</b><p>Cada resultado vem com nota de 0 a 100 e a resposta indica a melhor correspondência. Quando a busca é vaga, ela explica como refinar.</p></div></div>
+            <div class="stp"><span class="n">4</span><div><b>Valor e histórico juntos</b><p>Preço do mês de referência mais o histórico de meses anteriores, em base própria. A resposta não depende da fonte original estar no ar.</p></div></div>
           </div>
           <div class="prod-code">
-            <div class="lb">Requisição</div>
-<pre><span style="color:#C792EA">GET</span> /v1/fipe/placa/<span style="color:#8FE3B4">ABC1D23</span>
-<span style="color:#7DD3F5">X-API-Key</span>: sua-chave</pre>
+            <div class="lb">Busca livre, tolerante a erro</div>
+<pre><span style="color:#C792EA">GET</span> /search?q=<span style="color:#8FE3B4">t-cross+2022</span>&amp;vehicle_type=<span style="color:#8FE3B4">cars</span>
+<span style="color:#7DD3F5">X-Subscription-Token</span>: sua-chave</pre>
             <div class="div"></div>
             <div class="lb">Resposta</div>
 <pre>{
-  <span style="color:#7DD3F5">"marca"</span>: <span style="color:#8FE3B4">"Volkswagen"</span>,
-  <span style="color:#7DD3F5">"modelo"</span>: <span style="color:#8FE3B4">"T-Cross 1.0 TSI"</span>,
-  <span style="color:#7DD3F5">"ano"</span>: <span style="color:#F0B86E">2022</span>,
-  <span style="color:#7DD3F5">"codigo_fipe"</span>: <span style="color:#8FE3B4">"005340-1"</span>,
-  <span style="color:#7DD3F5">"valor"</span>: <span style="color:#F0B86E">112450.00</span>,
-  <span style="color:#7DD3F5">"referencia"</span>: <span style="color:#8FE3B4">"agosto/2026"</span>
+  <span style="color:#7DD3F5">"brand"</span>: <span style="color:#8FE3B4">"VW - VolksWagen"</span>,
+  <span style="color:#7DD3F5">"model"</span>: <span style="color:#8FE3B4">"T-Cross 1.0 TSI"</span>,
+  <span style="color:#7DD3F5">"modelYear"</span>: <span style="color:#F0B86E">2022</span>,
+  <span style="color:#7DD3F5">"codeFipe"</span>: <span style="color:#8FE3B4">"005340-1"</span>,
+  <span style="color:#7DD3F5">"fuel"</span>: <span style="color:#8FE3B4">"Gasolina"</span>,
+  <span style="color:#7DD3F5">"price"</span>: <span style="color:#8FE3B4">"R$ 112.450,00"</span>,
+  <span style="color:#7DD3F5">"referenceMonth"</span>: <span style="color:#8FE3B4">"agosto de 2026"</span>,
+  <span style="color:#7DD3F5">"priceHistory"</span>: [ <span style="color:#5A7594">/* meses anteriores */</span> ]
 }</pre>
-            <div class="prod-note">Estrutura ilustrativa. Os campos exatos vão na documentação que acompanha o acesso.</div>
+            <div class="prod-note">Também aceita navegação por marca, modelo e ano, e consulta direta pelo código FIPE.</div>
           </div>
         </div>
         <div class="usos">
@@ -739,32 +741,29 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <div class="prod-body">
           <div class="steps">
             <div class="lb">O caminho da consulta</div>
-            <div class="stp"><span class="n">1</span><div><b>Você informa a busca</b><p>Número do processo, quando já se sabe qual é, ou o documento da parte, para descobrir tudo que existe em nome dela.</p></div></div>
+            <div class="stp"><span class="n">1</span><div><b>Número do processo ou documento da parte</b><p>Com o número CNJ, a consulta é direta. Com CPF ou CNPJ, descobrimos tudo que existe em nome daquela parte.</p></div></div>
             <div class="stp"><span class="n">2</span><div><b>Buscamos em vários tribunais de uma vez</b><p>As fontes são acionadas em paralelo, incluindo o eProc do TJSC e a base nacional. Você espera a mais lenta, não a soma de todas.</p></div></div>
-            <div class="stp"><span class="n">3</span><div><b>Normalizamos o retorno</b><p>Cada tribunal devolve num formato diferente. Entregamos tudo com os mesmos nomes de campo, para a sua integração não precisar tratar caso a caso.</p></div></div>
+            <div class="stp"><span class="n">3</span><div><b>Movimentações em ordem</b><p>O andamento vem ordenado do mais recente para o mais antigo, com data e descrição, pronto para exibir sem tratamento.</p></div></div>
             <div class="stp"><span class="n">4</span><div><b>Acompanhamento contínuo</b><p>Se quiser, o processo fica monitorado e você recebe aviso quando houver movimentação, em vez de consultar de novo por conta.</p></div></div>
           </div>
           <div class="prod-code">
-            <div class="lb">Requisição</div>
-<pre><span style="color:#C792EA">POST</span> /v1/processos/parte
-<span style="color:#7DD3F5">X-API-Key</span>: sua-chave
-
-{ <span style="color:#7DD3F5">"documento"</span>: <span style="color:#8FE3B4">"000.000.000-00"</span> }</pre>
+            <div class="lb">Por número do processo</div>
+<pre><span style="color:#C792EA">GET</span> /processo/<span style="color:#8FE3B4">50012345620248240008</span></pre>
             <div class="div"></div>
             <div class="lb">Resposta</div>
 <pre>{
-  <span style="color:#7DD3F5">"total"</span>: <span style="color:#F0B86E">2</span>,
-  <span style="color:#7DD3F5">"processos"</span>: [
-    {
-      <span style="color:#7DD3F5">"numero"</span>: <span style="color:#8FE3B4">"5001234-56.2024.8.24.0008"</span>,
-      <span style="color:#7DD3F5">"tribunal"</span>: <span style="color:#8FE3B4">"TJSC"</span>,
-      <span style="color:#7DD3F5">"classe"</span>: <span style="color:#8FE3B4">"Execução de Título"</span>,
-      <span style="color:#7DD3F5">"situacao"</span>: <span style="color:#8FE3B4">"em andamento"</span>,
-      <span style="color:#7DD3F5">"ultimo_andamento"</span>: <span style="color:#8FE3B4">"2026-08-14"</span>
-    }
+  <span style="color:#7DD3F5">"numeroProcesso"</span>: <span style="color:#8FE3B4">"5001234-56.2024.8.24.0008"</span>,
+  <span style="color:#7DD3F5">"tribunal"</span>: <span style="color:#8FE3B4">"TJSC"</span>,
+  <span style="color:#7DD3F5">"grau"</span>: <span style="color:#8FE3B4">"G1"</span>,
+  <span style="color:#7DD3F5">"classe"</span>: { <span style="color:#7DD3F5">"nome"</span>: <span style="color:#8FE3B4">"Execução de Título"</span> },
+  <span style="color:#7DD3F5">"orgaoJulgador"</span>: { <span style="color:#5A7594">/* vara */</span> },
+  <span style="color:#7DD3F5">"dataAjuizamento"</span>: <span style="color:#8FE3B4">"2024-03-11"</span>,
+  <span style="color:#7DD3F5">"movimentos"</span>: [
+    { <span style="color:#7DD3F5">"data"</span>: <span style="color:#8FE3B4">"2026-08-14"</span>,
+      <span style="color:#7DD3F5">"nome"</span>: <span style="color:#8FE3B4">"Conclusos para decisão"</span> }
   ]
 }</pre>
-            <div class="prod-note">Estrutura ilustrativa. Os campos exatos vão na documentação que acompanha o acesso.</div>
+            <div class="prod-note">Busca por CPF ou CNPJ da parte roda em vários tribunais e devolve a lista completa de processos.</div>
           </div>
         </div>
         <div class="usos">
@@ -905,10 +904,10 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       <div class="term rv-s">
         <div class="term-top">
           <span class="dots"><i></i><i></i><i></i></span>
-          <span class="tt">GET /v1/veiculo/{placa}</span>
+          <span class="tt">GET /api/fipe/placa/{placa}</span>
           <span class="ms">200 OK</span>
         </div>
-<pre><span class="c">// exemplo ilustrativo do retorno</span>
+<pre><span class="c">// consulta consolidada por placa</span>
 {
   <span class="k">"placa"</span>: <span class="s">"ABC1D23"</span>,
   <span class="k">"marca"</span>: <span class="s">"Volkswagen"</span>,
