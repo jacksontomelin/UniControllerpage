@@ -240,6 +240,35 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .cite q{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--navy);line-height:1.5;letter-spacing:-.3px;quotes:'\201C' '\201D'}
 .cite cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:12px;font-weight:500}
 
+/* COMO FUNCIONA (produtos em detalhe) */
+.prod{background:#fff;border:1px solid var(--border);border-radius:22px;overflow:hidden;margin-bottom:22px}
+.prod:last-child{margin-bottom:0}
+.prod-head{display:flex;align-items:center;gap:16px;padding:28px 32px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.prod-head .ic{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--az),var(--az2));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prod-head .ic svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:1.9}
+.prod-head h3{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.5px}
+.prod-head p{font-size:13.5px;color:var(--muted);margin-top:3px}
+.prod-head .tg{margin-left:auto;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--az);background:var(--azl);padding:6px 12px;border-radius:99px;white-space:nowrap}
+.prod-body{display:grid;grid-template-columns:.95fr 1.05fr;gap:0}
+.steps{padding:30px 32px;border-right:1px solid var(--border)}
+.steps .lb{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--az2);margin-bottom:22px}
+.stp{display:flex;gap:15px;position:relative;padding-bottom:22px}
+.stp:last-child{padding-bottom:0}
+.stp::before{content:'';position:absolute;left:13px;top:30px;bottom:0;width:2px;background:var(--border)}
+.stp:last-child::before{display:none}
+.stp .n{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;flex-shrink:0;position:relative;z-index:1}
+.stp b{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:800;color:var(--navy);display:block;margin-bottom:4px;letter-spacing:-.2px}
+.stp p{font-size:13px;color:var(--muted);line-height:1.65}
+.prod-code{padding:30px 32px;background:#02081C}
+.prod-code .lb{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--cy);margin-bottom:18px}
+.prod-code pre{margin:0 0 16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.8;color:#C8D8EA;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.prod-code pre:last-of-type{margin-bottom:0}
+.prod-code .div{height:1px;background:rgba(255,255,255,.1);margin:16px 0}
+.prod-note{font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.6;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.usos{display:flex;flex-wrap:wrap;gap:8px;padding:20px 32px;background:var(--bg);border-top:1px solid var(--border)}
+.usos span{font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--border);padding:7px 13px;border-radius:99px}
+.usos span b{color:var(--navy);font-weight:700}
+
 /* AMOSTRA DA API */
 .api-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:56px;align-items:center;margin-top:52px}
 .api-pts .p{display:flex;gap:16px;margin-bottom:24px}
@@ -403,6 +432,8 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 @media(max-width:900px){
   .hero-in,.f-grid,.pains{grid-template-columns:1fr;gap:40px}
   .band-in,.hist-grid,.form-wrap,.api-grid{grid-template-columns:1fr;gap:34px}
+  .prod-body{grid-template-columns:1fr}
+  .steps{border-right:none;border-bottom:1px solid var(--border)}
   .band-face{max-width:300px;margin:0 auto}
   .pains{gap:20px}
   .f-top{grid-template-columns:1fr;gap:32px}
@@ -427,6 +458,12 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   .sol,.c-grid,.hist-items,.fields,.dep-grid,.oque-grid{grid-template-columns:1fr}
   .oque{padding:38px 16px}
   .term pre{font-size:11.5px;padding:16px}
+  .prod-head{padding:22px 20px;gap:13px}
+  .prod-head h3{font-size:18px}
+  .prod-head .tg{margin-left:0}
+  .steps,.prod-code{padding:24px 20px}
+  .prod-code pre{font-size:11px}
+  .usos{padding:16px 20px}
   .qa summary{font-size:14.5px;padding:17px 18px;gap:12px}
   .qa .a{padding:0 18px 19px;font-size:13.5px}
   .oque-grid{gap:24px}
@@ -469,7 +506,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   <div class="nav-links">
     <a href="#problema">O que resolvemos</a>
     <a href="#solucoes">Soluções</a>
-    <a href="#historico">Histórico</a>
+    <a href="#como-funciona">Como funciona</a>
     <a href="#corporativo">Corporativo</a>
     <a href="#duvidas">Dúvidas</a>
     <a href="#proposta">Proposta</a>
@@ -641,6 +678,102 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
           <li><span class="d"></span><span><b>Mapa de revendas</b>: prospecção e análise de concorrência</span></li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona" style="background:var(--bg)">
+  <div class="in-w">
+    <div class="center rv">
+      <div class="tag">Como funciona</div>
+      <h2>Os dois produtos que mais integram</h2>
+      <p class="lead">FipeConsulta e JudSC respondem as duas perguntas que travam qualquer negócio com veículo: quanto vale, e se tem processo atrás.</p>
+    </div>
+
+    <div style="margin-top:52px">
+
+      <div class="prod rv">
+        <div class="prod-head">
+          <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17V9l1.8-4h7.4l1.8 4v8"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/><path d="M6.5 12h11"/></svg></div>
+          <div><h3>FipeConsulta</h3><p>Quanto o veículo vale, pela placa ou pelo código</p></div>
+          <span class="tg">API REST</span>
+        </div>
+        <div class="prod-body">
+          <div class="steps">
+            <div class="lb">O caminho da consulta</div>
+            <div class="stp"><span class="n">1</span><div><b>Você envia a placa</b><p>Uma chamada com a placa do veículo. Se preferir, aceita também o código FIPE direto, quando você já o tem.</p></div></div>
+            <div class="stp"><span class="n">2</span><div><b>Identificamos o veículo</b><p>A placa é resolvida em marca, modelo, versão e ano. É o passo que costuma dar errado quando a busca é manual, porque uma versão trocada muda bastante o valor.</p></div></div>
+            <div class="stp"><span class="n">3</span><div><b>Cruzamos com a base de valores</b><p>Mantemos a tabela completa e atualizada em base própria. Por isso a resposta não depende da disponibilidade da fonte original no momento da consulta.</p></div></div>
+            <div class="stp"><span class="n">4</span><div><b>Retorno pronto para usar</b><p>Valor, referência do mês e os dados do veículo num JSON único. Sem tela para abrir, sem operador digitando.</p></div></div>
+          </div>
+          <div class="prod-code">
+            <div class="lb">Requisição</div>
+<pre><span style="color:#C792EA">GET</span> /v1/fipe/placa/<span style="color:#8FE3B4">ABC1D23</span>
+<span style="color:#7DD3F5">X-API-Key</span>: sua-chave</pre>
+            <div class="div"></div>
+            <div class="lb">Resposta</div>
+<pre>{
+  <span style="color:#7DD3F5">"marca"</span>: <span style="color:#8FE3B4">"Volkswagen"</span>,
+  <span style="color:#7DD3F5">"modelo"</span>: <span style="color:#8FE3B4">"T-Cross 1.0 TSI"</span>,
+  <span style="color:#7DD3F5">"ano"</span>: <span style="color:#F0B86E">2022</span>,
+  <span style="color:#7DD3F5">"codigo_fipe"</span>: <span style="color:#8FE3B4">"005340-1"</span>,
+  <span style="color:#7DD3F5">"valor"</span>: <span style="color:#F0B86E">112450.00</span>,
+  <span style="color:#7DD3F5">"referencia"</span>: <span style="color:#8FE3B4">"agosto/2026"</span>
+}</pre>
+            <div class="prod-note">Estrutura ilustrativa. Os campos exatos vão na documentação que acompanha o acesso.</div>
+          </div>
+        </div>
+        <div class="usos">
+          <span><b>Financeira:</b> avaliar a garantia dentro da esteira de crédito</span>
+          <span><b>Loja:</b> precificar entrada de troca na hora</span>
+          <span><b>Seguradora:</b> base para indenização</span>
+        </div>
+      </div>
+
+      <div class="prod rv">
+        <div class="prod-head">
+          <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8L3 14h6zM18 8l-3 6h6zM7 21h10M12 3l6 5M12 3L6 8"/></svg></div>
+          <div><h3>JudSC</h3><p>Se existe processo, e em que pé ele está</p></div>
+          <span class="tg">API REST</span>
+        </div>
+        <div class="prod-body">
+          <div class="steps">
+            <div class="lb">O caminho da consulta</div>
+            <div class="stp"><span class="n">1</span><div><b>Você informa a busca</b><p>Número do processo, quando já se sabe qual é, ou o documento da parte, para descobrir tudo que existe em nome dela.</p></div></div>
+            <div class="stp"><span class="n">2</span><div><b>Buscamos em vários tribunais de uma vez</b><p>As fontes são acionadas em paralelo, incluindo o eProc do TJSC e a base nacional. Você espera a mais lenta, não a soma de todas.</p></div></div>
+            <div class="stp"><span class="n">3</span><div><b>Normalizamos o retorno</b><p>Cada tribunal devolve num formato diferente. Entregamos tudo com os mesmos nomes de campo, para a sua integração não precisar tratar caso a caso.</p></div></div>
+            <div class="stp"><span class="n">4</span><div><b>Acompanhamento contínuo</b><p>Se quiser, o processo fica monitorado e você recebe aviso quando houver movimentação, em vez de consultar de novo por conta.</p></div></div>
+          </div>
+          <div class="prod-code">
+            <div class="lb">Requisição</div>
+<pre><span style="color:#C792EA">POST</span> /v1/processos/parte
+<span style="color:#7DD3F5">X-API-Key</span>: sua-chave
+
+{ <span style="color:#7DD3F5">"documento"</span>: <span style="color:#8FE3B4">"000.000.000-00"</span> }</pre>
+            <div class="div"></div>
+            <div class="lb">Resposta</div>
+<pre>{
+  <span style="color:#7DD3F5">"total"</span>: <span style="color:#F0B86E">2</span>,
+  <span style="color:#7DD3F5">"processos"</span>: [
+    {
+      <span style="color:#7DD3F5">"numero"</span>: <span style="color:#8FE3B4">"5001234-56.2024.8.24.0008"</span>,
+      <span style="color:#7DD3F5">"tribunal"</span>: <span style="color:#8FE3B4">"TJSC"</span>,
+      <span style="color:#7DD3F5">"classe"</span>: <span style="color:#8FE3B4">"Execução de Título"</span>,
+      <span style="color:#7DD3F5">"situacao"</span>: <span style="color:#8FE3B4">"em andamento"</span>,
+      <span style="color:#7DD3F5">"ultimo_andamento"</span>: <span style="color:#8FE3B4">"2026-08-14"</span>
+    }
+  ]
+}</pre>
+            <div class="prod-note">Estrutura ilustrativa. Os campos exatos vão na documentação que acompanha o acesso.</div>
+          </div>
+        </div>
+        <div class="usos">
+          <span><b>Banco:</b> risco da parte antes de aprovar o crédito</span>
+          <span><b>Escritório:</b> carteira inteira monitorada sem abrir portal</span>
+          <span><b>Loja:</b> conferir a situação de quem está vendendo o carro</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1037,6 +1170,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <div class="f-links">
           <a href="#problema">O que resolvemos</a>
           <a href="#solucoes">Soluções</a>
+          <a href="#como-funciona">Como funciona</a>
           <a href="#historico">Histórico veicular</a>
           <a href="#corporativo">Corporativo</a>
           <a href="#fundador">Quem constrói</a>
