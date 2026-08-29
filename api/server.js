@@ -16,7 +16,8 @@ const REMETENTE = process.env.SMTP_FROM || process.env.SMTP_USER || 'jk2706@gmai
 const RESPONDER_PARA = process.env.REPLY_TO || DESTINO;
 const SITE = process.env.SITE_URL || 'https://unicontroller.com.br';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
-const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET || '';
+const SEGREDO = process.env.DESAFIO_SECRET || require('crypto').randomBytes(32).toString('hex');
+const DIFICULDADE = Number(process.env.DESAFIO_BITS || 15);  // ~0,5s no desktop, ~2s no celular
 const ORIGENS = (process.env.CORS_ORIGINS ||
   'https://unicontroller.com.br,https://www.unicontroller.com.br')
   .split(',').map(s => s.trim()).filter(Boolean);
@@ -227,34 +228,62 @@ async function enviar(para, assunto, html, responder) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// CAPTCHA (Cloudflare Turnstile)
-// Sem TURNSTILE_SECRET configurado, a verificação é ignorada e o
-// formulário continua funcionando.
+// Verificação anti-robô, sem serviço externo
+//
+// O navegador recebe um desafio e precisa encontrar um número que,
+// junto com o sal, gere um hash começando com N bits zero. Custa
+// centenas de milissegundos para uma pessoa (que nem percebe) e
+// torna caro disparar milhares de envios automatizados.
+//
+// O desafio é assinado com HMAC, então o servidor não guarda estado:
+// basta conferir a assinatura, o prazo e o hash.
 // ─────────────────────────────────────────────────────────────
-async function captchaValido(token, ip) {
-  if (!TURNSTILE_SECRET) return true;
-  if (!token) return false;
-  try {
-    const corpo = new URLSearchParams({ secret: TURNSTILE_SECRET, response: token });
-    if (ip) corpo.append('remoteip', ip);
-    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: corpo,
-      signal: AbortSignal.timeout(8000)
-    });
-    const j = await r.json();
-    if (!j.success) console.warn('[captcha] recusado:', (j['error-codes'] || []).join(', '));
-    return Boolean(j.success);
-  } catch (e) {
-    // Falha de rede ou indisponibilidade do Cloudflare não é culpa do visitante.
-    // Bloquear aqui derrubaria o formulário inteiro numa queda deles, e perder
-    // lead real é pior que deixar passar spam eventual. O campo isca e o limite
-    // por IP continuam ativos nesse cenário.
-    console.error('[captcha] indisponível, liberando envio:', e.message);
-    return true;
-  }
+const crypto = require('crypto');
+const usados = new Map();   // id -> validade, evita reaproveitar o mesmo desafio
+
+function assina(dados) {
+  return crypto.createHmac('sha256', SEGREDO).update(dados).digest('hex').slice(0, 32);
 }
+
+function novoDesafio() {
+  const id = crypto.randomBytes(8).toString('hex');
+  const sal = crypto.randomBytes(12).toString('hex');
+  const criado = Date.now();
+  return { id, sal, bits: DIFICULDADE, criado, assinatura: assina(`${id}.${sal}.${criado}.${DIFICULDADE}`) };
+}
+
+function zerosIniciais(hex) {
+  let n = 0;
+  for (const c of hex) {
+    const v = parseInt(c, 16);
+    if (v === 0) { n += 4; continue; }
+    if (v < 2) n += 3; else if (v < 4) n += 2; else if (v < 8) n += 1;
+    break;
+  }
+  return n;
+}
+
+function desafioValido(d) {
+  if (!d || !d.id || !d.sal || d.nonce == null || !d.assinatura) return 'Verificação ausente.';
+  if (assina(`${d.id}.${d.sal}.${d.criado}.${d.bits}`) !== d.assinatura) return 'Verificação inválida.';
+
+  const idade = Date.now() - Number(d.criado);
+  if (idade > 20 * 60 * 1000) return 'Verificação expirada. Recarregue a página.';
+  if (idade < 2500) return 'Envio rápido demais. Tente novamente.';   // armadilha de tempo
+  if (usados.has(d.id)) return 'Verificação já utilizada.';
+  if (Number(d.bits) < DIFICULDADE) return 'Verificação insuficiente.';
+
+  const hash = crypto.createHash('sha256').update(`${d.sal}${d.nonce}`).digest('hex');
+  if (zerosIniciais(hash) < Number(d.bits)) return 'Verificação não confere.';
+
+  usados.set(d.id, Date.now() + 20 * 60 * 1000);
+  return null;
+}
+
+setInterval(() => {
+  const agora = Date.now();
+  for (const [id, ate] of usados) if (ate < agora) usados.delete(id);
+}, 5 * 60 * 1000).unref();
 
 // ─────────────────────────────────────────────────────────────
 // App
@@ -333,7 +362,7 @@ code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
     <tr><td>Status</td><td>operando</td></tr>
     <tr><td>Tickets registrados</td><td>${n}</td></tr>
     <tr><td>Envio de e-mail</td><td>${smtp ? 'configurado' : 'pendente'}</td></tr>
-    <tr><td>Verificação CAPTCHA</td><td>${TURNSTILE_SECRET ? 'ativa' : 'desativada'}</td></tr>
+    <tr><td>Verificação anti-robô</td><td>ativa</td></tr>
     <tr><td>Notificações para</td><td>${esc(DESTINO)}</td></tr>
   </table>
   <a class="b" href="${SITE}">Ir para o site</a>
@@ -343,6 +372,9 @@ code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
   </div>
 </div></body></html>`);
 });
+
+// Desafio para o formulário
+app.get('/api/desafio', (req, res) => res.json({ ok: true, ...novoDesafio() }));
 
 // Abertura de ticket
 app.post('/api/tickets', async (req, res) => {
@@ -365,9 +397,8 @@ app.post('/api/tickets', async (req, res) => {
     return res.status(400).json({ ok: false, erro: 'Preencha nome, empresa e um e-mail válido.' });
   }
 
-  if (!(await captchaValido(b.turnstile_token, ip))) {
-    return res.status(400).json({ ok: false, erro: 'Verificação de segurança não confirmada. Tente novamente.' });
-  }
+  const problema = desafioValido(b.desafio);
+  if (problema) return res.status(400).json({ ok: false, erro: problema });
 
   const agora = new Date().toISOString();
   const t = {
@@ -461,7 +492,7 @@ app.use((req, res) => {
   res.status(404).json({
     ok: false,
     erro: 'Rota não encontrada.',
-    rotas: ['GET /', 'GET /health', 'POST /api/tickets', 'GET /api/tickets/:codigo']
+    rotas: ['GET /', 'GET /health', 'GET /api/desafio', 'POST /api/tickets', 'GET /api/tickets/:codigo']
   });
 });
 
@@ -497,5 +528,5 @@ app.listen(PORT, () => {
   console.log(`[tickets] banco em ${DB_DIR}`);
   console.log(`[tickets] notificações para ${DESTINO}`);
   console.log(`[tickets] SMTP ${smtpAtivo() ? 'configurado (' + process.env.SMTP_USER + ')' : 'NÃO configurado'}`);
-  console.log(`[tickets] CAPTCHA ${TURNSTILE_SECRET ? 'ativo' : 'desativado'}`);
+  console.log(`[tickets] anti-robô ativo (${DIFICULDADE} bits)`);
 });

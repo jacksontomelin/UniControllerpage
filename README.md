@@ -145,24 +145,22 @@ endereço do domínio é ignorado.
 Limite do Gmail: cerca de 500 mensagens por dia, folgado para o volume
 de um formulário de site.
 
-### CAPTCHA (Cloudflare Turnstile)
+### Verificação anti-robô
 
-1. Em `dash.cloudflare.com` → **Turnstile** → **Add site**, cadastre
-   `unicontroller.com.br`. Widget mode: **Managed**
-2. Cole a **chave pública** no `index.html`, na linha
-   `window.UC_TURNSTILE = '';` (fica logo no início do `<head>`)
-3. Cole a **chave secreta** na variável `TURNSTILE_SECRET` da aplicação
-   da API no Coolify
-4. Redeploy nas duas aplicações
+Não usa serviço externo. O navegador recebe um desafio assinado e precisa
+encontrar um número que gere um hash SHA-256 com 15 bits zero à frente.
 
-Enquanto as chaves estiverem vazias, o formulário funciona normalmente
-sem o CAPTCHA. Nada quebra por não configurar.
+- Leva cerca de meio segundo no desktop e dois segundos no celular
+- Começa a resolver quando a pessoa toca no primeiro campo, então já está
+  pronto quando ela termina de preencher
+- Ninguém clica em nada nem lê texto distorcido
+- O desafio é assinado por HMAC: o servidor não guarda estado
+- Cada desafio só vale uma vez, expira em 20 minutos e recusa envios com
+  menos de 2,5 segundos
 
-**Comportamento em falha:** se o Cloudflare estiver fora do ar, o envio é
-liberado e a ocorrência fica registrada no log. Bloquear nesse cenário
-derrubaria o formulário inteiro por um problema de terceiro, e perder
-lead real é pior que passar spam eventual. O campo isca e o limite por
-IP seguem ativos.
+Ajuste a dificuldade em `DESAFIO_BITS` (cada bit a mais dobra o custo).
+Defina também `DESAFIO_SECRET` com um valor longo e fixo, senão a chave
+é sorteada a cada reinício e os desafios em aberto param de valer.
 
 ### Proteções já incluídas
 
