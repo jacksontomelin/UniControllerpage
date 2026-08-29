@@ -22,15 +22,15 @@ img,svg{display:block}
 :focus-visible{outline:2px solid var(--az2);outline-offset:3px}
 
 /* ── REVEAL ── */
-.rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
-.rv.in{opacity:1;transform:none}
-.rv-l{opacity:0;transform:translateX(-30px);transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1)}
-.rv-l.in{opacity:1;transform:none}
-.rv-s{opacity:0;transform:scale(.965);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
-.rv-s.in{opacity:1;transform:none}
+/* Reveal é opt-in: só esconde se o JS confirmar suporte (classe .js-rv).
+   Sem JS, sem IntersectionObserver ou com erro, tudo aparece normalmente. */
+.js-rv .rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.js-rv .rv-l{opacity:0;transform:translateX(-26px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.js-rv .rv-s{opacity:0;transform:scale(.97);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.js-rv .rv.in,.js-rv .rv-l.in,.js-rv .rv-s.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
-  .rv,.rv-l,.rv-s{opacity:1!important;transform:none!important}
+  .rv,.rv-l,.rv-s,.js-rv .rv,.js-rv .rv-l,.js-rv .rv-s{opacity:1!important;transform:none!important}
 }
 
 /* ── PROGRESS ── */
@@ -185,9 +185,9 @@ section{padding:96px 40px}
 .ceo-card{background:linear-gradient(135deg,var(--navy),#0D2060);border-radius:20px;padding:32px;box-shadow:0 24px 60px rgba(5,11,51,.24);position:relative;overflow:hidden}
 .ceo-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 0%,rgba(0,132,199,.3),transparent 66%)}
 .ceo-card>*{position:relative;z-index:1}
-.ceo-av{width:96px;height:96px;border-radius:24px;position:relative;overflow:visible}
-.ceo-av img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;border-radius:24px;border:2px solid rgba(125,211,245,.4);display:block}
-.ceo-av::after{content:'';position:absolute;inset:-7px;border-radius:31px;border:1px solid rgba(125,211,245,.32);animation:halo 3.5s ease-in-out infinite;pointer-events:none}
+.ceo-av{width:132px;height:132px;border-radius:28px;position:relative;overflow:visible}
+.ceo-av img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;border-radius:28px;border:2px solid rgba(125,211,245,.45);display:block;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.ceo-av::after{content:'';position:absolute;inset:-8px;border-radius:36px;border:1px solid rgba(125,211,245,.32);animation:halo 3.5s ease-in-out infinite;pointer-events:none}
 
 /* ── EVENTOS ── */
 .ev-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center;margin-top:52px}
@@ -207,6 +207,24 @@ section{padding:96px 40px}
 .ev-item h4{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--navy);margin-bottom:5px;letter-spacing:-.3px}
 .ev-item p{font-size:13.5px;color:var(--muted);line-height:1.7}
 
+/* ── MENTOR ── */
+.mt-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center;margin-top:52px}
+.mt-photo{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 30px 70px rgba(5,11,51,.32);aspect-ratio:4/5}
+.mt-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block;transform:scale(1.02);transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.mt-photo:hover img{transform:scale(1.07)}
+.mt-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,11,51,.68),rgba(5,11,51,.03) 44%,transparent 68%)}
+.mt-cap{position:absolute;left:22px;right:22px;bottom:20px;z-index:2}
+.mt-cap .t{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.mt-cap .s{font-size:11.5px;color:rgba(255,255,255,.62);margin-top:4px}
+.mt-badge{position:absolute;top:18px;left:18px;z-index:2;background:rgba(5,11,51,.6);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.16);padding:6px 13px;border-radius:99px}
+.mt-badge span{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--cy)}
+.mt-item{display:flex;gap:16px;margin-bottom:26px}
+.mt-item:last-child{margin-bottom:0}
+.mt-item .ic{width:40px;height:40px;border-radius:12px;background:var(--azl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mt-item .ic svg{width:18px;height:18px;stroke:var(--az);fill:none;stroke-width:1.9}
+.mt-item h4{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--navy);margin-bottom:5px;letter-spacing:-.3px}
+.mt-item p{font-size:13.5px;color:var(--muted);line-height:1.7}
+
 /* ── DEPOIMENTO ── */
 .dep{background:linear-gradient(135deg,var(--navy) 0%,#0A1850 55%,#0D2060 100%);position:relative;overflow:hidden}
 .dep::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 65% at 20% 10%,rgba(0,132,199,.24),transparent 66%)}
@@ -218,7 +236,7 @@ section{padding:96px 40px}
 .dep-text p:last-child{margin-bottom:0}
 .dep-text em{font-style:normal;color:var(--cy)}
 .dep-by{display:flex;align-items:center;gap:16px;margin-top:38px;padding-top:28px;border-top:1px solid rgba(255,255,255,.12)}
-.dep-by img{width:62px;height:62px;border-radius:17px;object-fit:cover;object-position:50% 22%;border:2px solid rgba(125,211,245,.35);flex-shrink:0}
+.dep-by img{width:78px;height:78px;border-radius:20px;object-fit:cover;object-position:50% 30%;border:2px solid rgba(125,211,245,.35);flex-shrink:0}
 .dep-by .nm{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px}
 .dep-by .rl{font-size:12px;color:rgba(255,255,255,.5);margin-top:3px}
 @keyframes halo{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.75;transform:scale(1.05)}}
@@ -297,11 +315,14 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 }
 @media(max-width:900px){
   .hero-inner{grid-template-columns:1fr;gap:44px}
-  .ceo-grid,.perf-grid,.feat-grid,.ev-grid{grid-template-columns:1fr;gap:32px}
+  .ceo-grid,.perf-grid,.feat-grid,.ev-grid,.mt-grid{grid-template-columns:1fr;gap:32px}
   .ev-photo{max-height:520px;margin:0 auto;width:100%}
   .foot-grid{grid-template-columns:1fr;gap:32px}
 }
 @media(max-width:768px){
+  /* blur pesado custa caro no Safari iOS — reduz sem perder o efeito */
+  .aur{filter:blur(52px);opacity:.75}
+  .mock,.ceo-card,.ent-card,.ev-badge{backdrop-filter:blur(8px)}
   nav{padding:calc(13px + env(safe-area-inset-top)) 16px 13px;gap:10px;max-width:100vw}
   .nav-links a:not(.btn-nav){display:none}
   .btn-nav{padding:8px 15px!important;font-size:12px!important;flex-shrink:0;white-space:nowrap}
@@ -319,6 +340,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   .pain-grid,.ent-grid{grid-template-columns:1fr}
   .ent-num{grid-template-columns:1fr;gap:26px}
   .ceo-quote{font-size:18px;padding-left:18px}
+  .mt-photo{max-height:480px}
   .dep-text{font-size:19px}
   .dep-mark{font-size:64px}
   .ev-photo{max-height:440px}
@@ -331,6 +353,17 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   .mq-track{gap:34px}
 }
 </style>
+<script>
+/* Ativa as animações de entrada só quando há suporte real.
+   Fica no <head> para evitar qualquer flash antes do primeiro paint. */
+(function(){
+  try{
+    var ok = 'IntersectionObserver' in window
+          && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(ok) document.documentElement.className += ' js-rv';
+  }catch(e){}
+})();
+</script>
 </head>
 <body>
 
@@ -343,6 +376,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     <a href="#empresa">A empresa</a>
     <a href="#corporativo">Corporativo</a>
     <a href="#lideranca">Liderança</a>
+    <a href="#mentoria">Mentoria</a>
     <a href="#mercado">Mercado</a>
     <a href="#portfolio">Soluções</a>
     <a href="#contato" class="btn-nav">Fale conosco</a>
@@ -569,13 +603,14 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     </div>
     <div class="ceo-grid">
       <div class="ceo-card rv-l">
-        <div class="ceo-av"><img src="img/jackson-tomelin.jpg" alt="Jackson Tomelin, CEO e fundador da UniController" loading="lazy" width="96" height="96"></div>
+        <div class="ceo-av"><img src="img/jackson-tomelin.jpg" alt="Jackson Tomelin, CEO e fundador da UniController" width="132" height="132"></div>
         <h3>Jackson Tomelin</h3>
         <div class="ceo-role">CEO &amp; fundador · UniController</div>
         <div class="ceo-badges">
           <div><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>Despachante documentalista credenciado, à frente da marca União CERT</div>
           <div><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Mentor de despachantes, lojistas e profissionais do jurídico</div>
           <div><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Idealizador de todo o portfólio de soluções da UniController</div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Investidor anjo de sistemas e startups do setor</div>
           <div><svg viewBox="0 0 24 24"><path d="M12 21c-4.4-3-8-6.6-8-11a8 8 0 0 1 16 0c0 4.4-3.6 8-8 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Blumenau / Timbó — Santa Catarina</div>
         </div>
       </div>
@@ -593,6 +628,44 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   </div>
 </section>
 
+<section id="mentoria">
+  <div class="sec-inner">
+    <div class="rv">
+      <div class="sec-tag">Mentoria</div>
+      <h2 class="sec-title">Quem ensina é quem<br>já perdeu noite resolvendo</h2>
+      <p class="sec-sub">A mentoria da UniController não vem de teoria de curso. Vem de madrugada em cima de código, de conversa com quem opera e de erro cometido em produção — o tipo de conhecimento que não se transfere em slide.</p>
+    </div>
+    <div class="mt-grid">
+      <div class="mt-photo rv-s">
+        <div class="mt-badge"><span>13º Congresso FENAUTO</span></div>
+        <img src="img/jackson-mentor.jpg" alt="Jackson Tomelin, mentor e CEO da UniController, no Congresso FENAUTO" width="760" height="950">
+        <div class="mt-cap">
+          <div class="t">Jackson Tomelin</div>
+          <div class="s">Mentor, CEO e investidor anjo</div>
+        </div>
+      </div>
+      <div>
+        <div class="mt-item rv">
+          <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.2V17h6v-1.3c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3zM10 21h4"/></svg></div>
+          <div><h4>Muitas noites em programação e troca de informação</h4><p>Boa parte do que a UniController entrega hoje foi construída de madrugada, testando, quebrando e refazendo. É essa bagagem que sustenta a mentoria — não um material pronto.</p></div>
+        </div>
+        <div class="mt-item rv">
+          <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div><h4>Investidor anjo de sistemas e startups</h4><p>Apoia projetos de tecnologia em estágio inicial, principalmente os ligados ao setor automotivo e jurídico, com capital e com o que costuma faltar mais: leitura de mercado e experiência de operação.</p></div>
+        </div>
+        <div class="mt-item rv">
+          <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+          <div><h4>Mentoria para despachantes, lojistas e escritórios</h4><p>Orientação prática para organizar e modernizar a própria rotina, com a autoridade de quem executa esses processos todos os dias — não de quem só analisou de fora.</p></div>
+        </div>
+        <div class="mt-item rv">
+          <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5M17 3l3 4-3 4M7 13l-3 4 3 4"/></svg></div>
+          <div><h4>Conhecimento que volta para o produto</h4><p>Cada mentoria mostra uma trava nova de operação real. Muita coisa do portfólio nasceu exatamente aí, de um problema trazido por quem foi orientado.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="mercado" style="background:#fff">
   <div class="sec-inner">
     <div class="rv">
@@ -603,7 +676,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     <div class="ev-grid">
       <div class="ev-photo rv-s">
         <div class="ev-badge"><span class="dot"></span><span>14º Congresso Internacional FENAUTO</span></div>
-        <img src="img/jackson-fenauto.jpg" alt="Jackson Tomelin no 14º Congresso Internacional FENAUTO" loading="lazy">
+        <img src="img/jackson-fenauto.jpg" alt="Jackson Tomelin no 14º Congresso Internacional FENAUTO" width="896" height="1195">
         <div class="ev-cap">
           <div class="t">Jackson Tomelin no Congresso FENAUTO</div>
           <div class="s">Um dos principais encontros do setor de revenda automotiva no país</div>
@@ -636,14 +709,14 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     <div class="dep-mark rv">"</div>
     <div class="dep-text rv">
       <p>Eu comecei do outro lado do balcão, atendendo cliente e correndo atrás de documento. Aprendi ali que o problema quase nunca é falta de sistema — é <em>processo que depende de gente repetindo tarefa</em>.</p>
-      <p>Cada solução da UniController nasceu de uma dessas travas. Não desenho software para impressionar em apresentação: desenho para que a loja feche o negócio no mesmo dia, para que a financeira não pare a análise esperando uma consulta, e para que o escritório não gaste a manhã abrindo portal.</p>
-      <p>É por isso que toda conversa aqui começa pela mesma pergunta: <em>o que está travando a sua operação hoje?</em> O sistema vem depois.</p>
+      <p>Já perdi <em>muitas noites</em> em cima de código e em troca de informação com quem vive esse mercado. Cada solução da UniController nasceu de uma dessas madrugadas. Não desenho software para impressionar em apresentação: desenho para que a loja feche o negócio no mesmo dia, para que a financeira não pare a análise esperando uma consulta, e para que o escritório não gaste a manhã abrindo portal.</p>
+      <p>Hoje também invisto em outros sistemas e startups que estão começando essa mesma caminhada. E toda conversa aqui, com cliente ou com fundador, começa pela mesma pergunta: <em>o que está travando a sua operação hoje?</em> O sistema vem depois.</p>
     </div>
     <div class="dep-by rv">
-      <img src="img/jackson-tomelin.jpg" alt="Jackson Tomelin" loading="lazy" width="62" height="62">
+      <img src="img/jackson-tomelin.jpg" alt="Jackson Tomelin" width="78" height="78">
       <div>
         <div class="nm">Jackson Tomelin</div>
-        <div class="rl">CEO e fundador da UniController · Despachante documentalista credenciado</div>
+        <div class="rl">CEO e fundador da UniController · Mentor · Investidor anjo</div>
       </div>
     </div>
   </div>
@@ -748,6 +821,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
           <a href="#empresa">A UniController</a>
           <a href="#corporativo">Corporativo</a>
           <a href="#lideranca">Liderança</a>
+          <a href="#mentoria">Mentoria</a>
           <a href="#mercado">Presença no mercado</a>
           <a href="#portfolio">Portfólio</a>
         </div>
@@ -817,27 +891,47 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   };
   setTimeout(function(){ document.querySelectorAll('.hero-stats .cnt').forEach(count); }, 900);
 
+  var revealed = 0;
+  var reveal = function(el){
+    if(el.classList.contains('in')) return;
+    el.classList.add('in'); revealed++;
+    el.querySelectorAll('.cnt').forEach(count);
+    el.querySelectorAll('.track i').forEach(function(b,i){
+      setTimeout(function(){ b.style.width = b.dataset.w + '%'; }, 200 + i*150);
+    });
+  };
+
+  /* threshold baixo: em telas pequenas um card pode ser mais alto que a
+     viewport inteira e nunca atingir 15% de visibilidade */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(!en.isIntersecting) return;
-      var el = en.target;
-      el.classList.add('in');
-      el.querySelectorAll('.cnt').forEach(count);
-      el.querySelectorAll('.track i').forEach(function(b,i){
-        setTimeout(function(){ b.style.width = b.dataset.w + '%'; }, 200 + i*150);
-      });
-      io.unobserve(el);
+      reveal(en.target);
+      io.unobserve(en.target);
     });
-  }, {threshold:.15, rootMargin:'0px 0px -70px 0px'});
+  }, {threshold:.01, rootMargin:'0px 0px -40px 0px'});
 
   var groups = {};
   all.forEach(function(el){
     var key = el.parentNode.className + '|' + el.parentNode.id;
     groups[key] = (groups[key]||0);
-    el.style.transitionDelay = (groups[key] * 85) + 'ms';
+    el.style.transitionDelay = Math.min(groups[key] * 80, 320) + 'ms';
     groups[key]++;
     io.observe(el);
   });
+
+  /* já visível no carregamento (topo da página em celular) */
+  requestAnimationFrame(function(){
+    all.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0) reveal(el);
+    });
+  });
+
+  /* rede de segurança: se por qualquer motivo o observer não disparar,
+     nada fica invisível */
+  setTimeout(function(){ all.forEach(reveal); }, 3500);
+
 })();
 </script>
 
