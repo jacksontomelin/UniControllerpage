@@ -16,29 +16,33 @@ img/jackson-fenauto.jpg    foto do Congresso FENAUTO (seção Presença no merca
 CNAME                      domínio customizado do GitHub Pages
 ```
 
-## Publicação (GitHub Pages)
+## Deploy (Coolify — VPS KingHost)
 
-1. Settings → Pages → Source: `main` / raiz `/`
-2. Custom domain: `unicontroller.com.br`
-3. Marcar **Enforce HTTPS** depois que o certificado for emitido
-
-### DNS necessário no provedor do domínio
-
-Para o domínio raiz, criar 4 registros **A** apontando para o GitHub Pages:
+Build pack: **Dockerfile**. A imagem serve o conteúdo estático com nginx
+(gzip, cache de imagens, headers de segurança).
 
 ```
-185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153
+Dockerfile      imagem nginx:alpine
+nginx.conf      compressão, cache e headers
+robots.txt      indexação
+sitemap.xml     sitemap
 ```
 
-E um **CNAME** para `www` apontando para `jacksontomelin.github.io`.
+### Passos no Coolify
 
-## Seções
+1. **+ New** → **Public Repository**
+2. Repositório: `https://github.com/jacksontomelin/UniControllerpage`
+3. Branch `main` · Build Pack **Dockerfile** · Port **80**
+4. Domains: `https://unicontroller.com.br`
+5. **Deploy**
 
-Hero · Dores do setor · A empresa · Corporativo · Liderança · Presença no mercado · Depoimento · Performance · Portfólio · Contato
+### DNS (registrar do domínio)
 
-## Contato
+| Tipo | Nome | Valor |
+|---|---|---|
+| A | `@` | IP do VPS KingHost |
+| A | `www` | IP do VPS KingHost |
 
-suporte@unicontroller.com.br · (47) 99935-7131
+O certificado SSL é emitido automaticamente pelo Coolify (Let's Encrypt)
+depois que o DNS propagar e as portas 80/443 estiverem abertas.
+
