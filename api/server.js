@@ -252,6 +252,51 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, tickets: n, smtp: Boolean(process.env.SMTP_HOST) });
 });
 
+// Raiz: página de status legível, para não devolver "Cannot GET /"
+app.get('/', (req, res) => {
+  const n = db.prepare('SELECT COUNT(*) AS n FROM tickets').get().n;
+  const smtp = Boolean(process.env.SMTP_HOST);
+  res.type('html').send(`<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>API UniController</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#F7F9FD;color:#0D1B3E;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.c{background:#fff;border:1px solid #DDE6F5;border-radius:20px;padding:38px;max-width:520px;width:100%}
+.lg{font-size:19px;font-weight:800;letter-spacing:-.5px;color:#050B33;margin-bottom:6px}
+.lg span{color:#0084C7}
+.sb{font-size:13px;color:#5A6A8A;margin-bottom:24px}
+.st{display:inline-flex;align-items:center;gap:8px;background:#E7F7EF;border:1px solid #A7E3C8;color:#0B7A4E;padding:7px 14px;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:26px}
+.st i{width:7px;height:7px;border-radius:50%;background:#10B981;display:block}
+table{width:100%;border-collapse:collapse;margin-bottom:26px}
+td{padding:10px 0;border-bottom:1px solid #EDF2F8;font-size:13.5px}
+td:first-child{color:#5A6A8A;width:150px}
+td:last-child{font-weight:600;text-align:right}
+.warn{background:#FFF6E6;border-left:3px solid #E0A93B;border-radius:10px;padding:14px 16px;font-size:13px;color:#7A5A16;line-height:1.65;margin-bottom:22px}
+a.b{display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-size:13.5px;font-weight:700}
+.ft{margin-top:22px;padding-top:18px;border-top:1px solid #EDF2F8;font-size:12px;color:#5A6A8A;line-height:1.7}
+code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
+</style></head><body>
+<div class="c">
+  <div class="lg"><span>UNI</span>CONTROLLER<span>.</span></div>
+  <div class="sb">Serviço de tickets</div>
+  <div class="st"><i></i>NO AR</div>
+  ${smtp ? '' : '<div class="warn"><b>SMTP não configurado.</b> Os tickets são gravados, mas nenhum e-mail sai. Preencha as variáveis SMTP_* nas configurações da aplicação.</div>'}
+  <table>
+    <tr><td>Status</td><td>operando</td></tr>
+    <tr><td>Tickets registrados</td><td>${n}</td></tr>
+    <tr><td>Envio de e-mail</td><td>${smtp ? 'configurado' : 'pendente'}</td></tr>
+    <tr><td>Notificações para</td><td>${esc(DESTINO)}</td></tr>
+  </table>
+  <a class="b" href="${SITE}">Ir para o site</a>
+  <div class="ft">
+    Esta é a API do site, não uma página para visitantes.<br>
+    Consulta de andamento: <code>${SITE}/ticket.html</code>
+  </div>
+</div></body></html>`);
+});
+
 // Abertura de ticket
 app.post('/api/tickets', async (req, res) => {
   const b = req.body || {};
@@ -358,6 +403,21 @@ app.patch('/api/admin/tickets/:codigo', auth, async (req, res) => {
   const msg = emailStatus(t, nota);
   const ok = await enviar(t.email, msg.assunto, msg.html);
   res.json({ ok: true, codigo: t.codigo, status: novo, email_enviado: ok });
+});
+
+// Rota inexistente: responde em JSON, não com o HTML padrão do Express
+app.use((req, res) => {
+  res.status(404).json({
+    ok: false,
+    erro: 'Rota não encontrada.',
+    rotas: ['GET /', 'GET /health', 'POST /api/tickets', 'GET /api/tickets/:codigo']
+  });
+});
+
+// Erro inesperado: nunca vaza detalhe interno para o cliente
+app.use((err, req, res, next) => {
+  console.error('[erro]', err && err.message);
+  res.status(500).json({ ok: false, erro: 'Erro interno. Tente novamente em instantes.' });
 });
 
 app.listen(PORT, () => {
