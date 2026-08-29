@@ -1204,7 +1204,7 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
           <label for="f-msg">O que está travando hoje?</label>
           <textarea id="f-msg" name="mensagem" placeholder="Ex.: nossa esteira de crédito para de rodar esperando avaliação do veículo e consulta processual do cliente."></textarea>
         </div>
-        <div class="cap-box">
+        <div class="cap-box" id="cap-box">
           <div class="lb">Digite o código da imagem</div>
           <div class="cap-row">
             <div class="cap-img" id="cap-img"><span class="carregando">carregando…</span></div>
@@ -1404,29 +1404,57 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
   /* ── Formulário corporativo ──
      Envia para a API de tickets. Se ela estiver fora do ar, o botão de
      WhatsApp continua disponível como caminho alternativo. */
+  /* rede de segurança: nada pode ficar invisível */
+  setTimeout(function(){ all.forEach(reveal); }, 3500);
+})();
+
+/* ── Formulário: bloco próprio, para não depender do código de animação ── */
+(function(){
   var API_URL = window.UC_API || 'https://api.unicontroller.com.br';
   var fc = document.getElementById('fcorp');
   if(fc){
+    var aviso = document.getElementById('fmsg');
+    var btn = fc.querySelector('.btn-send');
+    var msg = function(txt, cor){ aviso.innerHTML = txt; aviso.style.color = cor || ''; };
+
     /* ── CAPTCHA visual, gerado pela própria API ── */
-    var captcha = null;
+    var captcha = null, apiFora = false;
+    var capBox = document.getElementById('cap-box');
     var capImg = document.getElementById('cap-img');
     var capBtn = document.getElementById('cap-novo');
     var capIn  = document.getElementById('f-captcha');
 
+    /* Se a API não responder, o formulário não fica travado:
+       o envio passa a ir pelo WhatsApp com os dados preenchidos. */
+    function modoWhats(){
+      apiFora = true; captcha = null;
+      if(capBox) capBox.style.display = 'none';
+      if(btn) btn.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+        '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Enviar pelo WhatsApp';
+      msg('O envio automático está indisponível no momento. Seus dados seguem pelo WhatsApp, com tudo preenchido.');
+    }
+
     function carregaCaptcha(){
-      if(!capImg) return;
+      if(!capImg || apiFora) return;
       capImg.innerHTML = '<span class="carregando">carregando…</span>';
       if(capIn) capIn.value = '';
-      fetch(API_URL + '/api/captcha', {cache:'no-store'})
-        .then(function(r){ return r.json(); })
+
+      // tempo limite: sem isso a requisição fica pendurada para sempre
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      var estourou = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 9000);
+
+      fetch(API_URL + '/api/captcha', ctrl ? {cache:'no-store', signal: ctrl.signal} : {cache:'no-store'})
+        .then(function(r){ if(!r.ok) throw new Error('http ' + r.status); return r.json(); })
         .then(function(c){
-          if(!c || !c.ok) throw new Error('sem captcha');
+          clearTimeout(estourou);
+          if(!c || !c.ok || !c.svg) throw new Error('resposta inesperada');
           captcha = { id: c.id, criado: c.criado, assinatura: c.assinatura };
           capImg.innerHTML = c.svg;
         })
         .catch(function(){
-          captcha = null;
-          capImg.innerHTML = '<span class="carregando">indisponível<br>use o WhatsApp</span>';
+          clearTimeout(estourou);
+          modoWhats();
         });
     }
 
@@ -1508,8 +1536,6 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
     fc.addEventListener('focusin', preparaDesafio, { once: true });
 
     var val = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
-    var aviso = document.getElementById('fmsg');
-    var btn = fc.querySelector('.btn-send');
 
     var dados = function(){
       return {
@@ -1533,8 +1559,6 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
         '', 'O que esta travando hoje:', d.mensagem || 'nao informado'].join('\n');
     };
 
-    var msg = function(txt, cor){ aviso.innerHTML = txt; aviso.style.color = cor || ''; };
-
     var valida = function(){
       var d = dados();
       if(!d.nome || !d.empresa || !d.email){
@@ -1551,15 +1575,16 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
       return true;
     };
 
-    var whats = function(){
+    function whats(){
       var url = 'https://wa.me/5547999357131?text=' + encodeURIComponent(texto() + ' [formulario]');
       var w = window.open(url, '_blank');
       if(!w) window.location.href = url;
-    };
+    }
 
     fc.addEventListener('submit', function(ev){
       ev.preventDefault();
       if(!valida()) return;
+      if(apiFora){ whats(); return; }
       btn.disabled = true;
       msg('Enviando…');
 
@@ -1631,7 +1656,6 @@ window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
   }
 
   /* rede de segurança: nada pode ficar invisível */
-  setTimeout(function(){ all.forEach(reveal); }, 3500);
 })();
 </script>
 
