@@ -16,6 +16,7 @@ const REMETENTE = process.env.SMTP_FROM || process.env.SMTP_USER || 'jk2706@gmai
 const RESPONDER_PARA = process.env.REPLY_TO || DESTINO;
 const SITE = process.env.SITE_URL || 'https://unicontroller.com.br';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
+const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET || '';
 const ORIGENS = (process.env.CORS_ORIGINS ||
   'https://unicontroller.com.br,https://www.unicontroller.com.br')
   .split(',').map(s => s.trim()).filter(Boolean);
@@ -226,6 +227,36 @@ async function enviar(para, assunto, html, responder) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// CAPTCHA (Cloudflare Turnstile)
+// Sem TURNSTILE_SECRET configurado, a verificação é ignorada e o
+// formulário continua funcionando.
+// ─────────────────────────────────────────────────────────────
+async function captchaValido(token, ip) {
+  if (!TURNSTILE_SECRET) return true;
+  if (!token) return false;
+  try {
+    const corpo = new URLSearchParams({ secret: TURNSTILE_SECRET, response: token });
+    if (ip) corpo.append('remoteip', ip);
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: corpo,
+      signal: AbortSignal.timeout(8000)
+    });
+    const j = await r.json();
+    if (!j.success) console.warn('[captcha] recusado:', (j['error-codes'] || []).join(', '));
+    return Boolean(j.success);
+  } catch (e) {
+    // Falha de rede ou indisponibilidade do Cloudflare não é culpa do visitante.
+    // Bloquear aqui derrubaria o formulário inteiro numa queda deles, e perder
+    // lead real é pior que deixar passar spam eventual. O campo isca e o limite
+    // por IP continuam ativos nesse cenário.
+    console.error('[captcha] indisponível, liberando envio:', e.message);
+    return true;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
 // App
 // ─────────────────────────────────────────────────────────────
 const app = express();
@@ -302,6 +333,7 @@ code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
     <tr><td>Status</td><td>operando</td></tr>
     <tr><td>Tickets registrados</td><td>${n}</td></tr>
     <tr><td>Envio de e-mail</td><td>${smtp ? 'configurado' : 'pendente'}</td></tr>
+    <tr><td>Verificação CAPTCHA</td><td>${TURNSTILE_SECRET ? 'ativa' : 'desativada'}</td></tr>
     <tr><td>Notificações para</td><td>${esc(DESTINO)}</td></tr>
   </table>
   <a class="b" href="${SITE}">Ir para o site</a>
@@ -331,6 +363,10 @@ app.post('/api/tickets', async (req, res) => {
 
   if (!nome || !empresa || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return res.status(400).json({ ok: false, erro: 'Preencha nome, empresa e um e-mail válido.' });
+  }
+
+  if (!(await captchaValido(b.turnstile_token, ip))) {
+    return res.status(400).json({ ok: false, erro: 'Verificação de segurança não confirmada. Tente novamente.' });
   }
 
   const agora = new Date().toISOString();
@@ -461,4 +497,5 @@ app.listen(PORT, () => {
   console.log(`[tickets] banco em ${DB_DIR}`);
   console.log(`[tickets] notificações para ${DESTINO}`);
   console.log(`[tickets] SMTP ${smtpAtivo() ? 'configurado (' + process.env.SMTP_USER + ')' : 'NÃO configurado'}`);
+  console.log(`[tickets] CAPTCHA ${TURNSTILE_SECRET ? 'ativo' : 'desativado'}`);
 });

@@ -145,6 +145,25 @@ endereço do domínio é ignorado.
 Limite do Gmail: cerca de 500 mensagens por dia, folgado para o volume
 de um formulário de site.
 
+### CAPTCHA (Cloudflare Turnstile)
+
+1. Em `dash.cloudflare.com` → **Turnstile** → **Add site**, cadastre
+   `unicontroller.com.br`. Widget mode: **Managed**
+2. Cole a **chave pública** no `index.html`, na linha
+   `window.UC_TURNSTILE = '';` (fica logo no início do `<head>`)
+3. Cole a **chave secreta** na variável `TURNSTILE_SECRET` da aplicação
+   da API no Coolify
+4. Redeploy nas duas aplicações
+
+Enquanto as chaves estiverem vazias, o formulário funciona normalmente
+sem o CAPTCHA. Nada quebra por não configurar.
+
+**Comportamento em falha:** se o Cloudflare estiver fora do ar, o envio é
+liberado e a ocorrência fica registrada no log. Bloquear nesse cenário
+derrubaria o formulário inteiro por um problema de terceiro, e perder
+lead real é pior que passar spam eventual. O campo isca e o limite por
+IP seguem ativos.
+
 ### Proteções já incluídas
 
 - Campo isca invisível contra robôs

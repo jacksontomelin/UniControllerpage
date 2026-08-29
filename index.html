@@ -201,6 +201,10 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .fld textarea{resize:vertical;min-height:96px;line-height:1.6}
 .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--az2);background:#fff}
 .fld select{appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235A6A8A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;background-size:17px;padding-right:38px}
+.cf-box{grid-column:1/-1;margin-bottom:2px}
+.cf-box .lb{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:9px}
+.cf-box.hide{display:none}
+#cf-widget{min-height:65px}
 .form-send{grid-column:1/-1;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
 .btn-send{padding:15px 30px;background:linear-gradient(135deg,var(--az),var(--az2));border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#fff;cursor:pointer;box-shadow:0 8px 26px rgba(0,97,175,.38);transition:transform .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:9px}
 .btn-send:hover{transform:translateY(-3px);box-shadow:0 14px 38px rgba(0,97,175,.5)}
@@ -509,6 +513,16 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   .mq-track{gap:34px}
 }
 </style>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CONFIGURAÇÃO
+   Cole aqui a chave pública do Cloudflare Turnstile.
+   Enquanto estiver vazia, o formulário funciona sem o CAPTCHA.
+   Gere em: dash.cloudflare.com → Turnstile → Add site
+   ═══════════════════════════════════════════════════════════ */
+window.UC_TURNSTILE = '';
+window.UC_API = window.UC_API || 'https://api.unicontroller.com.br';
+</script>
 <script>
 /* Ativa as animações de entrada só quando há suporte real. Sem isso,
    o conteúdo aparece normalmente em vez de ficar invisível. */
@@ -1185,6 +1199,10 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
           <label for="f-msg">O que está travando hoje?</label>
           <textarea id="f-msg" name="mensagem" placeholder="Ex.: nossa esteira de crédito para de rodar esperando avaliação do veículo e consulta processual do cliente."></textarea>
         </div>
+        <div class="cf-box hide" id="cf-box">
+          <div class="lb">Verificação de segurança</div>
+          <div id="cf-widget"></div>
+        </div>
         <div class="form-send">
           <button class="btn-send" type="submit">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
@@ -1376,6 +1394,43 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   var API_URL = window.UC_API || 'https://api.unicontroller.com.br';
   var fc = document.getElementById('fcorp');
   if(fc){
+    /* ── CAPTCHA do Cloudflare (Turnstile) ──
+       Só carrega se a chave estiver preenchida. Sem chave, o formulário
+       segue funcionando normalmente. */
+    var cfId = null, cfPronto = false;
+    (function carregaCaptcha(){
+      var chave = window.UC_TURNSTILE;
+      if(!chave) return;
+      var caixa = document.getElementById('cf-box');
+      window.ucTurnstileReady = function(){
+        try{
+          caixa.classList.remove('hide');
+          cfId = window.turnstile.render('#cf-widget', {
+            sitekey: chave,
+            language: 'pt-br',
+            theme: 'light',
+            callback: function(){ cfPronto = true; },
+            'expired-callback': function(){ cfPronto = false; },
+            'error-callback': function(){ cfPronto = false; }
+          });
+        }catch(e){ caixa.classList.add('hide'); }
+      };
+      var sc = document.createElement('script');
+      sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=ucTurnstileReady&render=explicit';
+      sc.async = true; sc.defer = true;
+      sc.onerror = function(){ caixa.classList.add('hide'); };
+      document.head.appendChild(sc);
+    })();
+
+    var cfToken = function(){
+      if(cfId === null || !window.turnstile) return '';
+      try{ return window.turnstile.getResponse(cfId) || ''; }catch(e){ return ''; }
+    };
+    var cfReset = function(){
+      if(cfId !== null && window.turnstile){ try{ window.turnstile.reset(cfId); }catch(e){} }
+      cfPronto = false;
+    };
+
     var val = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
     var aviso = document.getElementById('fmsg');
     var btn = fc.querySelector('.btn-send');
@@ -1384,7 +1439,8 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       return {
         nome: val('f-nome'), empresa: val('f-empresa'), email: val('f-email'),
         telefone: val('f-tel'), segmento: val('f-seg'), volume: val('f-vol'),
-        mensagem: val('f-msg'), website: val('f-website'), origem: 'formulario'
+        mensagem: val('f-msg'), website: val('f-website'), origem: 'formulario',
+        turnstile_token: cfToken()
       };
     };
 
@@ -1406,6 +1462,9 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       }
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)){
         msg('Confira o e-mail digitado.', '#E85D5D'); return false;
+      }
+      if(cfId !== null && !cfToken()){
+        msg('Conclua a verificação de segurança acima.', '#E85D5D'); return false;
       }
       return true;
     };
@@ -1444,10 +1503,12 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
             '</div>';
           return;
         }
+        cfReset();
         msg((res.j && res.j.erro) ? res.j.erro : 'Não foi possível enviar agora.', '#E85D5D');
       })
       .catch(function(){
         btn.disabled = false;
+        cfReset();
         msg('O envio automático falhou. Abrindo o WhatsApp com os seus dados…', '#E85D5D');
         setTimeout(whats, 900);
       });
