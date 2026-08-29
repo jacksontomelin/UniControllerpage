@@ -435,6 +435,27 @@ app.use((err, req, res, next) => {
   res.status(500).json({ ok: false, erro: 'Erro interno. Tente novamente em instantes.' });
 });
 
+// Backup diário do banco, mantendo os 14 mais recentes.
+// Ticket é lead comercial: se o volume sumir, não há como recuperar.
+function backup() {
+  try {
+    const dir = path.join(DB_DIR, 'backups');
+    fs.mkdirSync(dir, { recursive: true });
+    const nome = `tickets-${new Date().toISOString().slice(0, 10)}.db`;
+    db.backup(path.join(dir, nome))
+      .then(() => {
+        const antigos = fs.readdirSync(dir).filter(f => f.endsWith('.db')).sort();
+        while (antigos.length > 14) fs.unlinkSync(path.join(dir, antigos.shift()));
+        console.log('[backup]', nome);
+      })
+      .catch(e => console.error('[backup] falhou:', e.message));
+  } catch (e) {
+    console.error('[backup] falhou:', e.message);
+  }
+}
+backup();
+setInterval(backup, 24 * 60 * 60 * 1000).unref();
+
 app.listen(PORT, () => {
   console.log(`[tickets] ouvindo na porta ${PORT}`);
   console.log(`[tickets] banco em ${DB_DIR}`);
