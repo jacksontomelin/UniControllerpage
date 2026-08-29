@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>UNICONTROLLER — Documentação veicular e consulta de dados por API</title>
+<title>UNICONTROLLER | Documentação veicular e consulta de dados por API</title>
 <meta name="description" content="Mais de 2.800 clientes, 80 mil procurações processadas e 20 mil documentos de transferência emitidos. A UniController entrega documentação veicular e consulta de dados por API para lojas, revendas, financeiras e bancos.">
-<meta property="og:title" content="UniController — Documentação veicular e consulta de dados por API">
-<meta property="og:description" content="2.800+ clientes · 80 mil+ procurações processadas · 20 mil+ documentos de transferência. Documentação e dados que entram direto no seu sistema.">
+<meta property="og:title" content="UniController | Documentação veicular e consulta de dados por API">
+<meta property="og:description" content="2.800+ clientes, 80 mil+ procurações processadas e 20 mil+ documentos de transferência. Documentação e dados que entram direto no seu sistema.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://unicontroller.com.br/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,6 +104,26 @@ h1 .hl{background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background
 .cg{background:rgba(16,185,129,.15);color:#6EE7B7}
 .cb{background:rgba(0,132,199,.2);color:var(--cy)}
 
+/* FAIXA DE EVENTO (full-bleed) */
+.band{position:relative;min-height:600px;display:flex;align-items:flex-end;overflow:hidden;background:var(--navy)}
+.band-bg{position:absolute;inset:0;background-image:url('img/fenauto-faixa.jpg');background-size:cover;background-position:36% 42%;transform:scale(1.04);will-change:transform}
+.band::before{content:'';position:absolute;inset:0;z-index:1;background:
+  linear-gradient(to bottom,var(--navy) 0%,rgba(5,11,51,.35) 22%,rgba(5,11,51,.55) 62%,rgba(5,11,51,.96) 100%),
+  linear-gradient(to right,rgba(5,11,51,.85) 0%,rgba(5,11,51,.15) 55%,transparent 100%)}
+.band-in{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;padding:0 40px 68px}
+.band-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,132,199,.22);border:1px solid rgba(125,211,245,.32);padding:6px 14px;border-radius:99px;margin-bottom:20px}
+.band-tag span{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--cy)}
+.band h2{color:#fff;max-width:640px;font-size:36px;margin-bottom:14px}
+.band p{color:rgba(255,255,255,.66);font-size:15.5px;line-height:1.75;max-width:560px}
+.band-foot{margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);display:flex;gap:38px;flex-wrap:wrap;max-width:640px}
+.band-foot div{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.6}
+.band-foot b{display:block;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:3px}
+
+/* CITAÇÃO */
+.cite{margin-top:30px;padding:24px 26px;background:var(--azl);border-radius:16px;border-left:3px solid var(--az2)}
+.cite q{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--navy);line-height:1.5;letter-spacing:-.3px;quotes:'\201C' '\201D'}
+.cite cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:12px;font-weight:500}
+
 /* MARQUEE */
 .mq{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;overflow:hidden;position:relative}
 .mq::before,.mq::after{content:'';position:absolute;top:0;bottom:0;width:110px;z-index:2;pointer-events:none}
@@ -190,10 +210,6 @@ h2{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--navy
 .f-item .ic svg{width:18px;height:18px;stroke:var(--az);fill:none;stroke-width:1.9}
 .f-item h4{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--navy);margin-bottom:5px;letter-spacing:-.3px}
 .f-item p{font-size:13.5px;color:var(--muted);line-height:1.7}
-.f-ev{margin-top:28px;padding-top:26px;border-top:1px solid var(--border);display:flex;gap:18px;align-items:center}
-.f-ev img{width:132px;height:88px;object-fit:cover;object-position:50% 34%;border-radius:12px;flex-shrink:0;border:1px solid var(--border)}
-.f-ev div{font-size:13px;color:var(--muted);line-height:1.65}
-.f-ev b{font-family:'Syne',sans-serif;font-weight:800;color:var(--navy);font-size:13.5px;display:block;margin-bottom:3px}
 
 /* CTA */
 .cta{max-width:1200px;margin:0 auto;background:linear-gradient(135deg,var(--navy),#0D2060);border-radius:28px;padding:70px 44px;text-align:center;position:relative;overflow:hidden}
@@ -245,9 +261,15 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   .lead{font-size:14.5px}
   .sol,.c-grid{grid-template-columns:1fr}
   .f-photo{max-height:470px}
+  .band{min-height:520px}
+  .band-bg{background-image:url('img/fenauto-mobile.jpg');background-position:44% 32%}
+  .band::before{background:linear-gradient(to bottom,rgba(5,11,51,.72) 0%,rgba(5,11,51,.45) 30%,rgba(5,11,51,.9) 72%,var(--navy) 100%)}
+  .band-in{padding:0 16px 44px}
+  .band h2{font-size:25px}
+  .band p{font-size:14.5px}
+  .band-foot{gap:20px;flex-direction:column}
+  .cite q{font-size:15.5px}
   .quote{font-size:19px;padding-left:18px}
-  .f-ev{flex-direction:column;align-items:flex-start;gap:14px}
-  .f-ev img{width:100%;height:170px}
   .cta{padding:46px 22px;border-radius:22px}
   .cta h2{font-size:26px}
   .btn-w{width:100%;justify-content:center}
@@ -282,7 +304,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 </nav>
 
 <div class="hero" id="topo">
-  <div class="aur aur1" data-par="0.06"></div><div class="aur aur2" data-par="-0.04"></div>
+  <div class="aur aur1"></div><div class="aur aur2"></div>
   <div class="hero-in">
     <div>
       <div class="eyebrow hero-a d1"><span class="dot"></span><span>Documentação e dados veiculares</span></div>
@@ -352,7 +374,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     <div class="center rv">
       <div class="tag">O problema</div>
       <h2>Quatro travas que todo mundo do setor conhece</h2>
-      <p class="lead">Elas não aparecem em reunião de diretoria, mas custam hora de equipe, negócio perdido e cliente irritado — todos os dias.</p>
+      <p class="lead">Elas não aparecem em reunião de diretoria, mas custam hora de equipe, negócio perdido e cliente irritado todos os dias.</p>
     </div>
     <div class="pains">
       <div class="pain rv">
@@ -396,10 +418,10 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <h3>Documentação veicular</h3>
         <p>Do pedido ao documento assinado, com validade jurídica e sem cartório.</p>
         <ul class="s-list">
-          <li><span class="d"></span><span><b>União CERT</b> — procuração e ATPV‑e assinados pelo celular</span></li>
-          <li><span class="d"></span><span><b>UNIPROCURAÇÕES</b> — emissão e gestão com fluxo de aprovação</span></li>
-          <li><span class="d"></span><span><b>UniSIGNER</b> — coleta de assinaturas sem vai‑e‑vem manual</span></li>
-          <li><span class="d"></span><span><b>SistemaDespachante Pro</b> — gestão completa da operação</span></li>
+          <li><span class="d"></span><span><b>União CERT</b>: procuração e ATPV‑e assinados pelo celular</span></li>
+          <li><span class="d"></span><span><b>UNIPROCURAÇÕES</b>: emissão e gestão com fluxo de aprovação</span></li>
+          <li><span class="d"></span><span><b>UniSIGNER</b>: coleta de assinaturas sem vai‑e‑vem manual</span></li>
+          <li><span class="d"></span><span><b>SistemaDespachante Pro</b>: gestão completa da operação</span></li>
         </ul>
       </div>
       <div class="s-card rv">
@@ -407,10 +429,10 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <h3>Consulta de dados por API</h3>
         <p>Informação veicular e processual entrando direto no seu sistema.</p>
         <ul class="s-list">
-          <li><span class="d"></span><span><b>FipeConsulta</b> — valor do veículo pela placa ou pelo código</span></li>
-          <li><span class="d"></span><span><b>JudSC</b> — consulta processual multi‑tribunal, com eProc do TJSC</span></li>
-          <li><span class="d"></span><span><b>Painel do veículo</b> — situação, débitos e restrições numa tela</span></li>
-          <li><span class="d"></span><span><b>Base de valores</b> — referência de preço sempre atualizada</span></li>
+          <li><span class="d"></span><span><b>FipeConsulta</b>: valor do veículo pela placa ou pelo código</span></li>
+          <li><span class="d"></span><span><b>JudSC</b>: consulta processual multi‑tribunal, com eProc do TJSC</span></li>
+          <li><span class="d"></span><span><b>Painel do veículo</b>: situação, débitos e restrições numa tela</span></li>
+          <li><span class="d"></span><span><b>Base de valores</b>: referência de preço sempre atualizada</span></li>
         </ul>
       </div>
       <div class="s-card rv">
@@ -418,10 +440,10 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <h3>Atendimento e mercado</h3>
         <p>Conversa com cliente em escala e leitura de preço da concorrência.</p>
         <ul class="s-list">
-          <li><span class="d"></span><span><b>UniZap</b> — central de WhatsApp com transcrição de áudio</span></li>
-          <li><span class="d"></span><span><b>ZapController</b> — atendimento multi‑agente com histórico</span></li>
-          <li><span class="d"></span><span><b>Radar de estoque</b> — preço e giro das revendas da região</span></li>
-          <li><span class="d"></span><span><b>Mapa de revendas</b> — prospecção e análise de concorrência</span></li>
+          <li><span class="d"></span><span><b>UniZap</b>: central de WhatsApp com transcrição de áudio</span></li>
+          <li><span class="d"></span><span><b>ZapController</b>: atendimento multi‑agente com histórico</span></li>
+          <li><span class="d"></span><span><b>Radar de estoque</b>: preço e giro das revendas da região</span></li>
+          <li><span class="d"></span><span><b>Mapa de revendas</b>: prospecção e análise de concorrência</span></li>
         </ul>
       </div>
     </div>
@@ -470,12 +492,31 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   </div>
 </section>
 
+<section class="band" style="padding:0">
+  <div class="band-bg" data-par="0.05"></div>
+  <div class="band-in">
+    <div class="rv">
+      <div class="band-tag"><span class="dot"></span><span>14º Congresso Internacional FENAUTO</span></div>
+      <h2>Onde o setor decide seus rumos,<br>a gente está presente</h2>
+      <p>Congressos e feiras do mercado automotivo são onde a mudança aparece primeiro, em conversa de corredor, muito antes de virar norma. Estar lá é parte do trabalho, e boa parte do que a UniController entrega hoje nasceu de um problema ouvido nesses encontros.</p>
+      <div class="band-foot">
+        <div><b>Presença constante</b>Congressos, feiras e encontros do setor, ano após ano</div>
+        <div><b>Da conversa ao produto</b>Problema ouvido no corredor vira sistema em semanas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="fundador" class="fdr">
   <div class="in-w">
     <div class="rv">
       <div class="tag">Quem constrói</div>
       <h2>Jackson Tomelin</h2>
-      <p class="lead">Despachante documentalista credenciado, CEO e fundador da UniController, mentor e investidor anjo. As duas profissões — documentação e desenvolvimento — na mesma pessoa.</p>
+      <p class="lead">Despachante documentalista credenciado, CEO e fundador da UniController, mentor e investidor anjo. Duas profissões na mesma pessoa: documentação e desenvolvimento.</p>
+      <div class="cite">
+        <q>Mudança é inevitável. Crescimento é opcional.</q>
+        <cite>John C. Maxwell, escritor</cite>
+      </div>
     </div>
     <div class="f-grid">
       <div class="f-photo rv-s">
@@ -487,7 +528,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
       </div>
       <div>
         <div class="quote rv">
-          Já perdi <em>muitas noites</em> em cima de código e em troca de informação com quem vive esse mercado. Não desenho software para impressionar em apresentação — desenho para que a loja feche o negócio no mesmo dia e a financeira não pare a análise esperando uma consulta.
+          Já perdi <em>muitas noites</em> em cima de código e em troca de informação com quem vive esse mercado. Não desenho software para impressionar em apresentação. Desenho para que a loja feche o negócio no mesmo dia e para que a financeira não pare a análise esperando uma consulta.
           <span>Jackson Tomelin, CEO da UniController</span>
         </div>
         <div class="f-item rv">
@@ -502,10 +543,6 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
           <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5M17 3l3 4-3 4M7 13l-3 4 3 4"/></svg></div>
           <div><h4>Responsabilidade direta pela entrega</h4><p>Acompanha pessoalmente a operação de cada sistema em produção. Não há camada entre o cliente e quem decide.</p></div>
         </div>
-        <div class="f-ev rv">
-          <img src="img/evento-fenauto.jpg" alt="Jackson Tomelin no 14º Congresso Internacional FENAUTO" width="132" height="88">
-          <div><b>Presente onde o setor se reúne</b>Participação constante em congressos e feiras do mercado automotivo, como o Congresso Internacional FENAUTO. É ali que a mudança aparece antes de virar norma.</div>
-        </div>
       </div>
     </div>
   </div>
@@ -514,7 +551,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 <section id="contato" style="padding-top:0">
   <div class="cta rv-s">
     <h2>Qual processo está travando<br>a sua operação hoje?</h2>
-    <p>Comece pelo problema, não pelo sistema. Se envolve documentação de veículo, avaliação de bem, consulta processual ou atendimento em escala, provavelmente já existe uma solução pronta — ou pronta para ser adaptada.</p>
+    <p>Comece pelo problema, não pelo sistema. Se envolve documentação de veículo, avaliação de bem, consulta processual ou atendimento em escala, provavelmente já existe uma solução pronta, ou pronta para ser adaptada.</p>
     <div class="cta-b">
       <a class="btn-w" href="https://wa.me/5547999357131" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -545,8 +582,8 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
         <div class="f-h">Contato</div>
         <p>
           suporte@unicontroller.com.br<br>
-          <a href="https://wa.me/5547999357131">(47) 99935-7131 — WhatsApp</a><br>
-          Segunda a sexta, 8h–18h
+          <a href="https://wa.me/5547999357131">(47) 99935-7131 no WhatsApp</a><br>
+          Segunda a sexta, das 8h às 18h
         </p>
       </div>
     </div>
@@ -555,7 +592,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
     </div>
     <div class="f-copy">
       © <span id="ano">2026</span> UNICONTROLLER. Todos os direitos reservados.
-      <br><span style="font-size:11px;opacity:.5">Blumenau / Timbó — Santa Catarina, Brasil.</span>
+      <br><span style="font-size:11px;opacity:.5">Blumenau e Timbó, Santa Catarina, Brasil.</span>
     </div>
   </div>
 </footer>
@@ -599,13 +636,22 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 
   setTimeout(function(){ document.querySelectorAll('.hero-stats .cnt').forEach(count); }, 800);
 
-  var aur = document.querySelectorAll('[data-par]');
-  if(aur.length){
+  var par = document.querySelectorAll('[data-par]');
+  if(par.length){
+    var tick = false;
+    var move = function(){
+      par.forEach(function(a){
+        var r = a.parentNode.getBoundingClientRect();
+        if(r.bottom < 0 || r.top > window.innerHeight) return;
+        var off = (window.innerHeight - r.top) * parseFloat(a.dataset.par);
+        a.style.transform = 'translateY(' + off.toFixed(1) + 'px) scale(1.06)';
+      });
+      tick = false;
+    };
     window.addEventListener('scroll', function(){
-      var y = window.scrollY;
-      if(y > window.innerHeight) return;
-      aur.forEach(function(a){ a.style.transform = 'translateY(' + (y * parseFloat(a.dataset.par)) + 'px)'; });
+      if(!tick){ tick = true; requestAnimationFrame(move); }
     }, {passive:true});
+    move();
   }
 
   var reveal = function(el){
