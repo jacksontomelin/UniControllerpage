@@ -7,7 +7,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY index.html /usr/share/nginx/html/index.html
 COPY img/ /usr/share/nginx/html/img/
 COPY robots.txt sitemap.xml favicon.ico /usr/share/nginx/html/
-COPY privacidade.html /usr/share/nginx/html/privacidade.html
+COPY privacidade.html ticket.html /usr/share/nginx/html/
 
 EXPOSE 80
 

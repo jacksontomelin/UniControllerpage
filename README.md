@@ -74,3 +74,56 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
 
 - `/` — landing principal
 - `/privacidade.html` — política de privacidade (LGPD)
+
+## Serviço de tickets (pasta `api/`)
+
+Backend próprio que recebe o formulário, abre um ticket, avisa o Jackson por
+e-mail e envia a confirmação para o cliente com o número do atendimento.
+
+```
+api/server.js    Express + SQLite + Nodemailer
+api/Dockerfile   imagem Node 22 alpine
+api/.env.example modelo das variáveis
+```
+
+### Deploy no Coolify (segunda aplicação)
+
+1. **+ New** → **Public Repository** → mesmo repositório
+2. **Base Directory:** `/api`
+3. Build Pack **Dockerfile** · Port **3000**
+4. **Storages:** adicione um volume persistente em `/data` (o banco fica ali)
+5. **Domains:** `https://api.unicontroller.com.br`
+6. Preencha as variáveis conforme `api/.env.example`
+7. Deploy
+
+No DNS, crie um registro **A** para `api` apontando para o IP do VPS.
+
+### Endpoints
+
+| Método | Rota | Uso |
+|---|---|---|
+| `POST` | `/api/tickets` | Abre o ticket (usado pelo formulário) |
+| `GET` | `/api/tickets/:codigo` | Andamento público, sem dados sensíveis |
+| `GET` | `/api/admin/tickets` | Lista os últimos 200 (exige token) |
+| `PATCH` | `/api/admin/tickets/:codigo` | Muda o status e avisa o cliente (exige token) |
+| `GET` | `/health` | Diagnóstico |
+
+### Mudar o status de um ticket
+
+```bash
+curl -X PATCH https://api.unicontroller.com.br/api/admin/tickets/UC-2026-0001 \
+  -H "Authorization: Bearer SEU_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"status":"analise","nota":"Analisando o volume para montar a proposta."}'
+```
+
+Status disponíveis: `recebido`, `analise`, `respondido`, `concluido`.
+Cada mudança dispara um e-mail para o cliente.
+
+### Proteções já incluídas
+
+- Campo isca invisível contra robôs
+- Limite de 5 envios por IP a cada 10 minutos
+- CORS restrito aos domínios da UniController
+- Área interna protegida por token
+- E-mail do cliente parcialmente oculto na consulta pública
