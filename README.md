@@ -120,6 +120,31 @@ curl -X PATCH https://api.unicontroller.com.br/api/admin/tickets/UC-2026-0001 \
 Status disponíveis: `recebido`, `analise`, `respondido`, `concluido`.
 Cada mudança dispara um e-mail para o cliente.
 
+### Configurar o envio pelo Gmail
+
+1. Ative a **verificação em duas etapas** na conta `jk2706@gmail.com`
+2. Gere uma **senha de app** em `myaccount.google.com/apppasswords`
+3. Nas variáveis da aplicação no Coolify, informe:
+
+```
+SMTP_SERVICE=gmail
+SMTP_USER=jk2706@gmail.com
+SMTP_PASS=a-senha-de-app-de-16-caracteres
+SMTP_FROM=UniController <jk2706@gmail.com>
+```
+
+A senha comum do Gmail não funciona: o Google bloqueia login SMTP sem
+senha de app.
+
+Para o cliente ver `suporte@unicontroller.com.br` como remetente em vez
+do Gmail, cadastre esse endereço em **Gmail → Configurações → Contas →
+Enviar e-mail como**, confirme a verificação, e só então troque o
+`SMTP_FROM`. Sem esse cadastro o Google reescreve o remetente e o
+endereço do domínio é ignorado.
+
+Limite do Gmail: cerca de 500 mensagens por dia, folgado para o volume
+de um formulário de site.
+
 ### Proteções já incluídas
 
 - Campo isca invisível contra robôs

@@ -12,7 +12,8 @@ const fs = require('fs');
 const PORT = process.env.PORT || 3000;
 const DB_DIR = process.env.DB_DIR || '/data';
 const DESTINO = process.env.DESTINO_EMAIL || 'jk2706@gmail.com';
-const REMETENTE = process.env.SMTP_FROM || 'UniController <suporte@unicontroller.com.br>';
+const REMETENTE = process.env.SMTP_FROM || process.env.SMTP_USER || 'jk2706@gmail.com';
+const RESPONDER_PARA = process.env.REPLY_TO || DESTINO;
 const SITE = process.env.SITE_URL || 'https://unicontroller.com.br';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
 const ORIGENS = (process.env.CORS_ORIGINS ||
@@ -69,12 +70,20 @@ function proximoCodigo() {
 // ─────────────────────────────────────────────────────────────
 // E-mail
 // ─────────────────────────────────────────────────────────────
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT || 587),
-  secure: String(process.env.SMTP_SECURE || 'false') === 'true',
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-});
+// Gmail: basta SMTP_SERVICE=gmail com usuário e senha de app.
+// Qualquer outro provedor: informe SMTP_HOST/SMTP_PORT.
+const transporter = nodemailer.createTransport(
+  process.env.SMTP_SERVICE === 'gmail'
+    ? { service: 'gmail', auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } }
+    : {
+        host: process.env.SMTP_HOST,
+        port: Number(process.env.SMTP_PORT || 587),
+        secure: String(process.env.SMTP_SECURE || 'false') === 'true',
+        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+      }
+);
+
+const smtpAtivo = () => Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
 
 const esc = s => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -195,13 +204,19 @@ function emailStatus(t, nota) {
   return { assunto: `${t.codigo} · ${st.rotulo}`, html: layout('Atualização do seu atendimento', corpo) };
 }
 
-async function enviar(para, assunto, html) {
-  if (!process.env.SMTP_HOST) {
+async function enviar(para, assunto, html, responder) {
+  if (!smtpAtivo()) {
     console.warn('[email] SMTP não configurado, ignorando envio para', para);
     return false;
   }
   try {
-    await transporter.sendMail({ from: REMETENTE, to: para, subject: assunto, html });
+    await transporter.sendMail({
+      from: REMETENTE,
+      to: para,
+      replyTo: responder || RESPONDER_PARA,
+      subject: assunto,
+      html
+    });
     console.log('[email] enviado para', para, '|', assunto);
     return true;
   } catch (err) {
@@ -249,13 +264,13 @@ setInterval(() => {
 
 app.get('/health', (req, res) => {
   const n = db.prepare('SELECT COUNT(*) AS n FROM tickets').get().n;
-  res.json({ ok: true, tickets: n, smtp: Boolean(process.env.SMTP_HOST) });
+  res.json({ ok: true, tickets: n, smtp: smtpAtivo() });
 });
 
 // Raiz: página de status legível, para não devolver "Cannot GET /"
 app.get('/', (req, res) => {
   const n = db.prepare('SELECT COUNT(*) AS n FROM tickets').get().n;
-  const smtp = Boolean(process.env.SMTP_HOST);
+  const smtp = smtpAtivo();
   res.type('html').send(`<!DOCTYPE html><html lang="pt-BR"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
@@ -344,7 +359,7 @@ app.post('/api/tickets', async (req, res) => {
 
   const interno = emailInterno(t);
   const cliente = emailCliente(t);
-  enviar(DESTINO, interno.assunto, interno.html);
+  enviar(DESTINO, interno.assunto, interno.html, t.email);  // responder cai no cliente
   enviar(t.email, cliente.assunto, cliente.html);
 });
 
@@ -424,5 +439,5 @@ app.listen(PORT, () => {
   console.log(`[tickets] ouvindo na porta ${PORT}`);
   console.log(`[tickets] banco em ${DB_DIR}`);
   console.log(`[tickets] notificações para ${DESTINO}`);
-  console.log(`[tickets] SMTP ${process.env.SMTP_HOST ? 'configurado' : 'NÃO configurado'}`);
+  console.log(`[tickets] SMTP ${smtpAtivo() ? 'configurado (' + process.env.SMTP_USER + ')' : 'NÃO configurado'}`);
 });
