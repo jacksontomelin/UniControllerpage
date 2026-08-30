@@ -73,9 +73,8 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
 ## Páginas
 
 - `/` — landing principal
-- `/home-v2.html` — versão alternativa em layout corporativo (menu com submenus,
-  segmentos, módulos, números e FAQ). Marcada como `noindex`: é para comparação.
-  Para adotá-la, basta renomear para `index.html`
+- `/home-v1.html` — versão anterior (página única, tipografia Syne/DM Sans).
+  Guardada como `noindex` para consulta e possível retorno
 - `/privacidade.html` — política de privacidade (LGPD)
 
 ## Serviço de tickets (pasta `api/`)
