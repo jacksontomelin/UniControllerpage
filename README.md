@@ -76,6 +76,10 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
 - `/home-v1.html` — versão anterior (página única, tipografia Syne/DM Sans).
   Guardada como `noindex` para consulta e possível retorno
 - `/privacidade.html` — política de privacidade (LGPD)
+- `/404.html` — página de erro, servida pelo nginx
+
+Todas seguem o mesmo padrão visual: Montserrat nos títulos, Inter no texto,
+fundo `#F3F3F3` e a paleta navy/azure da marca.
 
 ## Serviço de tickets (pasta `api/`)
 

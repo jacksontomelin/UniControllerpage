@@ -92,20 +92,21 @@ const esc = s => String(s == null ? '' : s)
   .replace(/"/g, '&quot;');
 
 function layout(titulo, corpo) {
-  return `<!DOCTYPE html><html lang="pt-BR"><body style="margin:0;padding:0;background:#F7F9FD;font-family:Helvetica,Arial,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F9FD;padding:32px 16px">
+  return `<!DOCTYPE html><html lang="pt-BR"><body style="margin:0;padding:0;background:#F3F3F3;font-family:Helvetica,Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F3F3F3;padding:32px 16px">
 <tr><td align="center">
-<table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #DDE6F5">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #E2E5E9">
   <tr><td style="background:#050B33;padding:26px 30px">
     <div style="font-size:19px;font-weight:800;letter-spacing:-.5px;color:#fff">
       <span style="color:#7DD3F5">UNI</span>CONTROLLER<span style="color:#7DD3F5">.</span>
     </div>
+    <div style="font-size:11.5px;color:#7DD3F5;margin-top:4px">Unindo tudo. Controlando tudo.</div>
   </td></tr>
   <tr><td style="padding:32px 30px">
     <h1 style="margin:0 0 18px;font-size:21px;color:#050B33;letter-spacing:-.4px">${esc(titulo)}</h1>
     ${corpo}
   </td></tr>
-  <tr><td style="background:#F7F9FD;padding:20px 30px;border-top:1px solid #DDE6F5;font-size:12px;color:#5A6A8A;line-height:1.7">
+  <tr><td style="background:#F3F3F3;padding:20px 30px;border-top:1px solid #E2E5E9;font-size:12px;color:#5C6B7F;line-height:1.7">
     UniController &middot; Blumenau e Timbó, Santa Catarina<br>
     <a href="mailto:suporte@unicontroller.com.br" style="color:#0084C7">suporte@unicontroller.com.br</a> &middot; (47) 99935-7131
   </td></tr>
@@ -116,15 +117,15 @@ function layout(titulo, corpo) {
 function linha(rot, val) {
   if (!val) return '';
   return `<tr>
-    <td style="padding:9px 0;border-bottom:1px solid #EDF2F8;font-size:13px;color:#5A6A8A;width:170px;vertical-align:top">${esc(rot)}</td>
-    <td style="padding:9px 0;border-bottom:1px solid #EDF2F8;font-size:14px;color:#0D1B3E;font-weight:600">${esc(val)}</td>
+    <td style="padding:9px 0;border-bottom:1px solid #EEF1F4;font-size:13px;color:#5C6B7F;width:170px;vertical-align:top">${esc(rot)}</td>
+    <td style="padding:9px 0;border-bottom:1px solid #EEF1F4;font-size:14px;color:#1A2332;font-weight:600">${esc(val)}</td>
   </tr>`;
 }
 
 function emailInterno(t) {
   const corpo = `
-  <p style="margin:0 0 20px;font-size:14px;color:#5A6A8A;line-height:1.7">
-    Nova solicitação pelo site. Ticket <b style="color:#0D1B3E">${esc(t.codigo)}</b>.
+  <p style="margin:0 0 20px;font-size:14px;color:#5C6B7F;line-height:1.7">
+    Nova solicitação pelo site. Ticket <b style="color:#1A2332">${esc(t.codigo)}</b>.
   </p>
   <table width="100%" cellpadding="0" cellspacing="0">
     ${linha('Nome', t.nome)}
@@ -137,15 +138,15 @@ function emailInterno(t) {
   </table>
   ${t.mensagem ? `<div style="margin-top:22px;background:#E8F4FD;border-left:3px solid #0084C7;border-radius:10px;padding:16px 18px">
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0084C7;margin-bottom:8px">O que está travando</div>
-    <div style="font-size:14px;color:#0D1B3E;line-height:1.7;white-space:pre-wrap">${esc(t.mensagem)}</div>
+    <div style="font-size:14px;color:#1A2332;line-height:1.7;white-space:pre-wrap">${esc(t.mensagem)}</div>
   </div>` : ''}
   <div style="margin-top:26px">
     <a href="mailto:${esc(t.email)}?subject=${encodeURIComponent('Re: ' + t.codigo + ' | UniController')}"
-       style="display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:13px 24px;border-radius:10px;font-size:14px;font-weight:700">
+       style="display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:13px 24px;border-radius:8px;font-size:14px;font-weight:700">
       Responder ${esc(t.nome.split(' ')[0])}
     </a>
     ${t.telefone ? `<a href="https://wa.me/55${esc(String(t.telefone).replace(/\D/g, ''))}"
-       style="display:inline-block;margin-left:8px;background:#25D366;color:#fff;text-decoration:none;padding:13px 24px;border-radius:10px;font-size:14px;font-weight:700">
+       style="display:inline-block;margin-left:8px;background:#25D366;color:#fff;text-decoration:none;padding:13px 24px;border-radius:8px;font-size:14px;font-weight:700">
       WhatsApp</a>` : ''}
   </div>`;
   return { assunto: `[${t.codigo}] ${t.empresa} · ${t.segmento || 'contato'}`, html: layout('Nova solicitação de proposta', corpo) };
@@ -154,32 +155,32 @@ function emailInterno(t) {
 function emailCliente(t) {
   const st = STATUS[t.status] || STATUS.recebido;
   const corpo = `
-  <p style="margin:0 0 18px;font-size:15px;color:#0D1B3E;line-height:1.75">
+  <p style="margin:0 0 18px;font-size:15px;color:#1A2332;line-height:1.75">
     Olá, ${esc(t.nome.split(' ')[0])}. Recebemos a sua solicitação e abrimos um atendimento.
   </p>
-  <div style="background:#050B33;border-radius:14px;padding:22px 24px;margin-bottom:22px">
+  <div style="background:#050B33;border-radius:10px;padding:22px 24px;margin-bottom:22px">
     <div style="font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#7DD3F5;margin-bottom:8px">Número do ticket</div>
     <div style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px">${esc(t.codigo)}</div>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:rgba(255,255,255,.7)">
       Status atual: <b style="color:#fff">${esc(st.rotulo)}</b><br>${esc(st.desc)}
     </div>
   </div>
-  <p style="margin:0 0 18px;font-size:14px;color:#5A6A8A;line-height:1.75">
-    Retornamos em até <b style="color:#0D1B3E">um dia útil</b>. Você pode acompanhar o andamento a qualquer momento:
+  <p style="margin:0 0 18px;font-size:14px;color:#5C6B7F;line-height:1.75">
+    Retornamos em até <b style="color:#1A2332">um dia útil</b>. Você pode acompanhar o andamento a qualquer momento:
   </p>
   <a href="${SITE}/ticket.html?c=${encodeURIComponent(t.codigo)}"
-     style="display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:14px 26px;border-radius:11px;font-size:14px;font-weight:700">
+     style="display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:14px 26px;border-radius:8px;font-size:14px;font-weight:700">
     Acompanhar meu atendimento
   </a>
-  <div style="margin-top:28px;padding-top:22px;border-top:1px solid #EDF2F8">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#5A6A8A;margin-bottom:12px">Resumo do que você enviou</div>
+  <div style="margin-top:28px;padding-top:22px;border-top:1px solid #EEF1F4">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#5C6B7F;margin-bottom:12px">Resumo do que você enviou</div>
     <table width="100%" cellpadding="0" cellspacing="0">
       ${linha('Empresa', t.empresa)}
       ${linha('Segmento', t.segmento)}
       ${linha('Volume mensal', t.volume)}
     </table>
   </div>
-  <p style="margin:22px 0 0;font-size:13px;color:#5A6A8A;line-height:1.7">
+  <p style="margin:22px 0 0;font-size:13px;color:#5C6B7F;line-height:1.7">
     Precisa de algo urgente? Fale direto no WhatsApp
     <a href="https://wa.me/5547999357131" style="color:#0084C7;font-weight:700">(47) 99935-7131</a>.
   </p>`;
@@ -189,17 +190,17 @@ function emailCliente(t) {
 function emailStatus(t, nota) {
   const st = STATUS[t.status] || STATUS.recebido;
   const corpo = `
-  <p style="margin:0 0 20px;font-size:15px;color:#0D1B3E;line-height:1.75">
+  <p style="margin:0 0 20px;font-size:15px;color:#1A2332;line-height:1.75">
     Olá, ${esc(t.nome.split(' ')[0])}. O seu atendimento <b>${esc(t.codigo)}</b> mudou de status.
   </p>
-  <div style="background:#E8F4FD;border-left:3px solid #0084C7;border-radius:12px;padding:20px 22px">
+  <div style="background:#E8F4FD;border-left:3px solid #0084C7;border-radius:8px;padding:20px 22px">
     <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#0084C7;margin-bottom:7px">Status atual</div>
     <div style="font-size:19px;font-weight:800;color:#050B33;letter-spacing:-.3px">${esc(st.rotulo)}</div>
-    <div style="margin-top:8px;font-size:14px;color:#5A6A8A;line-height:1.7">${esc(nota || st.desc)}</div>
+    <div style="margin-top:8px;font-size:14px;color:#5C6B7F;line-height:1.7">${esc(nota || st.desc)}</div>
   </div>
   <div style="margin-top:24px">
     <a href="${SITE}/ticket.html?c=${encodeURIComponent(t.codigo)}"
-       style="display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:14px 26px;border-radius:11px;font-size:14px;font-weight:700">
+       style="display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:14px 26px;border-radius:8px;font-size:14px;font-weight:700">
       Ver o andamento
     </a>
   </div>`;
@@ -408,30 +409,36 @@ app.get('/', (req, res) => {
   res.type('html').send(`<!DOCTYPE html><html lang="pt-BR"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>API UniController</title>
+<title>Serviço de tickets | UNICONTROLLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#F7F9FD;color:#0D1B3E;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.c{background:#fff;border:1px solid #DDE6F5;border-radius:20px;padding:38px;max-width:520px;width:100%}
-.lg{font-size:19px;font-weight:800;letter-spacing:-.5px;color:#050B33;margin-bottom:6px}
-.lg span{color:#0084C7}
-.sb{font-size:13px;color:#5A6A8A;margin-bottom:24px}
-.st{display:inline-flex;align-items:center;gap:8px;background:#E7F7EF;border:1px solid #A7E3C8;color:#0B7A4E;padding:7px 14px;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:26px}
-.st i{width:7px;height:7px;border-radius:50%;background:#10B981;display:block}
-table{width:100%;border-collapse:collapse;margin-bottom:26px}
-td{padding:10px 0;border-bottom:1px solid #EDF2F8;font-size:13.5px}
-td:first-child{color:#5A6A8A;width:150px}
+:root{--navy:#050B33;--az:#0061AF;--az2:#0084C7;--cy:#7DD3F5;--txt:#1A2332;--muted:#5C6B7F;--bg:#F3F3F3;--border:#E2E5E9;--green:#10B981}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.c{background:#fff;border:1px solid var(--border);border-radius:12px;padding:36px;max-width:540px;width:100%}
+.lg{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.4px;color:var(--navy)}
+.lg span{color:var(--az2)}
+.sl{font-size:12px;color:var(--az2);font-weight:600;margin:4px 0 6px}
+.sb{font-size:13px;color:var(--muted);margin-bottom:24px}
+.st{display:inline-flex;align-items:center;gap:8px;background:#E7F7EF;border:1px solid #A7E3C8;color:#0B7A4E;padding:7px 14px;border-radius:99px;font-size:12px;font-weight:600;margin-bottom:24px}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--green);display:block}
+table{width:100%;border-collapse:collapse;margin-bottom:24px}
+td{padding:11px 0;border-bottom:1px solid #EEF1F4;font-size:13.5px}
+td:first-child{color:var(--muted);width:170px}
 td:last-child{font-weight:600;text-align:right}
-.warn{background:#FFF6E6;border-left:3px solid #E0A93B;border-radius:10px;padding:14px 16px;font-size:13px;color:#7A5A16;line-height:1.65;margin-bottom:22px}
-a.b{display:inline-block;background:#0061AF;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-size:13.5px;font-weight:700}
-.ft{margin-top:22px;padding-top:18px;border-top:1px solid #EDF2F8;font-size:12px;color:#5A6A8A;line-height:1.7}
-code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
+.warn{background:#FFF6E6;border-left:3px solid #E0A93B;border-radius:8px;padding:14px 16px;font-size:13px;color:#7A5A16;line-height:1.65;margin-bottom:22px}
+a.b{display:inline-block;background:linear-gradient(135deg,var(--az),var(--az2));color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-family:'Montserrat',sans-serif;font-size:13.5px;font-weight:600}
+.ft{margin-top:22px;padding-top:18px;border-top:1px solid #EEF1F4;font-size:12px;color:var(--muted);line-height:1.75}
+code{background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px}
 </style></head><body>
 <div class="c">
   <div class="lg"><span>UNI</span>CONTROLLER<span>.</span></div>
+  <div class="sl">Unindo tudo. Controlando tudo.</div>
   <div class="sb">Serviço de tickets</div>
   <div class="st"><i></i>NO AR</div>
-  ${smtp ? '' : '<div class="warn"><b>SMTP não configurado.</b> Os tickets são gravados, mas nenhum e-mail sai. Preencha as variáveis SMTP_* nas configurações da aplicação.</div>'}
+  ${smtp ? '' : '<div class="warn"><b>SMTP não configurado.</b> Os tickets são gravados, mas nenhum e-mail sai. Preencha as variáveis SMTP nas configurações da aplicação.</div>'}
   <table>
     <tr><td>Status</td><td>operando</td></tr>
     <tr><td>Tickets registrados</td><td>${n}</td></tr>
@@ -441,7 +448,7 @@ code{background:#F1F5FA;padding:2px 6px;border-radius:5px;font-size:12px}
   </table>
   <a class="b" href="${SITE}">Ir para o site</a>
   <div class="ft">
-    Esta é a API do site, não uma página para visitantes.<br>
+    Esta é a API que recebe o formulário do site, não uma página para visitantes.<br>
     Consulta de andamento: <code>${SITE}/ticket.html</code>
   </div>
 </div></body></html>`);
