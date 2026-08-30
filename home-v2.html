@@ -106,6 +106,49 @@ header.nav{background:var(--navy);position:sticky;top:0;z-index:90;border-bottom
 .pn-tag{font-size:8px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:99px;background:rgba(0,132,199,.22);color:var(--cy)}
 .pn-tag.v{background:rgba(16,185,129,.16);color:#6EE7B7}
 
+/* ── FUNDADOR ── */
+.fdr{background:#fff}
+.fdr-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:56px;align-items:start;margin-top:48px}
+.fdr-foto{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 26px 60px -26px rgba(5,11,51,.5)}
+.fdr-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block;transform:scale(1.02);transition:transform 1.1s cubic-bezier(.16,1,.3,1)}
+.fdr-foto:hover img{transform:scale(1.06)}
+.fdr-foto::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,11,51,.7),rgba(5,11,51,.03) 46%,transparent 70%)}
+.fdr-cap{position:absolute;left:20px;right:20px;bottom:18px;z-index:2}
+.fdr-cap b{display:block;font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:#fff}
+.fdr-cap span{display:block;font-size:11.5px;color:rgba(255,255,255,.68);margin-top:4px;line-height:1.5}
+.depo{border-left:3px solid var(--az2);padding-left:22px;margin-bottom:32px}
+.depo p{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:500;line-height:1.65;color:var(--navy);letter-spacing:-.2px;margin-bottom:15px}
+.depo p:last-of-type{margin-bottom:0}
+.depo em{font-style:normal;color:var(--az2);font-weight:600}
+.depo cite{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:12.5px;color:var(--muted);margin-top:18px}
+.fdr-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:30px}
+.fdr-nums>div{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:17px 13px;text-align:center}
+.fdr-nums .n{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:700;color:var(--navy);letter-spacing:-.6px;line-height:1}
+.fdr-nums .l{font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+.exp{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;padding-top:26px;border-top:1px solid var(--border)}
+.exp-t{grid-column:1/-1;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--az2);margin-bottom:2px}
+.exp-i{display:flex;gap:12px}
+.exp-i .ic{width:32px;height:32px;border-radius:8px;background:var(--azl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.exp-i .ic svg{width:15px;height:15px;stroke:var(--az);fill:none;stroke-width:2}
+.exp-i b{display:block;font-family:'Montserrat',sans-serif;font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.exp-i p{font-size:12.5px;color:var(--muted);line-height:1.65}
+
+/* ── FAIXA DE EVENTO ── */
+.evento{position:relative;overflow:hidden;background:var(--navy);padding:80px 0}
+.ev-bg{position:absolute;inset:0;background-image:url('img/fenauto-faixa.jpg');background-size:cover;background-position:36% 42%;transform:scale(1.05)}
+.evento::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,var(--navy) 0%,rgba(5,11,51,.74) 26%,rgba(5,11,51,.8) 66%,var(--navy) 100%),linear-gradient(to right,rgba(5,11,51,.92) 0%,rgba(5,11,51,.6) 58%,rgba(5,11,51,.48) 100%)}
+.evento .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.evento h2{color:#fff;font-size:31px}
+.evento p{color:rgba(255,255,255,.68);font-size:15.5px;line-height:1.75;max-width:540px}
+.ev-face{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;max-width:320px;margin-left:auto;box-shadow:0 28px 60px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.16)}
+.ev-face img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block}
+.ev-face::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,11,51,.6),transparent 42%)}
+.ev-face .nm{position:absolute;left:18px;right:18px;bottom:16px;z-index:2}
+.ev-face .nm b{display:block;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:#fff}
+.ev-face .nm span{display:block;font-size:11px;color:rgba(255,255,255,.66);margin-top:3px}
+.ev-selo{display:inline-flex;align-items:center;gap:8px;background:rgba(0,132,199,.22);border:1px solid rgba(125,211,245,.34);padding:6px 14px;border-radius:99px;margin-bottom:18px}
+.ev-selo span{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--cy)}
+
 /* ── SEÇÕES ── */
 section{padding:92px 0}
 .tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--az2);margin-bottom:12px}
@@ -197,6 +240,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:64px 0 30px}
 
 @media(max-width:1080px){
   .segs,.mods,.nums-grid{grid-template-columns:1fr 1fr}
+  .fdr-grid,.evento .wrap{grid-template-columns:1fr;gap:36px}
+  .ev-face{margin:0 auto;max-width:280px}
   .f-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:900px){
@@ -228,7 +273,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:64px 0 30px}
   .hero p{font-size:15px}
   .hero-btns{flex-direction:column}
   .b1,.b2{justify-content:center;text-align:center}
-  .segs,.mods,.nums-grid,.f-grid{grid-template-columns:1fr}
+  .segs,.mods,.nums-grid,.f-grid,.exp{grid-template-columns:1fr}
+  .depo p{font-size:16px}
+  .fdr-nums{gap:8px}
+  .fdr-nums>div{padding:13px 8px}
+  .fdr-nums .n{font-size:19px}
+  .evento{padding:52px 0}
+  .evento h2{font-size:24px}
   .nums .n{font-size:34px}
   .cta-box{padding:44px 22px;border-radius:10px}
   .cta-box h2{font-size:25px}
@@ -287,6 +338,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:64px 0 30px}
         </div>
       </li>
       <li><a href="#completa">Plataforma</a></li>
+      <li><a href="#quem">Quem somos</a></li>
       <li><a href="#duvidas">Dúvidas</a></li>
     </ul>
     <a href="#contato" class="btn-demo">Peça uma demonstração</a>
@@ -475,6 +527,78 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:64px 0 30px}
   </div>
 </section>
 
+<!-- FUNDADOR -->
+<section id="quem" class="fdr">
+  <div class="wrap">
+    <div class="rv">
+      <div class="tag">Quem constrói</div>
+      <h2>Jackson Tomelin</h2>
+      <p class="lead">A UniController é dirigida por quem executa o processo todo dia. Despachante documentalista credenciado e desenvolvedor: emite documento no balcão e escreve o sistema que automatiza esse mesmo documento. São mais de vinte sistemas e APIs em produção, todos construídos e mantidos por ele.</p>
+    </div>
+
+    <div class="fdr-grid">
+      <div class="fdr-foto rv">
+        <img src="img/jackson-mentor.jpg" alt="Jackson Tomelin, CEO e fundador da UniController" width="760" height="950">
+        <div class="fdr-cap">
+          <b>Jackson Tomelin</b>
+          <span>CEO e fundador · Mentor · Investidor anjo de sistemas e startups</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="depo rv">
+          <p>Eu atendo no balcão. Sei o que é o lojista ligar no final do dia porque o cliente está ali com o Pix na mão e a documentação não anda. Sei o que é o vendedor perder a comissão porque o carro esfriou esperando papel, e o que é a loja segurar um veículo parado no pátio ocupando capital.</p>
+          <p>Já perdi <em>muitas noites</em> em cima de código e em troca de informação com quem vive esse mercado. Não desenho software para impressionar em apresentação. Desenho para que a loja feche o negócio no mesmo dia e para que a financeira não pare a análise esperando uma consulta.</p>
+          <p>Por isso cada sistema aqui resolve uma dor que <em>doeu em mim primeiro</em>.</p>
+          <cite>Jackson Tomelin, CEO da UniController</cite>
+        </div>
+
+        <div class="fdr-nums rv">
+          <div><div class="n"><span class="cnt" data-to="20">0</span>+</div><div class="l">sistemas e APIs em produção</div></div>
+          <div><div class="n"><span class="cnt" data-to="250">0</span>+</div><div class="l">endpoints escritos e mantidos</div></div>
+          <div><div class="n"><span class="cnt" data-to="2">0</span></div><div class="l">setores dominados na prática</div></div>
+        </div>
+
+        <div class="exp rv">
+          <div class="exp-t">O que já construiu e mantém</div>
+          <div class="exp-i">
+            <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+            <div><b>APIs de consulta</b><p>Valor de veículo, consulta processual multi-tribunal, situação e débitos, certidão negativa trabalhista e consulta em sistemas de crédito.</p></div>
+          </div>
+          <div class="exp-i">
+            <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+            <div><b>Visão computacional</b><p>Leitura automática de placa com detecção do veículo na imagem e validação dos padrões brasileiro e Mercosul.</p></div>
+          </div>
+          <div class="exp-i">
+            <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div><b>Comunicação em escala</b><p>Gateway de WhatsApp multi-instância com transcrição de áudio e atendimento multi-agente com métricas.</p></div>
+          </div>
+          <div class="exp-i">
+            <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><b>Infraestrutura própria</b><p>Tudo hospedado e operado em servidor próprio, com credenciais isoladas para nenhuma integração guardar segredo.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESENÇA NO MERCADO -->
+<section class="evento">
+  <div class="ev-bg"></div>
+  <div class="wrap">
+    <div class="rv">
+      <div class="ev-selo"><span class="pisca"></span><span>14º Congresso Internacional FENAUTO</span></div>
+      <h2>Onde o setor decide seus rumos,<br>a gente está presente</h2>
+      <p>Congressos e feiras do mercado automotivo são onde a mudança aparece primeiro, em conversa de corredor, muito antes de virar norma. Boa parte do que a UniController entrega hoje nasceu de um problema ouvido nesses encontros.</p>
+    </div>
+    <div class="ev-face rv">
+      <img src="img/fenauto-retrato.jpg" alt="Jackson Tomelin no 14º Congresso Internacional FENAUTO" width="520" height="695">
+      <div class="nm"><b>Jackson Tomelin</b><span>CEO e fundador da UniController</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- NÚMEROS -->
 <section class="nums">
   <div class="wrap">
@@ -557,6 +681,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:64px 0 30px}
         <a href="https://wa.me/5547999357131">(47) 99935-7131</a>
         <a href="mailto:suporte@unicontroller.com.br">suporte@unicontroller.com.br</a>
         <a href="/ticket.html">Acompanhar atendimento</a>
+        <a href="#quem">Quem somos</a>
         <p>Segunda a sexta, das 8h às 18h</p>
       </div>
     </div>
