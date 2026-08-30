@@ -12,16 +12,16 @@
 <meta name="theme-color" content="#050B33">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--navy:#050B33;--az:#0061AF;--az2:#0084C7;--azl:#E8F4FD;--cy:#7DD3F5;
---txt:#0D1B3E;--muted:#5A6A8A;--bg:#F7F9FD;--border:#DDE6F5}
+--txt:#1A2332;--muted:#5C6B7F;--bg:#F3F3F3;--border:#E2E5E9}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
 a{color:var(--az);text-decoration:none}
 a:hover{text-decoration:underline}
-.logo{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-.5px}
+.logo{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.4px}
 .logo .u,.logo .p{color:var(--az2)}
 nav{background:var(--navy);padding:calc(18px + env(safe-area-inset-top)) 24px 18px}
 .nav-in{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
@@ -33,18 +33,18 @@ nav a.back:hover{color:#fff;text-decoration:none}
 header{background:linear-gradient(135deg,var(--navy),#0D2060);padding:52px 24px 60px;color:#fff}
 .hd{max-width:820px;margin:0 auto}
 .hd .tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--cy);margin-bottom:12px}
-.hd h1{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;letter-spacing:-1.2px;line-height:1.15}
+.hd h1{font-family:'Montserrat',sans-serif;font-size:33px;font-weight:700;letter-spacing:-.7px;line-height:1.15}
 .hd p{color:rgba(255,255,255,.6);font-size:14.5px;margin-top:14px}
 main{max-width:820px;margin:0 auto;padding:56px 24px 80px}
-.card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:34px;margin-bottom:20px}
-h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.4px;margin-bottom:14px}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:34px;margin-bottom:20px}
+h2{font-family:'Montserrat',sans-serif;font-size:19px;font-weight:700;color:var(--navy);letter-spacing:-.2px;margin-bottom:14px}
 p{font-size:14.5px;line-height:1.8;color:var(--muted)}
 p+p{margin-top:12px}
 b,strong{color:var(--txt);font-weight:700}
 ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:10px}
 li{display:flex;gap:11px;font-size:14.5px;line-height:1.7;color:var(--muted)}
 li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--az2);flex-shrink:0;margin-top:9px}
-.box{background:var(--azl);border-left:3px solid var(--az2);border-radius:12px;padding:20px 22px;margin-top:18px}
+.box{background:var(--azl);border-left:3px solid var(--az2);border-radius:8px;padding:20px 22px;margin-top:18px}
 .box p{color:var(--txt);font-size:14px}
 footer{background:var(--navy);color:rgba(255,255,255,.5);padding:40px 24px;text-align:center;font-size:12.5px;line-height:1.9}
 footer .logo{font-size:18px;color:#fff;display:block;margin-bottom:10px}
@@ -53,7 +53,7 @@ footer a{color:var(--cy)}
   header{padding:40px 16px 46px}
   .hd h1{font-size:27px;letter-spacing:-.7px}
   main{padding:36px 16px 56px}
-  .card{padding:24px 20px;border-radius:14px}
+  .card{padding:24px 20px;border-radius:8px}
   nav{padding:calc(14px + env(safe-area-inset-top)) 16px 14px}
 }
 </style>
@@ -87,12 +87,13 @@ footer a{color:var(--cy)}
     <h2>2. Dados que coletamos neste site</h2>
     <p>Este site é institucional e não exige cadastro. Coletamos apenas o que você nos envia de forma voluntária:</p>
     <ul>
-      <li><b>Formulário de proposta corporativa:</b> nome, empresa, e-mail, telefone, segmento, volume estimado e a descrição que você escrever. Esses dados são enviados diretamente ao nosso e-mail pelo seu próprio programa de correio, sem passar por banco de dados intermediário.</li>
+      <li><b>Formulário de proposta corporativa:</b> nome, empresa, e-mail, telefone, segmento, volume mensal estimado e a descrição que você escrever. Ao enviar, abrimos um atendimento com um número de protocolo, gravado em servidor próprio, e disparamos dois e-mails automáticos: um aviso interno para a nossa equipe e uma confirmação para o endereço que você informou.</li>
+      <li><b>Verificação anti-robô:</b> para enviar o formulário é preciso digitar um código exibido em imagem. Essa verificação é gerada e conferida no nosso próprio servidor, sem serviço de terceiro e sem rastrear o seu navegador.</li>
       <li><b>Contato por WhatsApp ou e-mail:</b> os dados que você decidir compartilhar na conversa.</li>
-      <li><b>Dados técnicos de acesso:</b> registros de servidor comuns, como endereço IP, data e hora do acesso e tipo de navegador, gerados automaticamente e usados para segurança e diagnóstico.</li>
+      <li><b>Dados técnicos de acesso:</b> registros de servidor comuns, como endereço IP, data e hora do acesso e tipo de navegador, gerados automaticamente e usados para segurança e diagnóstico. O endereço IP também é usado para limitar o número de envios do formulário e conter uso automatizado.</li>
     </ul>
     <div class="box">
-      <p>Este site <b>não utiliza cookies de rastreamento, pixels de publicidade ou ferramentas de perfilamento</b> de terceiros.</p>
+      <p>Este site <b>não utiliza cookies de rastreamento, pixels de publicidade ou ferramentas de perfilamento</b> de terceiros. Não há analytics de terceiro, nem botão de rede social que carregue conteúdo externo.</p>
     </div>
   </div>
 
@@ -129,11 +130,18 @@ footer a{color:var(--cy)}
   <div class="card">
     <h2>6. Retenção e segurança</h2>
     <p>Mantemos os dados pelo tempo necessário ao cumprimento das finalidades descritas e dos prazos legais aplicáveis. Depois disso, são eliminados ou anonimizados.</p>
+    <p>Os atendimentos abertos pelo formulário ficam armazenados em banco próprio, em servidor sob nosso controle, com cópia de segurança diária. A página pública de acompanhamento exibe o e-mail de contato de forma parcialmente oculta, para que o número do protocolo sozinho não revele o endereço completo.</p>
     <p>Adotamos medidas técnicas e administrativas de proteção, entre elas controle de acesso, criptografia em trânsito, segregação de ambientes e registro de operações. Nenhum sistema é imune a incidentes, mas trabalhamos para reduzir riscos e responder rapidamente caso algum ocorra.</p>
   </div>
 
   <div class="card">
-    <h2>7. Seus direitos</h2>
+    <h2>7. Acompanhamento de atendimento</h2>
+    <p>Ao enviar o formulário, você recebe por e-mail um número de protocolo e um link para acompanhar o andamento. Essa página mostra apenas a empresa informada, o status atual, o histórico de mudanças e o e-mail de contato parcialmente oculto.</p>
+    <p>O protocolo funciona como chave de acesso, portanto trate o link como informação reservada. Se preferir que o atendimento seja encerrado e os dados eliminados, basta pedir por e-mail.</p>
+  </div>
+
+  <div class="card">
+    <h2>8. Seus direitos</h2>
     <p>Como titular, a LGPD garante a você o direito de solicitar:</p>
     <ul>
       <li>Confirmação da existência de tratamento e acesso aos seus dados.</li>
@@ -147,7 +155,7 @@ footer a{color:var(--cy)}
   </div>
 
   <div class="card">
-    <h2>8. Alterações</h2>
+    <h2>9. Alterações</h2>
     <p>Esta política pode ser atualizada para refletir mudanças na legislação ou nos nossos serviços. A data da última atualização fica sempre indicada no topo desta página.</p>
   </div>
 
