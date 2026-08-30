@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>UNICONTROLLER | Documentação e dados de veículo para lojas, financeiras e escritórios</title>
+<meta name="description" content="Unindo tudo. Controlando tudo. A UniController emite os documentos de compra e venda de veículo e entrega por API os dados de consulta. 2.800+ clientes.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<meta name="theme-color" content="#050B33">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#050B33;--az:#0061AF;--az2:#0084C7;--azl:#E8F4FD;--cy:#7DD3F5;
+  --txt:#0D1B3E;--muted:#5A6A8A;--ink3:#7C90A5;--bg:#F7F9FD;
+  --border:#DDE6F5;--green:#10B981;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--txt);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img,svg{display:block}
+svg{max-width:100%;max-height:100%;flex-shrink:0}
+:focus-visible{outline:2px solid var(--az2);outline-offset:3px}
+.wrap{max-width:1220px;margin:0 auto;padding:0 32px}
+
+.js-rv .rv{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+.js-rv .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rv,.js-rv .rv{opacity:1!important;transform:none!important}}
+
+.logo{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+.logo .u,.logo .p{color:var(--cy)}
+
+/* ── BARRA SUPERIOR ── */
+.topbar{background:var(--navy);color:rgba(255,255,255,.62);font-size:12.5px}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:40px;gap:20px}
+.topbar a{transition:color .2s}
+.topbar a:hover{color:#fff}
+.tb-left{display:flex;align-items:center;gap:20px}
+.tb-left span{display:inline-flex;align-items:center;gap:7px}
+.tb-left svg{width:13px;height:13px;stroke:var(--cy);fill:none;stroke-width:2}
+.tb-right{display:flex;align-items:center;gap:20px}
+
+/* ── NAV ── */
+header.nav{background:var(--navy);position:sticky;top:0;z-index:90;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:74px;gap:26px}
+.brand{display:flex;flex-direction:column;line-height:1.12}
+.brand .logo{font-size:22px;color:#fff}
+.brand small{font-size:9.5px;color:rgba(255,255,255,.5);margin-top:2px;letter-spacing:.02em}
+.menu{display:flex;align-items:center;gap:4px;margin-left:auto}
+.menu>li{list-style:none;position:relative}
+.menu>li>a{display:flex;align-items:center;gap:6px;padding:12px 15px;font-size:14px;font-weight:500;color:rgba(255,255,255,.82);border-radius:9px;transition:background .22s,color .22s}
+.menu>li>a:hover{background:rgba(255,255,255,.08);color:#fff}
+.menu .seta{width:9px;height:9px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .28s}
+.menu>li:hover .seta{transform:rotate(-135deg) translateY(-2px)}
+.sub{position:absolute;top:100%;left:0;min-width:280px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 26px 60px -22px rgba(5,11,51,.4);padding:10px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .24s,transform .24s,visibility .24s}
+.menu>li:hover .sub{opacity:1;visibility:visible;transform:none}
+.sub .grupo{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--az2);padding:10px 12px 6px}
+.sub a{display:block;padding:10px 12px;border-radius:9px;font-size:13.5px;color:var(--txt);transition:background .18s,color .18s}
+.sub a:hover{background:var(--azl);color:var(--az)}
+.sub a small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.btn-demo{background:linear-gradient(135deg,var(--az),var(--az2));color:#fff;padding:12px 22px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:13.5px;white-space:nowrap;box-shadow:0 6px 20px rgba(0,97,175,.45);transition:transform .22s,box-shadow .22s}
+.btn-demo:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,97,175,.6)}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.burger span{display:block;width:22px;height:2px;background:#fff;margin:4px 0;border-radius:2px;transition:transform .3s,opacity .3s}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#0A1850 55%,#0D2060 100%);color:#fff;position:relative;overflow:hidden;padding:84px 0 92px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 75% 60% at 72% 40%,rgba(0,132,199,.24),transparent 68%)}
+.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px);background-size:100% 52px;pointer-events:none}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.04fr .96fr;gap:64px;align-items:center}
+.selo{display:inline-flex;align-items:center;gap:8px;background:rgba(0,132,199,.18);border:1px solid rgba(125,211,245,.32);padding:6px 14px;border-radius:99px;margin-bottom:22px}
+.selo span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--cy)}
+.pisca{width:6px;height:6px;border-radius:50%;background:var(--cy);animation:pisca 2s infinite}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Syne',sans-serif;font-size:49px;font-weight:800;line-height:1.07;letter-spacing:-1.9px;margin-bottom:20px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--cy),var(--az2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:16.5px;color:rgba(255,255,255,.64);line-height:1.8;max-width:520px;margin-bottom:32px}
+.hero p b{color:#fff;font-weight:700}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.b1{background:linear-gradient(135deg,var(--az),var(--az2));color:#fff;padding:15px 28px;border-radius:11px;font-family:'Syne',sans-serif;font-weight:800;font-size:14.5px;display:inline-flex;align-items:center;gap:9px;box-shadow:0 10px 30px rgba(0,97,175,.45);transition:transform .22s,box-shadow .22s}
+.b1:hover{transform:translateY(-3px);box-shadow:0 16px 42px rgba(0,97,175,.6)}
+.b1 svg{width:16px;height:16px;transition:transform .28s}
+.b1:hover svg{transform:translateX(4px)}
+.b2{border:1.5px solid rgba(255,255,255,.24);color:rgba(255,255,255,.85);padding:15px 28px;border-radius:11px;font-family:'Syne',sans-serif;font-weight:700;font-size:14.5px;transition:border-color .22s,color .22s,transform .22s}
+.b2:hover{border-color:rgba(255,255,255,.6);color:#fff;transform:translateY(-3px)}
+
+/* painel */
+.painel{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:22px;backdrop-filter:blur(20px);position:relative;overflow:hidden}
+.painel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(125,211,245,.9),transparent);animation:varre 5s ease-in-out infinite}
+@keyframes varre{0%,100%{opacity:.2;transform:translateX(-46%)}50%{opacity:1;transform:translateX(46%)}}
+.pn-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,.09);margin-bottom:15px}
+.pn-top .lg{font-size:15px;color:#fff}
+.pn-ok{background:rgba(16,185,129,.2);color:#6EE7B7;font-size:8.5px;font-weight:700;letter-spacing:.06em;padding:4px 10px;border-radius:99px;display:inline-flex;align-items:center;gap:5px}
+.pn-ok i{width:4px;height:4px;border-radius:50%;background:#6EE7B7;animation:pisca 2.2s infinite}
+.pn-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:11px}
+.pn-row:last-child{margin-bottom:0}
+.pn-ico{width:31px;height:31px;border-radius:9px;background:linear-gradient(135deg,var(--az),var(--az2));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pn-ico svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.pn-txt{flex:1;min-width:0}
+.pn-txt b{display:block;font-size:11px;font-weight:700;color:#fff}
+.pn-txt span{display:block;font-size:8.5px;color:rgba(255,255,255,.42);margin-top:1px}
+.pn-tag{font-size:8px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:99px;background:rgba(0,132,199,.22);color:var(--cy)}
+.pn-tag.v{background:rgba(16,185,129,.16);color:#6EE7B7}
+
+/* ── SEÇÕES ── */
+section{padding:92px 0}
+.tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--az2);margin-bottom:12px}
+h2{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--navy);line-height:1.16;letter-spacing:-1px;margin-bottom:16px}
+.lead{font-size:16px;color:var(--muted);line-height:1.75;max-width:640px}
+.centro{text-align:center}
+.centro .lead{margin:0 auto}
+
+/* produto */
+.prod{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.pilulas{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 30px}
+.pilulas span{display:inline-flex;align-items:center;gap:8px;background:var(--azl);color:var(--az);padding:9px 16px;border-radius:99px;font-family:'Syne',sans-serif;font-size:13px;font-weight:800}
+.pilulas svg{width:14px;height:14px;stroke:var(--az2);fill:none;stroke-width:2.6}
+.prod-img{background:linear-gradient(135deg,var(--navy),#0D2060);border-radius:22px;padding:30px;box-shadow:0 34px 70px -34px rgba(5,11,51,.6)}
+
+/* segmentos */
+.segs{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px}
+.seg{background:#fff;border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s}
+.seg:hover{transform:translateY(-6px);box-shadow:0 18px 46px -20px rgba(0,97,175,.34);border-color:var(--az)}
+.seg .ic{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--az),var(--az2));display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:transform .4s}
+.seg:hover .ic{transform:scale(1.08) rotate(-5deg)}
+.seg .ic svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:1.8}
+.seg h3{font-family:'Syne',sans-serif;font-size:17.5px;font-weight:800;color:var(--navy);margin-bottom:10px;letter-spacing:-.3px}
+.seg p{font-size:13.5px;color:var(--muted);line-height:1.75;flex:1}
+.seg a{margin-top:20px;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--az);display:inline-flex;align-items:center;gap:7px}
+.seg a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .26s}
+.seg a:hover svg{transform:translateX(4px)}
+
+/* solução completa */
+.completa{background:var(--bg)}
+.comp-top{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:start;margin-bottom:52px}
+.difs{background:#fff;border:1px solid var(--border);border-radius:18px;padding:28px}
+.difs h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--navy);margin-bottom:18px;letter-spacing:-.2px}
+.difs ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+.difs li{display:flex;gap:11px;font-size:13.5px;color:var(--muted);line-height:1.6;align-items:flex-start}
+.difs li svg{width:15px;height:15px;stroke:var(--green);fill:none;stroke-width:3;flex-shrink:0;margin-top:3px}
+.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mod{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;transition:transform .32s cubic-bezier(.16,1,.3,1),box-shadow .32s,border-color .32s}
+.mod:hover{transform:translateY(-5px);box-shadow:0 16px 40px -20px rgba(0,97,175,.3);border-color:var(--az)}
+.mod .ic{width:40px;height:40px;border-radius:11px;background:var(--azl);display:flex;align-items:center;justify-content:center;margin-bottom:15px}
+.mod .ic svg{width:18px;height:18px;stroke:var(--az);fill:none;stroke-width:1.9}
+.mod h4{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:-.2px}
+.mod p{font-size:12.8px;color:var(--muted);line-height:1.7}
+.mods-tit{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--navy);margin:44px 0 20px;letter-spacing:-.3px}
+
+/* números */
+.nums{background:linear-gradient(135deg,var(--navy),#0D2060);color:#fff;position:relative;overflow:hidden}
+.nums::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 0%,rgba(0,132,199,.28),transparent 66%)}
+.nums .wrap{position:relative;z-index:1}
+.nums-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.nums .n{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;letter-spacing:-1.6px;line-height:1}
+.nums .n em{font-style:normal;color:var(--cy)}
+.nums .l{font-size:12.5px;color:rgba(255,255,255,.55);margin-top:10px;line-height:1.5}
+
+/* FAQ */
+.faq{max-width:860px;margin:48px auto 0}
+.qa{background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:11px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.qa[open]{border-color:var(--az2);box-shadow:0 12px 34px -18px rgba(0,97,175,.4)}
+.qa summary{list-style:none;cursor:pointer;padding:20px 24px;display:flex;align-items:center;gap:16px;font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;color:var(--navy);letter-spacing:-.2px}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:'';margin-left:auto;width:10px;height:10px;border-right:2px solid var(--az2);border-bottom:2px solid var(--az2);transform:rotate(45deg) translateY(-2px);transition:transform .3s;flex-shrink:0}
+.qa[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.qa .a{padding:0 24px 22px;font-size:14px;color:var(--muted);line-height:1.8}
+.qa .a b{color:var(--navy)}
+
+/* CTA final */
+.cta{background:var(--bg);text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--navy),#0D2060);border-radius:26px;padding:66px 44px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 0%,rgba(0,132,199,.3),transparent 66%)}
+.cta-box h2{color:#fff;position:relative;z-index:1;font-size:35px}
+.cta-box p{color:rgba(255,255,255,.62);max-width:560px;margin:16px auto 30px;position:relative;z-index:1;font-size:15.5px;line-height:1.75}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.bw{background:#fff;color:var(--navy);padding:15px 30px;border-radius:11px;font-family:'Syne',sans-serif;font-weight:800;font-size:14.5px;display:inline-flex;align-items:center;gap:9px;transition:transform .22s,box-shadow .22s}
+.bw:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.bw svg{width:16px;height:16px}
+
+/* rodapé */
+footer{background:var(--navy);color:rgba(255,255,255,.5);padding:64px 0 30px}
+.f-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,.09)}
+.f-brand .logo{font-size:23px;color:#fff;margin-bottom:7px}
+.f-slogan{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--cy);margin-bottom:14px}
+.f-brand p{font-size:13px;line-height:1.75;max-width:300px}
+.f-col h5{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:rgba(255,255,255,.34);margin-bottom:15px}
+.f-col a,.f-col p{display:block;font-size:13px;margin-bottom:10px;line-height:1.6;transition:color .2s,transform .24s}
+.f-col a:hover{color:#fff;transform:translateX(3px)}
+.f-base{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px}
+.f-base a{color:rgba(255,255,255,.62)}
+.f-base a:hover{color:#fff}
+
+@media(max-width:1080px){
+  .segs,.mods,.nums-grid{grid-template-columns:1fr 1fr}
+  .f-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:900px){
+  .hero .wrap,.prod,.comp-top{grid-template-columns:1fr;gap:44px}
+  .topbar{display:none}
+  .burger{display:block}
+  .menu{position:fixed;inset:74px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;margin:0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1);padding:10px 16px 20px;max-height:calc(100vh - 74px);overflow-y:auto;transform:translateY(-12px);opacity:0;visibility:hidden;transition:opacity .28s,transform .28s,visibility .28s}
+  .menu.aberto{opacity:1;visibility:visible;transform:none}
+  .menu>li>a{padding:14px 8px;font-size:15px;border-bottom:1px solid rgba(255,255,255,.07);border-radius:0}
+  .menu .seta{margin-left:auto}
+  .sub{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:none;background:transparent;padding:0 0 10px 8px;display:none;min-width:0}
+  .menu>li.aberta .sub{display:block}
+  .menu>li.aberta .seta{transform:rotate(-135deg) translateY(-2px)}
+  .sub a{color:rgba(255,255,255,.7);padding:9px 8px}
+  .sub a:hover{background:rgba(255,255,255,.07);color:#fff}
+  .sub a small{color:rgba(255,255,255,.42)}
+  .sub .grupo{color:var(--cy);padding:12px 8px 5px}
+  .burger.x span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .burger.x span:nth-child(2){opacity:0}
+  .burger.x span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  .hero h1{font-size:33px;letter-spacing:-1.1px}
+}
+@media(max-width:600px){
+  .wrap{padding:0 16px}
+  section{padding:58px 0}
+  h2{font-size:26px;letter-spacing:-.6px}
+  .hero{padding:56px 0 62px}
+  .hero h1{font-size:29px}
+  .hero p{font-size:15px}
+  .hero-btns{flex-direction:column}
+  .b1,.b2{justify-content:center;text-align:center}
+  .segs,.mods,.nums-grid,.f-grid{grid-template-columns:1fr}
+  .nums .n{font-size:34px}
+  .cta-box{padding:44px 22px;border-radius:18px}
+  .cta-box h2{font-size:25px}
+  .bw{width:100%;justify-content:center}
+  .brand .logo{font-size:18px}
+  .btn-demo{padding:10px 16px;font-size:12.5px}
+}
+</style>
+<script>
+(function(){try{if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.className+=' js-rv';}catch(e){}})();
+</script>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg><a href="https://wa.me/5547999357131">(47) 99935-7131</a></span>
+      <span><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M4 4h16v16H4zM4 7l8 6 8-6"/></svg><a href="mailto:suporte@unicontroller.com.br">suporte@unicontroller.com.br</a></span>
+    </div>
+    <div class="tb-right">
+      <a href="/ticket.html">Acompanhar atendimento</a>
+      <a href="#duvidas">Dúvidas</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVEGAÇÃO -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="/" class="brand">
+      <span class="logo"><span class="u">UNI</span>CONTROLLER<span class="p">.</span></span>
+      <small>Unindo tudo. Controlando tudo.</small>
+    </a>
+    <ul class="menu">
+      <li>
+        <a href="#solucoes">Soluções <i class="seta"></i></a>
+        <div class="sub">
+          <div class="grupo">Documentação veicular</div>
+          <a href="#solucoes">União CERT<small>Procuração e ATPV-e pelo celular</small></a>
+          <a href="#solucoes">UNIPROCURAÇÕES<small>Emissão e gestão com aprovação</small></a>
+          <a href="#solucoes">UniSIGNER<small>Coleta de assinaturas automatizada</small></a>
+          <div class="grupo">Consulta de dados</div>
+          <a href="#solucoes">FipeConsulta<small>Valor do veículo por API</small></a>
+          <a href="#solucoes">JudSC<small>Consulta processual multi-tribunal</small></a>
+        </div>
+      </li>
+      <li>
+        <a href="#segmentos">Segmentos <i class="seta"></i></a>
+        <div class="sub">
+          <a href="#segmentos">Lojas e revendas<small>Documento no mesmo dia</small></a>
+          <a href="#segmentos">Bancos e financeiras<small>Dado dentro da esteira de crédito</small></a>
+          <a href="#segmentos">Escritórios jurídicos<small>Carteira monitorada</small></a>
+          <a href="#segmentos">Despachantes<small>Rotina completa em um painel</small></a>
+        </div>
+      </li>
+      <li><a href="#completa">Plataforma</a></li>
+      <li><a href="#duvidas">Dúvidas</a></li>
+    </ul>
+    <a href="#contato" class="btn-demo">Peça uma demonstração</a>
+    <button class="burger" id="burger" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="selo"><span class="pisca"></span><span>Unindo tudo. Controlando tudo.</span></div>
+      <h1>Ganhe tempo<br>para <em>vender mais.</em></h1>
+      <p>A UniController faz duas coisas para quem trabalha com veículo: <b>emite os documentos de compra e venda</b> e <b>entrega por API os dados que a operação precisa consultar</b>. Menos espera no balcão, menos análise travada, mais negócio fechado.</p>
+      <div class="hero-btns">
+        <a class="b1" href="#solucoes">Conheça a plataforma
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="b2" href="#contato">Peça uma demonstração</a>
+      </div>
+    </div>
+    <div class="painel">
+      <div class="pn-top">
+        <span class="logo pn-top-lg" style="font-size:15px;color:#fff">UNI<span style="color:var(--cy)">CONTROLLER</span>.</span>
+        <span class="pn-ok"><i></i>OPERANDO</span>
+      </div>
+      <div class="pn-row">
+        <div class="pn-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+        <div class="pn-txt"><b>Procuração assinada</b><span>Validade jurídica, pelo celular</span></div>
+        <span class="pn-tag v">MESMO DIA</span>
+      </div>
+      <div class="pn-row">
+        <div class="pn-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17V9l1.8-4h7.4l1.8 4v8"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/></svg></div>
+        <div class="pn-txt"><b>Valor do veículo</b><span>Por placa, código ou descrição</span></div>
+        <span class="pn-tag">API</span>
+      </div>
+      <div class="pn-row">
+        <div class="pn-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8L3 14h6zM18 8l-3 6h6zM7 21h10"/></svg></div>
+        <div class="pn-txt"><b>Situação processual</b><span>Multi-tribunal, por parte ou processo</span></div>
+        <span class="pn-tag">API</span>
+      </div>
+      <div class="pn-row">
+        <div class="pn-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="pn-txt"><b>Atendimento em escala</b><span>Vários atendentes, um número</span></div>
+        <span class="pn-tag v">ATIVO</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATAFORMA -->
+<section id="solucoes">
+  <div class="wrap prod">
+    <div class="rv">
+      <div class="tag">A plataforma</div>
+      <h2>O sistema que não é<br>só mais um sistema</h2>
+      <p class="lead">A UniController nasceu dentro de um escritório de documentação veicular, não de uma sala de reunião. Por isso ela aguenta a exceção do mundo real: a exceção é a nossa rotina.</p>
+      <div class="pilulas">
+        <span><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Autonomia</span>
+        <span><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Integração</span>
+        <span><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Operação própria</span>
+      </div>
+      <a class="b1" href="#contato" style="box-shadow:0 8px 24px rgba(0,97,175,.35)">Peça uma demonstração
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="prod-img rv">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cy);margin-bottom:18px">Retorno da API</div>
+<pre style="margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.85;color:#C8D8EA;overflow-x:auto">{
+  <span style="color:#7DD3F5">"brand"</span>: <span style="color:#8FE3B4">"VW - VolksWagen"</span>,
+  <span style="color:#7DD3F5">"model"</span>: <span style="color:#8FE3B4">"T-Cross 1.0 TSI"</span>,
+  <span style="color:#7DD3F5">"modelYear"</span>: <span style="color:#F0B86E">2022</span>,
+  <span style="color:#7DD3F5">"codeFipe"</span>: <span style="color:#8FE3B4">"005340-1"</span>,
+  <span style="color:#7DD3F5">"price"</span>: <span style="color:#8FE3B4">"R$ 112.450,00"</span>,
+  <span style="color:#7DD3F5">"referenceMonth"</span>: <span style="color:#8FE3B4">"agosto de 2026"</span>
+}</pre>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:11.5px;color:rgba(255,255,255,.42);line-height:1.6">Uma chamada, um JSON previsível. Sem SDK proprietário e sem tela para o seu operador abrir.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEGMENTOS -->
+<section id="segmentos" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="centro rv">
+      <div class="tag">Segmentos</div>
+      <h2>Feito para quem compra,<br>vende ou financia veículo</h2>
+      <p class="lead">Cada segmento tem uma trava diferente. A plataforma resolve a que trava o seu.</p>
+    </div>
+    <div class="segs">
+      <div class="seg rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17V9l1.8-4h7.4l1.8 4v8"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/><path d="M6.5 12h11"/></svg></div>
+        <h3>Lojas e revendas</h3>
+        <p>Procuração e assinatura no mesmo dia, pelo celular do cliente. O negócio não esfria esperando papel, e o veículo não fica parado no pátio ocupando capital.</p>
+        <a href="#contato">Falar sobre a minha loja <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="seg rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18L12 3 3 10zM6 10v11M10 10v11M14 10v11M18 10v11"/></svg></div>
+        <h3>Bancos e financeiras</h3>
+        <p>Valor do veículo, histórico de leilão e restrição, e situação processual da parte chegando por API dentro da esteira de crédito. Nenhum operador abrindo portal no meio da análise.</p>
+        <a href="#contato">Ver integração corporativa <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="seg rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8L3 14h6zM18 8l-3 6h6zM7 21h10M12 3l6 5M12 3L6 8"/></svg></div>
+        <h3>Escritórios jurídicos</h3>
+        <p>Consulta processual em lote e monitoramento com alerta de movimentação. A equipe volta a trabalhar no caso, em vez de abrir portal processo por processo.</p>
+        <a href="#contato">Consultar a minha carteira <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="seg rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+        <h3>Despachantes</h3>
+        <p>Processos, clientes e documentação em um painel só, com fluxo de aprovação e assinatura. Feito por quem executa essa rotina todo dia.</p>
+        <a href="#contato">Organizar o meu escritório <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO COMPLETA -->
+<section id="completa" class="completa" style="background:#fff">
+  <div class="wrap">
+    <div class="comp-top">
+      <div class="rv">
+        <div class="tag">Plataforma completa</div>
+        <h2>Documento, dado<br>e atendimento</h2>
+        <p class="lead">Você contrata só a frente que precisa, ou o conjunto. Tudo conversa entre si sob a mesma marca, com uma operação só por trás.</p>
+      </div>
+      <div class="difs rv">
+        <h4>Diferenciais</h4>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Dirigida por despachante documentalista credenciado</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Infraestrutura própria, sem intermediário cobrando por consulta</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Integração em uma tarde, com ambiente de homologação</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Trilha completa de auditoria em documento e consulta</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Base própria de valores, atualizada e sempre disponível</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mods">
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+        <h4>União CERT</h4>
+        <p>Procuração, ATPV-e e transferência assinados pelo celular do cliente, com validade jurídica e sem cartório.</p>
+      </div>
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17V9l1.8-4h7.4l1.8 4v8"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/></svg></div>
+        <h4>FipeConsulta</h4>
+        <p>Valor do veículo com busca que entende texto solto, tolera erro de digitação e devolve o histórico de meses anteriores.</p>
+      </div>
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8L3 14h6zM18 8l-3 6h6zM7 21h10"/></svg></div>
+        <h4>JudSC</h4>
+        <p>Consulta processual multi-tribunal com cobertura da Justiça catarinense, por número do processo ou por documento da parte.</p>
+      </div>
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>Histórico veicular</h4>
+        <p>Passagem por leilão, registro de furto, restrição judicial e gravame, antes do veículo virar garantia na sua carteira.</p>
+      </div>
+    </div>
+
+    <div class="mods-tit">E também</div>
+    <div class="mods">
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4>UniZap</h4>
+        <p>Central de WhatsApp multi-instância com transcrição automática dos áudios recebidos.</p>
+      </div>
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+        <h4>ZapController</h4>
+        <p>Atendimento multi-agente: vários atendentes na mesma fila, com histórico centralizado.</p>
+      </div>
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 15l4-6 4 3 5-8"/></svg></div>
+        <h4>Radar de estoque</h4>
+        <p>Preço e giro das revendas da região consolidados em painel, para decidir compra e margem com número.</p>
+      </div>
+      <div class="mod rv">
+        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <h4>Leitura de placa</h4>
+        <p>Reconhecimento automático de placa a partir da imagem, com validação dos padrões brasileiro e Mercosul.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<section class="nums">
+  <div class="wrap">
+    <div class="centro rv" style="margin-bottom:44px">
+      <div class="tag" style="color:var(--cy)">Em números</div>
+      <h2 style="color:#fff">Operação real, não portfólio</h2>
+    </div>
+    <div class="nums-grid rv">
+      <div><div class="n"><span class="cnt" data-to="2800">0</span><em>+</em></div><div class="l">clientes atendidos</div></div>
+      <div><div class="n"><span class="cnt" data-to="80000">0</span><em>+</em></div><div class="l">procurações processadas</div></div>
+      <div><div class="n"><span class="cnt" data-to="20000">0</span><em>+</em></div><div class="l">documentos de transferência</div></div>
+      <div><div class="n"><span class="cnt" data-to="20">0</span><em>+</em></div><div class="l">sistemas e APIs em produção</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DÚVIDAS -->
+<section id="duvidas" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="centro rv">
+      <div class="tag">Dúvidas frequentes</div>
+      <h2>O que costumam perguntar</h2>
+      <p class="lead">As respostas que damos na primeira conversa, adiantadas aqui.</p>
+    </div>
+    <div class="faq">
+      <details class="qa rv"><summary>O que a UniController faz, em uma frase?</summary><div class="a"><p>Emite os documentos de compra e venda de veículo e entrega por API os dados que a operação precisa consultar, como valor, histórico e situação processual.</p></div></details>
+      <details class="qa rv"><summary>Quanto custa?</summary><div class="a"><p>Depende do volume e das frentes que você usa. Não trabalhamos com licença fixa por usuário: para consulta, o preço acompanha o número de chamadas; para documentação, acompanha o número de documentos emitidos.</p></div></details>
+      <details class="qa rv"><summary>Quanto tempo leva para integrar?</summary><div class="a"><p>A parte técnica costuma levar uma tarde: é REST com JSON previsível, sem biblioteca proprietária. Você recebe acesso de homologação para a equipe testar antes de qualquer coisa ir para produção.</p></div></details>
+      <details class="qa rv"><summary>Preciso trocar o sistema que já uso?</summary><div class="a"><p>Não. O dado entra no seu core, no seu CRM ou na sua esteira de crédito, e o operador continua trabalhando na tela de sempre.</p></div></details>
+      <details class="qa rv"><summary>De onde vem a informação?</summary><div class="a"><p>De fontes oficiais e de parceiros do setor, dentro dos limites contratuais de cada uma. Somos investidores e contribuintes de informação em empresas de sistemas de crédito e consulta veicular.</p></div></details>
+      <details class="qa rv"><summary>E a LGPD?</summary><div class="a"><p>Na operação atuamos como <b>operadores</b>: tratamos os dados conforme as instruções do cliente contratante. Toda consulta e todo documento ficam registrados com autor, data e retorno. Detalhes na <a href="/privacidade.html" style="color:var(--az2);font-weight:700">Política de Privacidade</a>.</p></div></details>
+      <details class="qa rv"><summary>Vocês atendem fora de Santa Catarina?</summary><div class="a"><p>Sim. A documentação veicular tem particularidade estadual e a nossa base é catarinense, mas as consultas de dado funcionam em âmbito nacional.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contato">
+  <div class="wrap">
+    <div class="cta-box rv">
+      <h2>Qual processo está travando<br>a sua operação hoje?</h2>
+      <p>Comece pelo problema, não pelo sistema. Provavelmente já existe uma solução pronta, ou pronta para ser adaptada ao seu caso.</p>
+      <div class="cta-btns">
+        <a class="bw" href="https://wa.me/5547999357131" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          (47) 99935-7131
+        </a>
+        <a class="b2" href="/#proposta">Proposta corporativa</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <div class="logo"><span class="u">UNI</span>CONTROLLER<span class="p">.</span></div>
+        <div class="f-slogan">Unindo tudo. Controlando tudo.</div>
+        <p>Documentação veicular e consulta de dados por API para lojas, revendas, financeiras, bancos e escritórios. Sede em Blumenau e Timbó, Santa Catarina.</p>
+      </div>
+      <div class="f-col">
+        <h5>Soluções</h5>
+        <a href="#solucoes">União CERT</a>
+        <a href="#solucoes">UNIPROCURAÇÕES</a>
+        <a href="#solucoes">UniSIGNER</a>
+        <a href="#solucoes">FipeConsulta</a>
+        <a href="#solucoes">JudSC</a>
+      </div>
+      <div class="f-col">
+        <h5>Segmentos</h5>
+        <a href="#segmentos">Lojas e revendas</a>
+        <a href="#segmentos">Bancos e financeiras</a>
+        <a href="#segmentos">Escritórios jurídicos</a>
+        <a href="#segmentos">Despachantes</a>
+      </div>
+      <div class="f-col">
+        <h5>Contato</h5>
+        <a href="https://wa.me/5547999357131">(47) 99935-7131</a>
+        <a href="mailto:suporte@unicontroller.com.br">suporte@unicontroller.com.br</a>
+        <a href="/ticket.html">Acompanhar atendimento</a>
+        <p>Segunda a sexta, das 8h às 18h</p>
+      </div>
+    </div>
+    <div class="f-base">
+      <span>© <span id="ano">2026</span> UNICONTROLLER. Todos os direitos reservados.</span>
+      <a href="/privacidade.html">Política de Privacidade</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var y = document.getElementById('ano'); if(y) y.textContent = new Date().getFullYear();
+
+  /* menu no celular */
+  var bg = document.getElementById('burger');
+  var menu = document.querySelector('.menu');
+  if(bg && menu){
+    bg.addEventListener('click', function(){
+      var abriu = menu.classList.toggle('aberto');
+      bg.classList.toggle('x', abriu);
+      bg.setAttribute('aria-label', abriu ? 'Fechar menu' : 'Abrir menu');
+    });
+    // submenus abrem por toque quando o menu está no modo celular
+    menu.querySelectorAll('li').forEach(function(li){
+      var a = li.querySelector(':scope > a');
+      if(!a || !li.querySelector('.sub')) return;
+      a.addEventListener('click', function(ev){
+        if(window.matchMedia('(max-width:900px)').matches){
+          ev.preventDefault();
+          li.classList.toggle('aberta');
+        }
+      });
+    });
+    // fecha ao escolher um destino
+    menu.querySelectorAll('.sub a, li > a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(){
+        if(a.parentNode.querySelector('.sub')) return;
+        menu.classList.remove('aberto'); bg.classList.remove('x');
+      });
+    });
+  }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var todos = document.querySelectorAll('.rv');
+  var fmt = function(n){ return n.toLocaleString('pt-BR'); };
+
+  var conta = function(el){
+    if(el.dataset.feito) return; el.dataset.feito = '1';
+    var alvo = parseInt(el.dataset.to,10), ini = null, dur = 1800;
+    var passo = function(ts){
+      if(!ini) ini = ts;
+      var p = Math.min((ts-ini)/dur,1);
+      el.textContent = fmt(Math.round(alvo * (1 - Math.pow(1-p,3))));
+      if(p < 1) requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+  };
+
+  if(reduce || !('IntersectionObserver' in window)){
+    todos.forEach(function(e){ e.classList.add('in'); });
+    document.querySelectorAll('.cnt').forEach(function(e){ e.textContent = fmt(parseInt(e.dataset.to,10)); });
+    return;
+  }
+
+  var mostra = function(el){
+    if(el.classList.contains('in')) return;
+    el.classList.add('in');
+    el.querySelectorAll('.cnt').forEach(conta);
+  };
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){ if(e.isIntersecting){ mostra(e.target); io.unobserve(e.target); } });
+  }, {threshold:.01, rootMargin:'0px 0px -40px 0px'});
+
+  var grupos = {};
+  todos.forEach(function(el){
+    var k = el.parentNode.className;
+    grupos[k] = (grupos[k]||0);
+    el.style.transitionDelay = Math.min(grupos[k]*80, 320) + 'ms';
+    grupos[k]++;
+    io.observe(el);
+  });
+  requestAnimationFrame(function(){
+    todos.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0) mostra(el);
+    });
+  });
+  setTimeout(function(){ todos.forEach(mostra); }, 3500);
+})();
+</script>
+
+</body>
+</html>

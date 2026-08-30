@@ -73,6 +73,9 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
 ## Páginas
 
 - `/` — landing principal
+- `/home-v2.html` — versão alternativa em layout corporativo (menu com submenus,
+  segmentos, módulos, números e FAQ). Marcada como `noindex`: é para comparação.
+  Para adotá-la, basta renomear para `index.html`
 - `/privacidade.html` — política de privacidade (LGPD)
 
 ## Serviço de tickets (pasta `api/`)
