@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="UniController">
+<meta name="author" content="UniController — Unindo tudo. Controlando tudo.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="UniController | Documentação veicular e consulta de dados por API">
 <meta name="twitter:description" content="2.800+ clientes, 80 mil+ procurações processadas e 20 mil+ documentos de transferência.">
@@ -32,6 +33,7 @@
   "logo":"https://unicontroller.com.br/img/icon-512.png",
   "image":"https://unicontroller.com.br/img/og-image.jpg",
   "description":"Documentação veicular e consulta de dados por API para lojas, revendas, financeiras, bancos e escritórios.",
+  "slogan":"Unindo tudo. Controlando tudo.",
   "email":"suporte@unicontroller.com.br",
   "telephone":"+55-47-99935-7131",
   "address":{"@type":"PostalAddress","addressLocality":"Blumenau","addressRegion":"SC","addressCountry":"BR"},
@@ -74,7 +76,10 @@ svg{max-width:100%;max-height:100%;flex-shrink:0}
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:calc(15px + env(safe-area-inset-top)) 40px 15px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:background .4s,border-color .4s,padding .35s}
 nav.scrolled{background:rgba(255,255,255,.95);border-bottom-color:rgba(0,97,175,.1);padding-top:11px;padding-bottom:11px}
+.nav-brand{display:flex;flex-direction:column;line-height:1.15;min-width:0}
 .nav-logo{font-size:18px;color:#fff;transition:color .4s}
+.nav-slogan{font-family:'DM Sans',sans-serif;font-size:9.5px;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.5);transition:color .4s;white-space:nowrap;margin-top:1px}
+nav.scrolled .nav-slogan{color:var(--muted)}
 nav.scrolled .nav-logo{color:var(--navy)}
 .nav-links{display:flex;align-items:center;gap:26px}
 .nav-links a{font-size:13px;font-weight:500;color:rgba(255,255,255,.62);transition:color .25s}
@@ -449,7 +454,8 @@ h2{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--navy
 footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
 .f-in{max-width:1200px;margin:0 auto}
 .f-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px}
-.f-logo{font-size:22px;color:#fff;margin-bottom:10px}
+.f-logo{font-size:22px;color:#fff;margin-bottom:6px}
+.slogan{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--cy);letter-spacing:-.2px;margin-bottom:12px}
 .f-logo .u,.f-logo .p{color:var(--cy)}
 .f-top p{font-size:13px;line-height:1.75}
 .f-top p a{transition:color .2s}
@@ -483,6 +489,7 @@ footer{background:var(--navy);padding:64px 40px 32px;color:rgba(255,255,255,.5)}
   .nav-links a:not(.btn-nav){display:none}
   .btn-nav{padding:8px 15px;font-size:12px;flex-shrink:0;white-space:nowrap}
   .nav-logo{font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .nav-slogan{display:none}
   .hero{padding:calc(100px + env(safe-area-inset-top,0px)) 16px 56px}
   h1{font-size:31px;letter-spacing:-1.1px}
   .hero-sub{font-size:14.5px}
@@ -549,7 +556,7 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
 <div id="prog"></div>
 
 <nav id="nav">
-  <div class="logo nav-logo"><span class="u">UNI</span>CONTROLLER<span class="p">.</span></div>
+  <div class="nav-brand"><div class="logo nav-logo"><span class="u">UNI</span>CONTROLLER<span class="p">.</span></div><div class="nav-slogan">Unindo tudo. Controlando tudo.</div></div>
   <div class="nav-links">
     <a href="#problema">O que resolvemos</a>
     <a href="#solucoes">Soluções</a>
@@ -565,7 +572,7 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
   <div class="aur aur1"></div><div class="aur aur2"></div>
   <div class="hero-in">
     <div>
-      <div class="eyebrow hero-a d1"><span class="dot"></span><span>Desde 2018 em Santa Catarina</span></div>
+      <div class="eyebrow hero-a d1"><span class="dot"></span><span>Unindo tudo. Controlando tudo.</span></div>
       <h1 class="hero-a d1">A papelada e os dados<br>do veículo, <span class="hl">resolvidos.</span></h1>
       <p class="hero-sub hero-a d2">A UniController faz duas coisas para quem trabalha com veículo: <b>emite os documentos de compra e venda</b> e <b>entrega por API os dados que a operação precisa consultar</b>. Para lojas, revendas, financeiras, bancos e escritórios.</p>
       <div class="hero-btns hero-a d3">
@@ -1256,6 +1263,7 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
     <div class="f-top">
       <div>
         <div class="logo f-logo"><span class="u">UNI</span>CONTROLLER<span class="p">.</span></div>
+        <div class="slogan">Unindo tudo. Controlando tudo.</div>
         <p>Documentação veicular e consulta de dados por API para lojas, revendas, financeiras, bancos e escritórios. Sede em Blumenau/Timbó, Santa Catarina.</p>
       </div>
       <div>
