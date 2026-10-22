@@ -43,7 +43,8 @@
   ]
 }
 </script>
-<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
 <link rel="apple-touch-icon" href="/img/icon-180.png">
 <meta name="theme-color" content="#050B33">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -231,6 +232,8 @@ header.nav{background:rgba(5,11,51,.94);backdrop-filter:blur(14px);-webkit-backd
 .pc[hidden]{display:none}
 .pc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
 .pc-logo{width:52px;height:52px;border-radius:13px;object-fit:cover;box-shadow:0 6px 16px -6px rgba(5,11,51,.45)}
+.pc-logo.solta{width:64px;height:64px;margin:-6px 0 -6px -4px;border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(5,11,51,.25))}
+.fam-ic .solta img{border-radius:0;object-fit:contain}
 .pc-tipo{font-size:12px;font-weight:600;color:var(--az);background:var(--azl);padding:4px 10px;border-radius:99px}
 .pc h3{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.2px;margin-bottom:6px}
 .pc p{font-size:14px;color:var(--muted);line-height:1.6;flex:1}
@@ -530,11 +533,11 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
       <li>
         <a href="#solucoes" aria-haspopup="true">Soluções <i class="seta"></i></a>
         <div class="sub">
-          <a href="#solucoes" data-filtro="doc">Documentação e assinatura<small>União CERT, UNIPROCURAÇÕES, UniSIGNER, UniCertificados</small></a>
+          <a href="#solucoes" data-filtro="doc">Documentação e assinatura<small>União CERT, UniCar, UniSIGNER, UniCertificados e mais</small></a>
           <a href="#solucoes" data-filtro="valida">Validação de documentos<small>UniVIO, UniSELOS, UniValidar</small></a>
           <a href="#solucoes" data-filtro="dados">Consulta de dados<small>FipeConsulta, JudSC, UniObito e mais</small></a>
           <a href="#solucoes" data-filtro="gestao">Gestão e atendimento<small>SistemaDespachante Pro, Recorre.AI, UniZap</small></a>
-          <a href="#solucoes" data-filtro="todos">Ver todos os produtos<small>19 soluções em produção</small></a>
+          <a href="#solucoes" data-filtro="todos">Ver todos os produtos<small>20 soluções em produção</small></a>
         </div>
       </li>
       <li>
@@ -650,11 +653,13 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
         <a href="#univio"><img src="img/produtos/univio-marca.png" alt="UniVIO" width="520" height="104" loading="lazy"></a>
         <a href="#recorre-ai"><img src="img/produtos/recorre-ai-marca.png" alt="Recorre.AI" width="520" height="98" loading="lazy"></a>
         <span class="fam-ic">
+          <a href="#uniao-cert" class="solta"><img src="img/produtos/uniao-cert.png" alt="União CERT" width="40" height="40"></a>
+          <a href="#unicar" class="solta"><img src="img/produtos/unicar.png" alt="UniCar" width="40" height="40"></a>
           <a href="#uniselos"><img src="img/produtos/uniselos.svg" alt="UniSELOS" width="40" height="40"></a>
           <a href="#univalidar"><img src="img/produtos/univalidar.svg" alt="UniValidar" width="40" height="40"></a>
           <a href="#uniobito"><img src="img/produtos/uniobito.svg" alt="UniObito" width="40" height="40"></a>
           <a href="#unicertificados"><img src="img/produtos/unicertificados.svg" alt="UniCertificados" width="40" height="40"></a>
-          <a href="#solucoes" class="fam-mais">+12</a>
+          <a href="#solucoes" class="fam-mais">+11</a>
         </span>
       </div>
     </div>
@@ -667,17 +672,23 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
     <div class="cab sol-cab">
       <div>
         <div class="kicker">Soluções</div>
-        <h2 id="h-sol">19 produtos, uma operação só por trás</h2>
+        <h2 id="h-sol">20 produtos, uma operação só por trás</h2>
         <p class="lead">A UniController nasceu dentro de um escritório de documentação veicular. Você contrata só o produto que precisa, ou o conjunto, e tudo conversa entre si.</p>
       </div>
     </div>
-    <div class="chips" role="group" aria-label="Filtrar produtos"><button class="chip" type="button" data-f="todos" aria-pressed="true">Todos <span>19</span></button><button class="chip" type="button" data-f="doc" aria-pressed="false">Documentação e assinatura <span>4</span></button><button class="chip" type="button" data-f="valida" aria-pressed="false">Validação de documentos <span>3</span></button><button class="chip" type="button" data-f="dados" aria-pressed="false">Consulta de dados <span>7</span></button><button class="chip" type="button" data-f="gestao" aria-pressed="false">Gestão e atendimento <span>5</span></button></div>
+    <div class="chips" role="group" aria-label="Filtrar produtos"><button class="chip" type="button" data-f="todos" aria-pressed="true">Todos <span>20</span></button><button class="chip" type="button" data-f="doc" aria-pressed="false">Documentação e assinatura <span>5</span></button><button class="chip" type="button" data-f="valida" aria-pressed="false">Validação de documentos <span>3</span></button><button class="chip" type="button" data-f="dados" aria-pressed="false">Consulta de dados <span>7</span></button><button class="chip" type="button" data-f="gestao" aria-pressed="false">Gestão e atendimento <span>5</span></button></div>
     <div class="catalogo" id="catalogo">
       <article class="pc" id="uniao-cert" data-cat="doc">
-        <div class="pc-top"><img class="pc-logo" src="img/produtos/uniao-cert.svg" alt="Logotipo União CERT" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Assinatura</span></div>
+        <div class="pc-top"><img class="pc-logo solta" src="img/produtos/uniao-cert.png" alt="Logotipo União CERT" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Documentos digitais</span></div>
         <h3>União CERT</h3>
         <p>Procuração, ATPV-e e transferência assinados pelo celular do cliente, com validade jurídica e sem cartório.</p>
-        <a class="pc-link" href="#proposta" data-prod="União CERT">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a class="pc-link" href="https://uniaocert.com.br" target="_blank" rel="noopener">uniaocert.com.br <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </article>
+      <article class="pc" id="unicar" data-cat="doc">
+        <div class="pc-top"><img class="pc-logo solta" src="img/produtos/unicar.png" alt="Logotipo UniCar" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Documentos digitais</span></div>
+        <h3>UniCar</h3>
+        <p>Documentação digital de veículos para lojas e revendas, com o mesmo time e o mesmo padrão da União CERT.</p>
+        <a class="pc-link" href="https://uniaocert.com.br" target="_blank" rel="noopener">uniaocert.com.br <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       </article>
       <article class="pc" id="uniprocuracoes" data-cat="doc">
         <div class="pc-top"><img class="pc-logo" src="img/produtos/uniprocuracoes.svg" alt="Logotipo UNIPROCURAÇÕES" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Painel</span></div>

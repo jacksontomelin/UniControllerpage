@@ -77,7 +77,7 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
    Processo), que se revezam sozinhas e param quando a pessoa clica
 2. Números da operação logo abaixo do topo
 3. Marcas da família no fim do topo (UniSIGNER, UniVIO, Recorre.AI e ícones)
-4. Soluções: catálogo com os 19 produtos, logotipo de cada um e filtro por
+4. Soluções: catálogo com os 20 produtos, logotipo de cada um e filtro por
    categoria. Cada produto tem âncora própria (`#unisigner`, `#univio`,
    `#uniobito` etc.); "Quero conhecer" já escreve o produto no formulário
 5. Segmentos (o link de cada um já escolhe o segmento no formulário)
@@ -90,7 +90,7 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
 
 ## Logotipos dos produtos (`img/produtos/`)
 
-Copiados dos repositórios de cada produto: UniSIGNER, UniVIO, Recorre.AI,
+Copiados dos repositórios de cada produto: União CERT e UniCar (uniao-cert-landing), UniSIGNER, UniVIO, Recorre.AI,
 UniSELOS, UniValidar e UniObito. Os demais ainda não têm logo no
 repositório e receberam um ícone em SVG no mesmo estilo da família; para
 trocar, basta substituir o arquivo com o mesmo nome.
