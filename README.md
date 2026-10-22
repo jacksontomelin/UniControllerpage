@@ -76,15 +76,24 @@ Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
 1. Topo com a demonstração interativa das três frentes (Documento, Valor e
    Processo), que se revezam sozinhas e param quando a pessoa clica
 2. Números da operação logo abaixo do topo
-3. Soluções: documentação veicular e consulta por API, cada produto com
-   âncora própria (`#uniao-cert`, `#fipeconsulta`, `#judsc` etc.)
-4. Segmentos (o link de cada um já escolhe o segmento no formulário)
-5. Como funciona, em três etapas
-6. Quem constrói e presença no FENAUTO
-7. Dúvidas (também marcadas para o Google como FAQ)
-8. Proposta: formulário de tickets e botão de WhatsApp
-9. Rodapé com a assinatura "um sistema UNICONTROLLER · Dev Jackson Tomelin"
+3. Marcas da família no fim do topo (UniSIGNER, UniVIO, Recorre.AI e ícones)
+4. Soluções: catálogo com os 19 produtos, logotipo de cada um e filtro por
+   categoria. Cada produto tem âncora própria (`#unisigner`, `#univio`,
+   `#uniobito` etc.); "Quero conhecer" já escreve o produto no formulário
+5. Segmentos (o link de cada um já escolhe o segmento no formulário)
+6. Como funciona, em três etapas
+7. Quem constrói e presença no FENAUTO
+8. Dúvidas (também marcadas para o Google como FAQ)
+9. Proposta: formulário de tickets e botão de WhatsApp
+10. Rodapé com a assinatura "um sistema UNICONTROLLER · Dev Jackson Tomelin"
    nas cores originais da marca
+
+## Logotipos dos produtos (`img/produtos/`)
+
+Copiados dos repositórios de cada produto: UniSIGNER, UniVIO, Recorre.AI,
+UniSELOS, UniValidar e UniObito. Os demais ainda não têm logo no
+repositório e receberam um ícone em SVG no mesmo estilo da família; para
+trocar, basta substituir o arquivo com o mesmo nome.
 
 ## Páginas
 

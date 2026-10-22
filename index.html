@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>UNICONTROLLER | Documentação e dados de veículo para lojas, financeiras e escritórios</title>
-<meta name="description" content="A UniController emite os documentos de compra e venda de veículo pelo celular do cliente e entrega por API valor, histórico e situação processual. Mais de 2.800 clientes atendidos.">
+<meta name="description" content="UniSIGNER, UniVIO, Recorre.AI, FipeConsulta, JudSC e mais. A UniController emite os documentos de compra e venda de veículo pelo celular do cliente e entrega por API valor, histórico e situação processual. Mais de 2.800 clientes atendidos.">
 <meta property="og:title" content="UniController | Documentação e dados de veículo">
 <meta property="og:description" content="2.800+ clientes, 80 mil+ procurações processadas e 20 mil+ documentos de transferência.">
 <meta property="og:type" content="website">
@@ -36,7 +36,7 @@
   "@context":"https://schema.org","@type":"FAQPage",
   "mainEntity":[
     {"@type":"Question","name":"O que a UniController faz, em uma frase?","acceptedAnswer":{"@type":"Answer","text":"Emite os documentos de compra e venda de veículo e entrega por API os dados que a operação precisa consultar, como valor, histórico e situação processual."}},
-    {"@type":"Question","name":"Quanto custa?","acceptedAnswer":{"@type":"Answer","text":"Depende do volume e das frentes que você usa. Para consulta, o preço acompanha o número de chamadas; para documentação, o número de documentos emitidos. Não há licença fixa por usuário."}},
+    {"@type":"Question","name":"Quanto custa?","acceptedAnswer":{"@type":"Answer","text":"Depende do volume e dos produtos que você usa. Para consulta, o preço acompanha o número de chamadas; para documentação, o número de documentos emitidos. Não há licença fixa por usuário."}},
     {"@type":"Question","name":"Quanto tempo leva para integrar?","acceptedAnswer":{"@type":"Answer","text":"A parte técnica costuma levar uma tarde. Você recebe acesso de homologação para a equipe testar antes de ir para produção."}},
     {"@type":"Question","name":"Preciso trocar o sistema que já uso?","acceptedAnswer":{"@type":"Answer","text":"Não. O dado entra no seu sistema, no seu CRM ou na sua esteira de crédito, e o operador continua trabalhando na tela de sempre."}},
     {"@type":"Question","name":"Vocês atendem fora de Santa Catarina?","acceptedAnswer":{"@type":"Answer","text":"Sim. A documentação veicular tem particularidade estadual e a base é catarinense, mas as consultas de dado funcionam em âmbito nacional."}}
@@ -205,35 +205,49 @@ header.nav{background:rgba(5,11,51,.94);backdrop-filter:blur(14px);-webkit-backd
 .prova .n em{font-style:normal;color:var(--cy)}
 .prova .l{font-size:14px;color:rgba(255,255,255,.58);margin-top:8px;line-height:1.45}
 
-/* ── SOLUÇÕES ── */
-.frentes{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.frente{border:1px solid var(--border);border-radius:var(--r-lg);padding:34px;background:#fff;display:flex;flex-direction:column}
-.frente.escura{background:linear-gradient(160deg,var(--navy),var(--navy2));border-color:transparent;color:#fff}
-.fr-cab{display:flex;gap:16px;align-items:flex-start;margin-bottom:26px}
-.fr-ic{width:50px;height:50px;border-radius:14px;background:var(--azl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fr-ic svg{width:24px;height:24px;stroke:var(--az);fill:none;stroke-width:1.8}
-.frente.escura .fr-ic{background:rgba(125,211,245,.14)}
-.frente.escura .fr-ic svg{stroke:var(--cy)}
-.fr-cab h3{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:700;color:var(--navy);letter-spacing:-.4px;line-height:1.25}
-.frente.escura h3{color:#fff}
-.fr-cab p{font-size:15px;color:var(--muted);line-height:1.6;margin-top:6px}
-.frente.escura .fr-cab p{color:rgba(255,255,255,.62)}
-.prods{list-style:none;display:flex;flex-direction:column;flex:1}
-.prods li{padding:16px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:150px 1fr;gap:16px;scroll-margin-top:100px}
-.frente.escura .prods li{border-color:rgba(255,255,255,.1)}
-.prods b{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--navy)}
-.frente.escura .prods b{color:#fff}
-.prods p{font-size:14.5px;color:var(--muted);line-height:1.6}
-.frente.escura .prods p{color:rgba(255,255,255,.66)}
-.prods li:target{background:rgba(0,132,199,.07);margin:0 -14px;padding-left:14px;padding-right:14px;border-radius:10px}
 
-.tambem{margin-top:24px;display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:28px;align-items:start;padding:28px 34px;background:var(--bg);border-radius:var(--r-lg)}
-.tambem h3{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--navy);max-width:150px;line-height:1.3}
-.tb-it{display:flex;gap:12px;scroll-margin-top:100px}
-.tb-it .ic{width:36px;height:36px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tb-it .ic svg{width:17px;height:17px;stroke:var(--az);fill:none;stroke-width:1.9}
-.tb-it b{display:block;font-size:14.5px;font-weight:600;color:var(--navy);margin-bottom:3px}
-.tb-it p{font-size:13.5px;color:var(--muted);line-height:1.55}
+/* ── marcas da família (fim do topo) ── */
+.familia{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.1);padding:26px 0 34px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.fam-t{font-size:13.5px;color:rgba(255,255,255,.5);max-width:150px;line-height:1.4}
+.fam-logos{flex:1;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.fam-logos>a img{height:30px;width:auto;opacity:.86;transition:opacity .2s,transform .2s}
+.fam-logos>a:hover img{opacity:1;transform:translateY(-2px)}
+.fam-ic{display:flex;align-items:center;gap:8px}
+.fam-ic img{width:38px;height:38px;border-radius:10px;transition:transform .2s}
+.fam-ic a:hover img{transform:translateY(-2px)}
+.fam-mais{width:38px;height:38px;border-radius:10px;border:1px dashed rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--cy)}
+
+/* ── catálogo de produtos ── */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;border:1px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--navy);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.chip span{font-size:12px;font-weight:700;color:var(--muted);background:var(--bg);border-radius:99px;padding:1px 8px}
+.chip:hover{border-color:var(--az2)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip[aria-pressed="true"] span{background:rgba(255,255,255,.16);color:#fff}
+.catalogo{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pc{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;scroll-margin-top:100px;transition:border-color .2s,box-shadow .2s}
+.pc:hover{border-color:var(--az2);box-shadow:0 18px 40px -26px rgba(0,97,175,.5)}
+.pc:target{border-color:var(--az2);box-shadow:0 0 0 3px rgba(0,132,199,.2)}
+.pc[hidden]{display:none}
+.pc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.pc-logo{width:52px;height:52px;border-radius:13px;object-fit:cover;box-shadow:0 6px 16px -6px rgba(5,11,51,.45)}
+.pc-tipo{font-size:12px;font-weight:600;color:var(--az);background:var(--azl);padding:4px 10px;border-radius:99px}
+.pc h3{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.2px;margin-bottom:6px}
+.pc p{font-size:14px;color:var(--muted);line-height:1.6;flex:1}
+.pc-link{margin-top:16px;font-size:13.5px;font-weight:600;color:var(--az);display:inline-flex;align-items:center;gap:6px;align-self:flex-start}
+.pc-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s}
+.pc-link:hover svg{transform:translateX(3px)}
+@media(max-width:1080px){.catalogo{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.catalogo{grid-template-columns:1fr 1fr}.fam-t{max-width:none;width:100%}}
+@media(max-width:600px){
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 22px;padding:0 16px 4px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{white-space:nowrap}
+  .catalogo{grid-template-columns:1fr;gap:12px}
+  .pc{padding:18px}
+  .fam-logos{justify-content:flex-start;gap:20px 26px}
+  .fam-logos>a img{height:24px}
+}
 
 /* ── SEGMENTOS ── */
 .segmentos{background:var(--bg)}
@@ -402,9 +416,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.55);padding:64px 0 28px}
   .hero-grid{gap:40px}
   .hero h1{font-size:44px}
   .segs{grid-template-columns:1fr 1fr}
-  .frentes{grid-template-columns:1fr}
-  .tambem{grid-template-columns:1fr 1fr 1fr}
-  .tambem h3{grid-column:1/-1;max-width:none}
   .fdr-grid,.evento .wrap,.form-wrap,.faq-grid{grid-template-columns:1fr;gap:40px}
   .faq-grid .cab{position:static}
   .fdr-foto{max-width:420px}
@@ -459,9 +470,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.55);padding:64px 0 28px}
   .prova>div{padding:22px 12px 24px}
   .prova .n{font-size:30px}
   .prova .l{font-size:13px}
-  .frente{padding:24px 20px}
-  .prods li{grid-template-columns:1fr;gap:4px}
-  .tambem{grid-template-columns:1fr;padding:24px 20px;gap:20px}
   .segs,.f-grid,.exp,.fields{grid-template-columns:1fr}
   .fdr-nums{gap:8px}
   .fdr-nums>div{padding:14px 10px}
@@ -522,14 +530,11 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
       <li>
         <a href="#solucoes" aria-haspopup="true">Soluções <i class="seta"></i></a>
         <div class="sub">
-          <div class="grupo">Documentação veicular</div>
-          <a href="#uniao-cert">União CERT<small>Procuração e ATPV-e pelo celular</small></a>
-          <a href="#uniprocuracoes">UNIPROCURAÇÕES<small>Emissão e gestão com aprovação</small></a>
-          <a href="#unisigner">UniSIGNER<small>Coleta de assinaturas automatizada</small></a>
-          <div class="grupo">Consulta de dados</div>
-          <a href="#fipeconsulta">FipeConsulta<small>Valor do veículo por API</small></a>
-          <a href="#historico">Histórico veicular<small>Leilão, furto, restrição e gravame</small></a>
-          <a href="#judsc">JudSC<small>Consulta processual multi-tribunal</small></a>
+          <a href="#solucoes" data-filtro="doc">Documentação e assinatura<small>União CERT, UNIPROCURAÇÕES, UniSIGNER, UniCertificados</small></a>
+          <a href="#solucoes" data-filtro="valida">Validação de documentos<small>UniVIO, UniSELOS, UniValidar</small></a>
+          <a href="#solucoes" data-filtro="dados">Consulta de dados<small>FipeConsulta, JudSC, UniObito e mais</small></a>
+          <a href="#solucoes" data-filtro="gestao">Gestão e atendimento<small>SistemaDespachante Pro, Recorre.AI, UniZap</small></a>
+          <a href="#solucoes" data-filtro="todos">Ver todos os produtos<small>19 soluções em produção</small></a>
         </div>
       </li>
       <li>
@@ -638,59 +643,150 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
       <div><div class="n"><span class="cnt" data-to="20000">20.000</span><em>+</em></div><div class="l">documentos de transferência</div></div>
       <div><div class="n"><span class="cnt" data-to="20">20</span><em>+</em></div><div class="l">sistemas e APIs em produção</div></div>
     </div>
+    <div class="familia">
+      <span class="fam-t">Marcas da família UniController</span>
+      <div class="fam-logos">
+        <a href="#unisigner"><img src="img/produtos/unisigner-marca.png" alt="UniSIGNER" width="520" height="91" loading="lazy"></a>
+        <a href="#univio"><img src="img/produtos/univio-marca.png" alt="UniVIO" width="520" height="104" loading="lazy"></a>
+        <a href="#recorre-ai"><img src="img/produtos/recorre-ai-marca.png" alt="Recorre.AI" width="520" height="98" loading="lazy"></a>
+        <span class="fam-ic">
+          <a href="#uniselos"><img src="img/produtos/uniselos.svg" alt="UniSELOS" width="40" height="40"></a>
+          <a href="#univalidar"><img src="img/produtos/univalidar.svg" alt="UniValidar" width="40" height="40"></a>
+          <a href="#uniobito"><img src="img/produtos/uniobito.svg" alt="UniObito" width="40" height="40"></a>
+          <a href="#unicertificados"><img src="img/produtos/unicertificados.svg" alt="UniCertificados" width="40" height="40"></a>
+          <a href="#solucoes" class="fam-mais">+12</a>
+        </span>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- SOLUÇÕES -->
 <section id="solucoes" aria-labelledby="h-sol">
   <div class="wrap">
-    <div class="cab">
-      <div class="kicker">Soluções</div>
-      <h2 id="h-sol">Duas frentes, uma operação só por trás</h2>
-      <p class="lead">A UniController nasceu dentro de um escritório de documentação veicular. Você contrata só a frente que precisa, ou o conjunto, e tudo conversa entre si.</p>
+    <div class="cab sol-cab">
+      <div>
+        <div class="kicker">Soluções</div>
+        <h2 id="h-sol">19 produtos, uma operação só por trás</h2>
+        <p class="lead">A UniController nasceu dentro de um escritório de documentação veicular. Você contrata só o produto que precisa, ou o conjunto, e tudo conversa entre si.</p>
+      </div>
     </div>
-
-    <div class="frentes">
-      <article class="frente">
-        <div class="fr-cab">
-          <div class="fr-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
-          <div><h3>Documentação veicular</h3><p>Compra e venda resolvida no mesmo dia, sem cartório e sem papel indo e voltando.</p></div>
-        </div>
-        <ul class="prods">
-          <li id="uniao-cert"><b>União CERT</b><p>Procuração, ATPV-e e transferência assinados pelo celular do cliente, com validade jurídica.</p></li>
-          <li id="uniprocuracoes"><b>UNIPROCURAÇÕES</b><p>Emissão e gestão de procurações com fluxo de aprovação, histórico e controle por loja.</p></li>
-          <li id="unisigner"><b>UniSIGNER</b><p>Coleta de assinaturas automatizada: o sistema cobra quem falta assinar, você não.</p></li>
-        </ul>
+    <div class="chips" role="group" aria-label="Filtrar produtos"><button class="chip" type="button" data-f="todos" aria-pressed="true">Todos <span>19</span></button><button class="chip" type="button" data-f="doc" aria-pressed="false">Documentação e assinatura <span>4</span></button><button class="chip" type="button" data-f="valida" aria-pressed="false">Validação de documentos <span>3</span></button><button class="chip" type="button" data-f="dados" aria-pressed="false">Consulta de dados <span>7</span></button><button class="chip" type="button" data-f="gestao" aria-pressed="false">Gestão e atendimento <span>5</span></button></div>
+    <div class="catalogo" id="catalogo">
+      <article class="pc" id="uniao-cert" data-cat="doc">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/uniao-cert.svg" alt="Logotipo União CERT" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Assinatura</span></div>
+        <h3>União CERT</h3>
+        <p>Procuração, ATPV-e e transferência assinados pelo celular do cliente, com validade jurídica e sem cartório.</p>
+        <a class="pc-link" href="#proposta" data-prod="União CERT">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </article>
-
-      <article class="frente escura">
-        <div class="fr-cab">
-          <div class="fr-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
-          <div><h3>Consulta de dados por API</h3><p>O dado chega dentro do seu sistema, sem operador abrindo portal no meio da análise.</p></div>
-        </div>
-        <ul class="prods">
-          <li id="fipeconsulta"><b>FipeConsulta</b><p>Valor do veículo por placa, código ou texto solto, tolerando erro de digitação e com histórico mensal.</p></li>
-          <li id="historico"><b>Histórico veicular</b><p>Leilão, registro de furto, restrição judicial e gravame antes do veículo virar garantia.</p></li>
-          <li id="judsc"><b>JudSC</b><p>Consulta processual multi-tribunal, com cobertura da Justiça catarinense e alerta de movimentação.</p></li>
-          <li id="placa"><b>Leitura de placa</b><p>Reconhecimento automático a partir da foto, validando os padrões brasileiro e Mercosul.</p></li>
-        </ul>
+      <article class="pc" id="uniprocuracoes" data-cat="doc">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/uniprocuracoes.svg" alt="Logotipo UNIPROCURAÇÕES" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Painel</span></div>
+        <h3>UNIPROCURAÇÕES</h3>
+        <p>Emissão e gestão de procurações com fluxo de aprovação, histórico e controle por loja.</p>
+        <a class="pc-link" href="#proposta" data-prod="UNIPROCURAÇÕES">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </article>
-    </div>
-
-    <div class="tambem">
-      <h3>Para o dia a dia da loja</h3>
-      <div class="tb-it" id="unizap">
-        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <div><b>UniZap</b><p>Central de WhatsApp com vários números e transcrição automática dos áudios.</p></div>
-      </div>
-      <div class="tb-it" id="zapcontroller">
-        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
-        <div><b>ZapController</b><p>Vários atendentes na mesma fila, um número só e histórico centralizado.</p></div>
-      </div>
-      <div class="tb-it" id="radar">
-        <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18M7 15l4-6 4 3 5-8"/></svg></div>
-        <div><b>Radar de estoque</b><p>Preço e giro das revendas da região em um painel, para decidir compra e margem.</p></div>
-      </div>
+      <article class="pc" id="unisigner" data-cat="doc">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/unisigner.png" alt="Logotipo UniSIGNER" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Assinatura</span></div>
+        <h3>UniSIGNER</h3>
+        <p>Assinatura digital automotiva: envia o documento, cobra quem falta assinar e devolve tudo pronto.</p>
+        <a class="pc-link" href="https://unisigner.com.br" target="_blank" rel="noopener">unisigner.com.br <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </article>
+      <article class="pc" id="unicertificados" data-cat="doc">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/unicertificados.svg" alt="Logotipo UniCertificados" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Cofre</span></div>
+        <h3>UniCertificados</h3>
+        <p>Cofre de certificados A1 em nuvem. A equipe usa o certificado sem ter o arquivo nem a senha na máquina.</p>
+        <a class="pc-link" href="#proposta" data-prod="UniCertificados">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="univio" data-cat="valida">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/univio.png" alt="Logotipo UniVIO" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Validação</span></div>
+        <h3>UniVIO</h3>
+        <p>Confere o QR Code de segurança do documento do veículo e gera um protocolo do que foi lido.</p>
+        <a class="pc-link" href="https://vio.unicontroller.com.br" target="_blank" rel="noopener">vio.unicontroller.com.br <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </article>
+      <article class="pc" id="uniselos" data-cat="valida">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/uniselos.svg" alt="Logotipo UniSELOS" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Validação</span></div>
+        <h3>UniSELOS</h3>
+        <p>Consulta o selo digital do TJSC e entrega o comprovante em PDF, pronto para anexar ao processo.</p>
+        <a class="pc-link" href="#proposta" data-prod="UniSELOS">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="univalidar" data-cat="valida">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/univalidar.svg" alt="Logotipo UniValidar" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Validação</span></div>
+        <h3>UniValidar</h3>
+        <p>Valida assinaturas digitais de PDF no padrão ICP-Brasil e devolve um relatório de conformidade.</p>
+        <a class="pc-link" href="#proposta" data-prod="UniValidar">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="fipeconsulta" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/fipeconsulta.svg" alt="Logotipo FipeConsulta" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>FipeConsulta</h3>
+        <p>Valor do veículo por placa, código ou texto solto, tolerando erro de digitação e com histórico mensal.</p>
+        <a class="pc-link" href="#proposta" data-prod="FipeConsulta">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="historico" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/historico.svg" alt="Logotipo Histórico veicular" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>Histórico veicular</h3>
+        <p>Leilão, registro de furto, restrição judicial e gravame antes do veículo virar garantia.</p>
+        <a class="pc-link" href="#proposta" data-prod="Histórico veicular">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="debitos" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/debitos.svg" alt="Logotipo Débitos e dossiê SC" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>Débitos e dossiê SC</h3>
+        <p>Débitos, situação e dossiê do veículo registrado em Santa Catarina, em uma chamada.</p>
+        <a class="pc-link" href="#proposta" data-prod="Débitos e dossiê SC">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="judsc" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/judsc.svg" alt="Logotipo JudSC" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>JudSC</h3>
+        <p>Consulta processual multi-tribunal, com cobertura da Justiça catarinense e alerta de movimentação.</p>
+        <a class="pc-link" href="#proposta" data-prod="JudSC">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="uniobito" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/uniobito.svg" alt="Logotipo UniObito" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>UniObito</h3>
+        <p>Confirma pelo CPF se o titular consta como falecido, antes de liberar crédito, contrato ou documento.</p>
+        <a class="pc-link" href="#proposta" data-prod="UniObito">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="cndt" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/cndt.svg" alt="Logotipo Certidão trabalhista" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>Certidão trabalhista</h3>
+        <p>Emissão da Certidão Negativa de Débitos Trabalhistas em PDF, para análise cadastral e licitação.</p>
+        <a class="pc-link" href="#proposta" data-prod="Certidão trabalhista">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="placa" data-cat="dados">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/placa.svg" alt="Logotipo Leitura de placa" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">API</span></div>
+        <h3>Leitura de placa</h3>
+        <p>Reconhece a placa a partir da foto, validando os padrões brasileiro e Mercosul.</p>
+        <a class="pc-link" href="#proposta" data-prod="Leitura de placa">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="sistemadespachante" data-cat="gestao">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/despachante.svg" alt="Logotipo SistemaDespachante Pro" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Painel</span></div>
+        <h3>SistemaDespachante Pro</h3>
+        <p>Gestão completa do escritório de despachante: processos, clientes, financeiro e documentos.</p>
+        <a class="pc-link" href="#proposta" data-prod="SistemaDespachante Pro">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="recorre-ai" data-cat="gestao">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/recorre-ai.png" alt="Logotipo Recorre.AI" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Plataforma</span></div>
+        <h3>Recorre.AI</h3>
+        <p>Defesa e recurso de multas de trânsito com inteligência artificial, para motoristas e despachantes.</p>
+        <a class="pc-link" href="https://recorre.ai" target="_blank" rel="noopener">recorre.ai <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </article>
+      <article class="pc" id="unizap" data-cat="gestao">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/unizap.svg" alt="Logotipo UniZap" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Atendimento</span></div>
+        <h3>UniZap</h3>
+        <p>Central de WhatsApp com vários números e transcrição automática dos áudios recebidos.</p>
+        <a class="pc-link" href="#proposta" data-prod="UniZap">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="zapcontroller" data-cat="gestao">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/zapcontroller.svg" alt="Logotipo ZapController" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Atendimento</span></div>
+        <h3>ZapController</h3>
+        <p>Vários atendentes na mesma fila, um número só e histórico centralizado.</p>
+        <a class="pc-link" href="#proposta" data-prod="ZapController">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
+      <article class="pc" id="radar" data-cat="gestao">
+        <div class="pc-top"><img class="pc-logo" src="img/produtos/radar.svg" alt="Logotipo Radar de estoque" width="52" height="52" loading="lazy" decoding="async"><span class="pc-tipo">Painel</span></div>
+        <h3>Radar de estoque</h3>
+        <p>Preço e giro das revendas da região em um painel, para decidir compra e margem com número.</p>
+        <a class="pc-link" href="#proposta" data-prod="Radar de estoque">Quero conhecer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </article>
     </div>
   </div>
 </section>
@@ -839,7 +935,7 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
     </div>
     <div class="faq">
       <details class="qa"><summary>O que a UniController faz, em uma frase?</summary><div class="a"><p>Emite os documentos de compra e venda de veículo e entrega por API os dados que a operação precisa consultar, como valor, histórico e situação processual.</p></div></details>
-      <details class="qa"><summary>Quanto custa?</summary><div class="a"><p>Depende do volume e das frentes que você usa. Não trabalhamos com licença fixa por usuário: para consulta, o preço acompanha o número de chamadas; para documentação, o número de documentos emitidos.</p></div></details>
+      <details class="qa"><summary>Quanto custa?</summary><div class="a"><p>Depende do volume e dos produtos que você usa. Não trabalhamos com licença fixa por usuário: para consulta, o preço acompanha o número de chamadas; para documentação, o número de documentos emitidos.</p></div></details>
       <details class="qa"><summary>Quanto tempo leva para integrar?</summary><div class="a"><p>A parte técnica costuma levar uma tarde: é uma integração simples, com respostas previsíveis e sem biblioteca proprietária. Você recebe acesso de homologação para a equipe testar antes de ir para produção.</p></div></details>
       <details class="qa"><summary>Preciso trocar o sistema que já uso?</summary><div class="a"><p>Não. O dado entra no seu sistema, no seu CRM ou na sua esteira de crédito, e o operador continua trabalhando na tela de sempre.</p></div></details>
       <details class="qa"><summary>De onde vem a informação?</summary><div class="a"><p>De fontes oficiais e de parceiros do setor, dentro dos limites contratuais de cada uma. Somos investidores e contribuintes de informação em empresas de sistemas de crédito e consulta veicular.</p></div></details>
@@ -960,11 +1056,12 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
       </div>
       <div class="f-col">
         <h5>Soluções</h5>
-        <a href="#uniao-cert">União CERT</a>
-        <a href="#uniprocuracoes">UNIPROCURAÇÕES</a>
         <a href="#unisigner">UniSIGNER</a>
+        <a href="#univio">UniVIO</a>
+        <a href="#recorre-ai">Recorre.AI</a>
         <a href="#fipeconsulta">FipeConsulta</a>
         <a href="#judsc">JudSC</a>
+        <a href="#solucoes" data-filtro="todos">Todos os produtos</a>
       </div>
       <div class="f-col">
         <h5>Segmentos</h5>
@@ -1019,6 +1116,32 @@ window.UC_API = window.UC_API || 'https://tickets.unicontroller.com.br';
   document.querySelectorAll('[data-seg]').forEach(function(a){
     a.addEventListener('click', function(){
       var s = document.getElementById('f-seg'); if(s) s.value = a.dataset.seg;
+    });
+  });
+
+
+  /* ── catálogo: filtro por categoria ── */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var cards = document.querySelectorAll('.pc');
+  function filtra(f){
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.f === f ? 'true' : 'false'); });
+    cards.forEach(function(c){ c.hidden = !(f === 'todos' || c.dataset.cat === f); });
+  }
+  chips.forEach(function(c){ c.addEventListener('click', function(){ filtra(c.dataset.f); }); });
+  document.querySelectorAll('[data-filtro]').forEach(function(a){
+    a.addEventListener('click', function(){ filtra(a.dataset.filtro); });
+  });
+  /* ao abrir um produto pelo link, mostra todos para ele não ficar escondido */
+  function porAncora(){ var h = location.hash.slice(1); var el = h && document.getElementById(h); if(el && el.classList.contains('pc') && el.hidden) filtra('todos'); }
+  window.addEventListener('hashchange', porAncora); porAncora();
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(){ var el = document.getElementById(a.getAttribute('href').slice(1)); if(el && el.classList.contains('pc') && el.hidden) filtra('todos'); });
+  });
+  /* "Quero conhecer" já escreve o produto no formulário */
+  document.querySelectorAll('[data-prod]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var m = document.getElementById('f-msg');
+      if(m && !m.value) m.value = 'Tenho interesse no ' + a.dataset.prod + '.';
     });
   });
 
