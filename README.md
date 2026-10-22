@@ -63,12 +63,28 @@ A mensagem chega com um sufixo entre colchetes:
 
 | Marca | Onde fica |
 |---|---|
+| `topo` | Telefone na barra superior |
 | `botao-flutuante` | Bolinha verde fixa |
-| `cta-final` | Bloco de chamada no fim da página |
+| `cta-final` | Botão verde ao lado do formulário de proposta |
 | `formulario` | Atalho dentro do formulário corporativo |
 | `rodape` | Rodapé |
 
 Assim dá para saber o que mais converte sem instalar nenhuma ferramenta.
+
+## Estrutura da landing
+
+1. Topo com a demonstração interativa das três frentes (Documento, Valor e
+   Processo), que se revezam sozinhas e param quando a pessoa clica
+2. Números da operação logo abaixo do topo
+3. Soluções: documentação veicular e consulta por API, cada produto com
+   âncora própria (`#uniao-cert`, `#fipeconsulta`, `#judsc` etc.)
+4. Segmentos (o link de cada um já escolhe o segmento no formulário)
+5. Como funciona, em três etapas
+6. Quem constrói e presença no FENAUTO
+7. Dúvidas (também marcadas para o Google como FAQ)
+8. Proposta: formulário de tickets e botão de WhatsApp
+9. Rodapé com a assinatura "um sistema UNICONTROLLER · Dev Jackson Tomelin"
+   nas cores originais da marca
 
 ## Páginas
 
